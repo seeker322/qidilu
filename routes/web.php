@@ -11,9 +11,26 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
+//Route::get('/', function () {
+//    return view('index');
+//});
+//Route::get('/test', function () {
+//    return "111";
+//});
+
+
+
+Route::group(['middleware' => [],'namespace' => 'Admin', 'prefix' => 'admin'], function () {
+    //
+    Route::get('/', function () {
+        return view('admin.index');
+    });
 });
-Route::get('/test', function () {
-    return "111";
+
+
+Route::group(['namespace' => 'Home'], function () {
+    //
+    Route::get('/', function () {
+        return view('home.index');
+    });
 });
