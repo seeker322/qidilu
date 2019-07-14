@@ -6,7 +6,7 @@
                     <div class="panel-heading">Example Component</div>
 
                     <div class="panel-body">
-                        I'm an example component!{{testdata}}
+                        {{testdata}}
                     </div>
                     <el-select v-model="value" placeholder="请选择">
                         <el-option

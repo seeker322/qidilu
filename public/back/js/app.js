@@ -22977,7 +22977,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
-        cs: "1111"
+        cs: ""
     },
     mutations: {
         SetData: function SetData(state, data) {
@@ -23005,7 +23005,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 
 //前缀
-__WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL = '/';
+__WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL = '/admin';
 //接口列表
 var API = {
     testurl: function testurl(params) {

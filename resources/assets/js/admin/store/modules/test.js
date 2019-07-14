@@ -2,7 +2,7 @@ import api from '../../api';
 export default {
     namespaced:true,
     state: {
-        cs: "1111"
+        cs: ""
     },
     mutations:{
         SetData(state,data){

@@ -190,6 +190,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -239,49 +240,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-8 col-md-offset-2" }, [
-        _c(
-          "div",
-          { staticClass: "panel panel-default" },
-          [
-            _c("div", { staticClass: "panel-heading" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "panel-body" }, [
-              _vm._v(
-                "\n                    I'm an example component!" +
-                  _vm._s(_vm.testdata) +
-                  "\n                "
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "el-select",
-              {
-                attrs: { placeholder: "请选择" },
-                model: {
-                  value: _vm.value,
-                  callback: function($$v) {
-                    _vm.value = $$v
-                  },
-                  expression: "value"
-                }
-              },
-              _vm._l(_vm.options, function(item) {
-                return _c("el-option", {
-                  key: item.value,
-                  attrs: { label: item.label, value: item.value }
-                })
-              }),
-              1
-            )
-          ],
-          1
-        )
-      ])
-    ])
+    _vm._v("\n    " + _vm._s(_vm.testdata) + "\n    ")
   ])
 }
 var staticRenderFns = []

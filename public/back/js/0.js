@@ -251,7 +251,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "panel-body" }, [
               _vm._v(
-                "\n                    I'm an example component!" +
+                "\n                    " +
                   _vm._s(_vm.testdata) +
                   "\n                "
               )
