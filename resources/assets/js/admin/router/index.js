@@ -8,6 +8,11 @@ export default new VueRouter({
         {
             name: 'hello',
             path: '/',
+            component: resolve => void(require(['../pages/index.vue'], resolve))
+        },
+        {
+            name: 'hello',
+            path: '/test',
             component: resolve => void(require(['../components/TestComponent.vue'], resolve))
         }
     ]

@@ -4,6 +4,13 @@
 
 // Variables
 @import "variables";
+body,html{font-size:14px;font-family:"微软雅黑",Helvetica,Tahoma,Arial,sans-serif;color:#000;height:100%;background-position:center;background-attachment:fixed;background-size:cover}
+img{border:0}
+body{
+  margin:0px;
+  padding:0px;
+}
+#app{
+  height:100%;
 
-// Bootstrap
-@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+}
