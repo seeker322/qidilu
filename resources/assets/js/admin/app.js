@@ -10,9 +10,15 @@ import store from './store'
 import router from './router'
 import VueRouter from 'vue-router';
 import axios from 'axios';
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-Vue.use(ElementUI);
+// import ElementUI from 'element-ui';
+// import 'element-ui/lib/theme-chalk/index.css';
+import iView from 'iview';
+import 'iview/dist/styles/iview.css';
+
+
+
+Vue.use(iView);
+// Vue.use(ElementUI);
 Vue.prototype.axios = axios;
 Vue.use(VueRouter);
 /**

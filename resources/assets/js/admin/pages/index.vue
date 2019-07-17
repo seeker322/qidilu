@@ -1,160 +1,169 @@
 <template>
+    <div class="layout">
+        <Layout>
 
-    <el-container>
-        <el-header  height="50px">
-            <div class="qi-admin-header">
-                <div class="qi-admin-left">LOGO</div>
-                <div class="qi-admin-right">头部</div>
-            </div>
+            <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
+                <div class="slider-logo" :class="menuitemClasses">
+                    <Icon type="md-settings"></Icon>
+                    <span>后台</span>
 
-        </el-header>
-        <el-container>
-            <el-aside width="200px">
+                </div>
+                <Menu active-name="1-2" theme="dark" width="auto" :open-names="['1']" :class="menuitemClasses">
 
-                <el-menu
-                        default-active="2"
-                        class="el-menu-vertical-demo"
-                        @open="handleOpen"
-                        @close="handleClose"
-                        background-color="#20222A"
-                        text-color="#fff"
-                        active-text-color="#ffd04b">
-                    <el-submenu index="1">
+                    <Submenu name="1">
                         <template slot="title">
-                            <i class="el-icon-location"></i>
-                            <span>导航一</span>
+                            <Icon type="ios-navigate"></Icon>
+                            <span>Item 1</span>
                         </template>
-                        <el-menu-item-group>
-                            <template slot="title">分组一</template>
-                            <el-menu-item index="1-1">选项1</el-menu-item>
-                            <el-menu-item index="1-2">选项2</el-menu-item>
-                        </el-menu-item-group>
-                        <el-menu-item-group title="分组2">
-                            <el-menu-item index="1-3">选项3</el-menu-item>
-                        </el-menu-item-group>
-                        <el-submenu index="1-4">
-                            <template slot="title">选项4</template>
-                            <el-menu-item index="1-4-1">选项1</el-menu-item>
-                        </el-submenu>
-                    </el-submenu>
-                    <el-menu-item index="2">
-                        <i class="el-icon-menu"></i>
-                        <span slot="title">导航二</span>
-                    </el-menu-item>
-                    <el-menu-item index="3">
-                        <i class="el-icon-setting"></i>
-                        <span slot="title">导航三</span>
-                    </el-menu-item>
-                </el-menu>
-
-            </el-aside>
-            <el-container>
-                <el-breadcrumb separator-class="el-icon-arrow-right">
-                    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                    <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-                    <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-                    <el-breadcrumb-item>活动详情</el-breadcrumb-item>
-                </el-breadcrumb>
-                <el-main>
-
-
-                </el-main>
-                <el-footer height="20px">Footer</el-footer>
-            </el-container>
-        </el-container>
-    </el-container>
-
+                        <MenuItem name="1-1" >Option 1</MenuItem>
+                        <MenuItem name="1-2">Option 2</MenuItem>
+                        <MenuItem name="1-3">Option 3</MenuItem>
+                    </Submenu>
+                    <Submenu name="2">
+                        <template slot="title">
+                            <Icon type="ios-keypad"></Icon>
+                            <span>Item 2</span>
+                        </template>
+                        <MenuItem name="2-1">Option 1</MenuItem>
+                        <MenuItem name="2-2">Option 2</MenuItem>
+                    </Submenu>
+                    <Submenu name="3">
+                        <template slot="title">
+                            <Icon type="ios-analytics"></Icon>
+                            <span>Item 3</span>
+                        </template>
+                        <MenuItem name="3-1">Option 1</MenuItem>
+                        <MenuItem name="3-2">Option 2</MenuItem>
+                    </Submenu>
+                </Menu>
+            </Sider>
+            <Layout>
+                <Header :style="{padding: 0}" class="layout-header-bar">
+                    <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon>
+                </Header>
+                <Content :style="{margin: '20px', background: '#fff', minHeight: '260px'}">
+                    Content
+                </Content>
+            </Layout>
+        </Layout>
+    </div>
 </template>
 
 <script>
     export default {
-        name: "index",
-
-        methods: {
-            handleOpen(key, keyPath) {
-                console.log(key, keyPath);
+        data () {
+            return {
+                isCollapsed: false
+            }
+        },
+        computed: {
+            rotateIcon () {
+                return [
+                    'menu-icon',
+                    this.isCollapsed ? 'rotate-icon' : ''
+                ];
             },
-            handleClose(key, keyPath) {
-                console.log(key, keyPath);
+            menuitemClasses () {
+                return [
+                    'menu-item',
+                    this.isCollapsed ? 'collapsed-menu' : ''
+                ]
+            }
+        },
+        methods: {
+            collapsedSider () {
+                this.$refs.side1.toggleCollapse();
             }
         }
     }
 </script>
 
 <style lang="scss">
-    .el-header{
-        color: #333;
-        text-align: center;
-        line-height: 50px;
-        border-bottom: none;
-        box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
-        box-sizing: border-box;
-        background-color: #fff;
-        padding:0px;
-    }
-
-    .el-footer {
-          color: #333;
-          text-align: center;
-          line-height: 20px;
-          border-bottom: none;
-          box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
-          box-sizing: border-box;
-          background-color: #fff;
-      }
-
-    .el-aside {
-        background-color:rgba(32,34,42,.97);
-        color: #333;
-        text-align: center;
-        line-height: 200px;
-        .el-menu{
-            border-right: solid 0px #e6e6e6;
+    .layout{
+        border: 1px solid #d7dde4;
+        background: #f5f7f9;
+        position: relative;
+        border-radius: 4px;
+        overflow: hidden;
+        height:100%;
+        .ivu-layout{
+            height:100%;
         }
     }
-
-    .el-main {
-        background-color: #E9EEF3;
-        color: #333;
-        text-align: center;
-        line-height: 160px;
+    .ivu-layout-sider{
+        box-shadow: 0 1px 1px rgba(0,0,0,.05);
     }
-
-    #app > .el-container {
-        height:100%;
-    }
-
-    .el-container:nth-child(5) .el-aside,
-    .el-container:nth-child(6) .el-aside {
-        line-height: 260px;
-    }
-
-    .el-container:nth-child(7) .el-aside {
-        line-height: 320px;
-    }
-    .el-breadcrumb{
-        padding:0 15px;
+    .ivu-layout-header{
         height:50px;
         line-height:50px;
     }
+    .slider-logo{
+        height:50px;
+        line-height:50px;
+        box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        box-sizing: border-box;
+        font-size:18px;
+        text-align: center;
+        color: rgba(255,255,255,.7);
+        margin-bottom:1px;
 
-    .qi-admin-header{
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        height:100%;
-        justify-content: flex-start;
-        .qi-admin-left{
-            width: 200px;
-            flex-shrink: 0;
-            height:100%;
+    }
+    .layout-header-bar{
+        background: #fff;
+        box-shadow: 0 1px 1px rgba(0,0,0,.1);
+    }
+    .layout-logo-left{
+        width: 90%;
+        height: 30px;
+        background: #5b6270;
+        border-radius: 3px;
+        margin: 15px auto;
+    }
+    .menu-icon{
+        transition: all .3s;
+    }
+    .rotate-icon{
+        transform: rotate(-90deg);
+    }
+    .menu-item span{
+        display: inline-block;
+        overflow: hidden;
+        width: 69px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        vertical-align: bottom;
+        transition: width .2s ease .2s;
+    }
+    .menu-item i{
+        transform: translateX(0px);
+        transition: font-size .2s ease, transform .2s ease;
+        vertical-align: middle;
+        font-size: 16px;
+    }
 
-            background-color:rgba(32,34,42,.97);
-            color: rgba(255,255,255,.8);
-            box-shadow: 0 1px 2px 0 rgba(0,0,0,.15);
+    .collapsed-menu span{
+        width: 0px;
+        transition: width .2s ease;
+    }
+    .ivu-menu-vertical.collapsed-menu .ivu-menu-submenu-title{
+        padding:0px 24px;
+    }
+    .ivu-menu.collapsed-menu{
+        padding-top:14px;
+    }
+    .collapsed-menu{
+        .ivu-icon-ios-arrow-down:before,.ivu-icon-ios-arrow-up:before{
+            display: none;
         }
-        .qi-admin-right{
-            width: 100%;
+
+        ul{
+            display:none;
         }
+    }
+    .collapsed-menu i{
+        transform: translateX(5px);
+        transition: font-size .2s ease .2s, transform .2s ease .2s;
+        vertical-align: middle;
+        font-size: 22px;
     }
 </style>

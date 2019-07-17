@@ -1,6 +1,58 @@
 webpackJsonp([0],{
 
-/***/ 200:
+/***/ 52:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(67)
+}
+var normalizeComponent = __webpack_require__(54)
+/* script */
+var __vue_script__ = __webpack_require__(59)
+/* template */
+var __vue_template__ = __webpack_require__(66)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/admin/pages/index.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-019494c5", Component.options)
+  } else {
+    hotAPI.reload("data-v-019494c5", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 54:
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -110,59 +162,7 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ 209:
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(216)
-}
-var normalizeComponent = __webpack_require__(200)
-/* script */
-var __vue_script__ = __webpack_require__(214)
-/* template */
-var __vue_template__ = __webpack_require__(215)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/admin/pages/index.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-019494c5", Component.options)
-  } else {
-    hotAPI.reload("data-v-019494c5", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 212:
+/***/ 57:
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -181,7 +181,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(213)
+var listToStyles = __webpack_require__(58)
 
 /*
 type StyleObject = {
@@ -391,7 +391,7 @@ function applyToTag (styleElement, obj) {
 
 /***/ }),
 
-/***/ 213:
+/***/ 58:
 /***/ (function(module, exports) {
 
 /**
@@ -425,7 +425,7 @@ module.exports = function listToStyles (parentId, list) {
 
 /***/ }),
 
-/***/ 214:
+/***/ 59:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -481,40 +481,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: "index",
+    data: function data() {
+        return {
+            isCollapsed: false
+        };
+    },
 
-    methods: {
-        handleOpen: function handleOpen(key, keyPath) {
-            console.log(key, keyPath);
+    computed: {
+        rotateIcon: function rotateIcon() {
+            return ['menu-icon', this.isCollapsed ? 'rotate-icon' : ''];
         },
-        handleClose: function handleClose(key, keyPath) {
-            console.log(key, keyPath);
+        menuitemClasses: function menuitemClasses() {
+            return ['menu-item', this.isCollapsed ? 'collapsed-menu' : ''];
+        }
+    },
+    methods: {
+        collapsedSider: function collapsedSider() {
+            this.$refs.side1.toggleCollapse();
         }
     }
 });
 
 /***/ }),
 
-/***/ 215:
+/***/ 66:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -522,104 +514,134 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "el-container",
+    "div",
+    { staticClass: "layout" },
     [
-      _c("el-header", { attrs: { height: "50px" } }, [
-        _c("div", { staticClass: "qi-admin-header" }, [
-          _c("div", { staticClass: "qi-admin-left" }, [_vm._v("LOGO")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "qi-admin-right" }, [_vm._v("头部")])
-        ])
-      ]),
-      _vm._v(" "),
       _c(
-        "el-container",
+        "Layout",
         [
           _c(
-            "el-aside",
-            { attrs: { width: "200px" } },
+            "Sider",
+            {
+              ref: "side1",
+              attrs: {
+                "hide-trigger": "",
+                collapsible: "",
+                "collapsed-width": 78
+              },
+              model: {
+                value: _vm.isCollapsed,
+                callback: function($$v) {
+                  _vm.isCollapsed = $$v
+                },
+                expression: "isCollapsed"
+              }
+            },
             [
               _c(
-                "el-menu",
+                "div",
+                { staticClass: "slider-logo", class: _vm.menuitemClasses },
+                [
+                  _c("Icon", { attrs: { type: "md-settings" } }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("后台")])
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "Menu",
                 {
-                  staticClass: "el-menu-vertical-demo",
+                  class: _vm.menuitemClasses,
                   attrs: {
-                    "default-active": "2",
-                    "background-color": "#20222A",
-                    "text-color": "#fff",
-                    "active-text-color": "#ffd04b"
-                  },
-                  on: { open: _vm.handleOpen, close: _vm.handleClose }
+                    "active-name": "1-2",
+                    theme: "dark",
+                    width: "auto",
+                    "open-names": ["1"]
+                  }
                 },
                 [
                   _c(
-                    "el-submenu",
-                    { attrs: { index: "1" } },
+                    "Submenu",
+                    { attrs: { name: "1" } },
                     [
-                      _c("template", { slot: "title" }, [
-                        _c("i", { staticClass: "el-icon-location" }),
-                        _vm._v(" "),
-                        _c("span", [_vm._v("导航一")])
-                      ]),
-                      _vm._v(" "),
                       _c(
-                        "el-menu-item-group",
+                        "template",
+                        { slot: "title" },
                         [
-                          _c("template", { slot: "title" }, [_vm._v("分组一")]),
+                          _c("Icon", { attrs: { type: "ios-navigate" } }),
                           _vm._v(" "),
-                          _c("el-menu-item", { attrs: { index: "1-1" } }, [
-                            _vm._v("选项1")
-                          ]),
-                          _vm._v(" "),
-                          _c("el-menu-item", { attrs: { index: "1-2" } }, [
-                            _vm._v("选项2")
-                          ])
-                        ],
-                        2
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "el-menu-item-group",
-                        { attrs: { title: "分组2" } },
-                        [
-                          _c("el-menu-item", { attrs: { index: "1-3" } }, [
-                            _vm._v("选项3")
-                          ])
+                          _c("span", [_vm._v("Item 1")])
                         ],
                         1
                       ),
                       _vm._v(" "),
-                      _c(
-                        "el-submenu",
-                        { attrs: { index: "1-4" } },
-                        [
-                          _c("template", { slot: "title" }, [_vm._v("选项4")]),
-                          _vm._v(" "),
-                          _c("el-menu-item", { attrs: { index: "1-4-1" } }, [
-                            _vm._v("选项1")
-                          ])
-                        ],
-                        2
-                      )
+                      _c("MenuItem", { attrs: { name: "1-1" } }, [
+                        _vm._v("Option 1")
+                      ]),
+                      _vm._v(" "),
+                      _c("MenuItem", { attrs: { name: "1-2" } }, [
+                        _vm._v("Option 2")
+                      ]),
+                      _vm._v(" "),
+                      _c("MenuItem", { attrs: { name: "1-3" } }, [
+                        _vm._v("Option 3")
+                      ])
                     ],
                     2
                   ),
                   _vm._v(" "),
-                  _c("el-menu-item", { attrs: { index: "2" } }, [
-                    _c("i", { staticClass: "el-icon-menu" }),
-                    _vm._v(" "),
-                    _c("span", { attrs: { slot: "title" }, slot: "title" }, [
-                      _vm._v("导航二")
-                    ])
-                  ]),
+                  _c(
+                    "Submenu",
+                    { attrs: { name: "2" } },
+                    [
+                      _c(
+                        "template",
+                        { slot: "title" },
+                        [
+                          _c("Icon", { attrs: { type: "ios-keypad" } }),
+                          _vm._v(" "),
+                          _c("span", [_vm._v("Item 2")])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("MenuItem", { attrs: { name: "2-1" } }, [
+                        _vm._v("Option 1")
+                      ]),
+                      _vm._v(" "),
+                      _c("MenuItem", { attrs: { name: "2-2" } }, [
+                        _vm._v("Option 2")
+                      ])
+                    ],
+                    2
+                  ),
                   _vm._v(" "),
-                  _c("el-menu-item", { attrs: { index: "3" } }, [
-                    _c("i", { staticClass: "el-icon-setting" }),
-                    _vm._v(" "),
-                    _c("span", { attrs: { slot: "title" }, slot: "title" }, [
-                      _vm._v("导航三")
-                    ])
-                  ])
+                  _c(
+                    "Submenu",
+                    { attrs: { name: "3" } },
+                    [
+                      _c(
+                        "template",
+                        { slot: "title" },
+                        [
+                          _c("Icon", { attrs: { type: "ios-analytics" } }),
+                          _vm._v(" "),
+                          _c("span", [_vm._v("Item 3")])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("MenuItem", { attrs: { name: "3-1" } }, [
+                        _vm._v("Option 1")
+                      ]),
+                      _vm._v(" "),
+                      _c("MenuItem", { attrs: { name: "3-2" } }, [
+                        _vm._v("Option 2")
+                      ])
+                    ],
+                    2
+                  )
                 ],
                 1
               )
@@ -628,28 +650,37 @@ var render = function() {
           ),
           _vm._v(" "),
           _c(
-            "el-container",
+            "Layout",
             [
               _c(
-                "el-breadcrumb",
-                { attrs: { "separator-class": "el-icon-arrow-right" } },
+                "Header",
+                { staticClass: "layout-header-bar", style: { padding: 0 } },
                 [
-                  _c("el-breadcrumb-item", { attrs: { to: { path: "/" } } }, [
-                    _vm._v("首页")
-                  ]),
-                  _vm._v(" "),
-                  _c("el-breadcrumb-item", [_vm._v("活动管理")]),
-                  _vm._v(" "),
-                  _c("el-breadcrumb-item", [_vm._v("活动列表")]),
-                  _vm._v(" "),
-                  _c("el-breadcrumb-item", [_vm._v("活动详情")])
+                  _c("Icon", {
+                    class: _vm.rotateIcon,
+                    style: { margin: "0 20px" },
+                    attrs: { type: "md-menu", size: "24" },
+                    nativeOn: {
+                      click: function($event) {
+                        return _vm.collapsedSider($event)
+                      }
+                    }
+                  })
                 ],
                 1
               ),
               _vm._v(" "),
-              _c("el-main"),
-              _vm._v(" "),
-              _c("el-footer", { attrs: { height: "20px" } }, [_vm._v("Footer")])
+              _c(
+                "Content",
+                {
+                  style: {
+                    margin: "20px",
+                    background: "#fff",
+                    minHeight: "260px"
+                  }
+                },
+                [_vm._v("\n                Content\n            ")]
+              )
             ],
             1
           )
@@ -672,17 +703,17 @@ if (false) {
 
 /***/ }),
 
-/***/ 216:
+/***/ 67:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(217);
+var content = __webpack_require__(68);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(212)("de5913cc", content, false, {});
+var update = __webpack_require__(57)("de5913cc", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -699,15 +730,15 @@ if(false) {
 
 /***/ }),
 
-/***/ 217:
+/***/ 68:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(193)(false);
+exports = module.exports = __webpack_require__(13)(false);
 // imports
 
 
 // module
-exports.push([module.i, "\n.el-header {\n  color: #333;\n  text-align: center;\n  line-height: 50px;\n  border-bottom: none;\n  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);\n          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  background-color: #fff;\n  padding: 0px;\n}\n.el-footer {\n  color: #333;\n  text-align: center;\n  line-height: 20px;\n  border-bottom: none;\n  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);\n          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  background-color: #fff;\n}\n.el-aside {\n  background-color: rgba(32, 34, 42, 0.97);\n  color: #333;\n  text-align: center;\n  line-height: 200px;\n}\n.el-aside .el-menu {\n    border-right: solid 0px #e6e6e6;\n}\n.el-main {\n  background-color: #E9EEF3;\n  color: #333;\n  text-align: center;\n  line-height: 160px;\n}\n#app > .el-container {\n  height: 100%;\n}\n.el-container:nth-child(5) .el-aside,\n.el-container:nth-child(6) .el-aside {\n  line-height: 260px;\n}\n.el-container:nth-child(7) .el-aside {\n  line-height: 320px;\n}\n.el-breadcrumb {\n  padding: 0 15px;\n  height: 50px;\n  line-height: 50px;\n}\n.qi-admin-header {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  width: 100%;\n  height: 100%;\n  -webkit-box-pack: start;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n}\n.qi-admin-header .qi-admin-left {\n    width: 200px;\n    -ms-flex-negative: 0;\n        flex-shrink: 0;\n    height: 100%;\n    background-color: rgba(32, 34, 42, 0.97);\n    color: rgba(255, 255, 255, 0.8);\n    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.15);\n            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.15);\n}\n.qi-admin-header .qi-admin-right {\n    width: 100%;\n}\n", ""]);
+exports.push([module.i, "\n.layout {\n  border: 1px solid #d7dde4;\n  background: #f5f7f9;\n  position: relative;\n  border-radius: 4px;\n  overflow: hidden;\n  height: 100%;\n}\n.layout .ivu-layout {\n    height: 100%;\n}\n.ivu-layout-sider {\n  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);\n          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);\n}\n.ivu-layout-header {\n  height: 50px;\n  line-height: 50px;\n}\n.slider-logo {\n  height: 50px;\n  line-height: 50px;\n  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);\n          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  font-size: 18px;\n  text-align: center;\n  color: rgba(255, 255, 255, 0.7);\n  margin-bottom: 1px;\n}\n.layout-header-bar {\n  background: #fff;\n  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);\n          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);\n}\n.layout-logo-left {\n  width: 90%;\n  height: 30px;\n  background: #5b6270;\n  border-radius: 3px;\n  margin: 15px auto;\n}\n.menu-icon {\n  -webkit-transition: all .3s;\n  transition: all .3s;\n}\n.rotate-icon {\n  -webkit-transform: rotate(-90deg);\n          transform: rotate(-90deg);\n}\n.menu-item span {\n  display: inline-block;\n  overflow: hidden;\n  width: 69px;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  vertical-align: bottom;\n  -webkit-transition: width .2s ease .2s;\n  transition: width .2s ease .2s;\n}\n.menu-item i {\n  -webkit-transform: translateX(0px);\n          transform: translateX(0px);\n  -webkit-transition: font-size .2s ease, -webkit-transform .2s ease;\n  transition: font-size .2s ease, -webkit-transform .2s ease;\n  transition: font-size .2s ease, transform .2s ease;\n  transition: font-size .2s ease, transform .2s ease, -webkit-transform .2s ease;\n  vertical-align: middle;\n  font-size: 16px;\n}\n.collapsed-menu span {\n  width: 0px;\n  -webkit-transition: width .2s ease;\n  transition: width .2s ease;\n}\n.ivu-menu-vertical.collapsed-menu .ivu-menu-submenu-title {\n  padding: 0px 24px;\n}\n.ivu-menu.collapsed-menu {\n  padding-top: 14px;\n}\n.collapsed-menu .ivu-icon-ios-arrow-down:before, .collapsed-menu .ivu-icon-ios-arrow-up:before {\n  display: none;\n}\n.collapsed-menu ul {\n  display: none;\n}\n.collapsed-menu i {\n  -webkit-transform: translateX(5px);\n          transform: translateX(5px);\n  -webkit-transition: font-size .2s ease .2s, -webkit-transform .2s ease .2s;\n  transition: font-size .2s ease .2s, -webkit-transform .2s ease .2s;\n  transition: font-size .2s ease .2s, transform .2s ease .2s;\n  transition: font-size .2s ease .2s, transform .2s ease .2s, -webkit-transform .2s ease .2s;\n  vertical-align: middle;\n  font-size: 22px;\n}\n", ""]);
 
 // exports
 
