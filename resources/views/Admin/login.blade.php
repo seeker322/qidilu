@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>登录</title>
     <link rel="stylesheet" type="text/css" href="/common/css/zui.css" media="all">
     <link rel="stylesheet" type="text/css" href="/common/css/login.css" media="all">
@@ -10,8 +12,9 @@
     <script src="/common/js/vue.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <script src="/common/js/axios.min.js"></script>
+
     <style>
-        body { background-image: url("/common/img/loginbg.jpg");}
+        /*body { background-image: url("/common/img/loginbg.jpg");}*/
         #app{width: 100%;height:100%;}
     </style>
 </head>

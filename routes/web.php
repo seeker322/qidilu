@@ -14,20 +14,18 @@
 //Route::get('/', function () {
 //    return view('index');
 //});
+Auth::routes();
 
+//Route::get('/login', 'HomeController@index')->name('home');
 
 Route::get('/login', function () {
     return view('admin.login');
-});
+})->name('login');
 
 Route::group(['middleware' => [],'namespace' => 'Admin', 'prefix' => 'admin'], function () {
     //
     Route::get('/', function () {
         return view('admin.index');
-    });
-
-    Route::get('/test', function () {
-        return "这是后端测试页面";
     });
 });
 
@@ -42,3 +40,5 @@ Route::group(['namespace' => 'Home'], function () {
         return "这是前端测试项目";
     });
 });
+
+
