@@ -572,6 +572,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         collapsedSider: function collapsedSider() {
             this.$refs.side1.toggleCollapse();
+        },
+        loginOut: function loginOut() {
+            var _this = this;
+
+            var that = this;
+            this.axios({
+                method: 'get',
+                url: '../loginOut',
+                data: "",
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            }).then(function (e) {
+                console.log(_this);
+                if (e.status == 200 && e.data.code == 200) {
+
+                    _this.$Message.success(e.data.msg);
+                    window.location.href = "/login";
+                } else {
+                    _this.$Message.error(e.data.msg);
+                }
+            });
         }
     }
 });
@@ -784,7 +806,9 @@ var render = function() {
                                 _c("DropdownItem", [_vm._v("修改密码")]),
                                 _vm._v(" "),
                                 _c("DropdownItem", { attrs: { divided: "" } }, [
-                                  _vm._v("退出")
+                                  _c("div", { on: { click: _vm.loginOut } }, [
+                                    _vm._v("退出")
+                                  ])
                                 ])
                               ],
                               1

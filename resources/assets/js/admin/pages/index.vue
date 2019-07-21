@@ -51,7 +51,7 @@
                                 <DropdownMenu slot="list">
                                     <DropdownItem>基本资料</DropdownItem>
                                     <DropdownItem>修改密码</DropdownItem>
-                                    <DropdownItem divided>退出</DropdownItem>
+                                    <DropdownItem divided ><div @click="loginOut">退出</div></DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
 
@@ -103,7 +103,31 @@
         methods: {
             collapsedSider () {
                 this.$refs.side1.toggleCollapse();
+            },
+
+            loginOut(){
+                var that=this;
+                this.axios({
+                    method: 'get',
+                    url: '../loginOut',
+                    data: "",
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                }).then((e)=>{
+                    console.log(this);
+                        if (e.status == 200 && e.data.code == 200){
+
+                            this.$Message.success(e.data.msg);
+                            window.location.href = "/login";
+                        }else{
+                            this.$Message.error(e.data.msg);
+                        }
+                    }
+                )
             }
+
+
         }
     }
 </script>

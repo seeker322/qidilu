@@ -17173,9 +17173,18 @@ var API = {
     testurl: function testurl(params) {
         return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/test', params);
     }
-};
 
-/* harmony default export */ __webpack_exports__["a"] = (API);
+    // //异步请求返回统一处理
+    // axios.interceptors.response.use(
+    //     (response) => {
+    //       return response;
+    //     },
+    //     (err) => {
+    //
+    //         return Promise.reject(err);
+    //     }
+    // );
+};/* harmony default export */ __webpack_exports__["a"] = (API);
 
 /***/ }),
 /* 22 */

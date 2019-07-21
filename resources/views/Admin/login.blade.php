@@ -89,21 +89,37 @@
            },
 
            submit() {
+               var that=this;
                let data={
-                   username: this.username,
+                   name: this.username,
                    password: this.password,
                    captcha:this.captcha,
                }
+               // const params = new URLSearchParams();
+               // params.append('name', this.username);
+               // params.append('password', this.password);
+               // params.append('captcha', this.captcha);
                axios({
                    method: 'post',
                    url: '/login',
                    data: data,
-                   headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}
+                   headers: {
+                       'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                       // 'content-type': 'application/x-www-form-urlencoded'
+                   }
                }).then(
                    function (e) {
                        if (e.status == 200 && e.data.code == 200) {
-                           this_.$message.success('登录成功');
+                           that.$message({
+                               message: '登录成功',
+                               type: 'success'
+                           });
                            window.location.href = e.data.url;
+                       }else{
+                           that.$message({
+                               message: '登录失败',
+                               type: 'error'
+                           });
                        }
                    }
                )

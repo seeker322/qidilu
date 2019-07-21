@@ -22,11 +22,15 @@ Route::get('/login', function () {
     return view('admin.login');
 })->name('login');
 
-Route::group(['middleware' => [],'namespace' => 'Admin', 'prefix' => 'admin'], function () {
+Route::post('/login', 'Auth\LoginController@authenticate');
+Route::get('/loginOut', 'Auth\LoginController@loginOut');
+
+Route::group(['middleware' => ["auth:admin"],'namespace' => 'Admin', 'prefix' => 'admin'], function () {
     //
     Route::get('/', function () {
         return view('admin.index');
     });
+
 });
 
 

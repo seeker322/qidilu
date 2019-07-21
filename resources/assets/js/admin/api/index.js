@@ -8,5 +8,14 @@ const API = {
     }
 }
 
-
+// //异步请求返回统一处理
+// axios.interceptors.response.use(
+//     (response) => {
+//       return response;
+//     },
+//     (err) => {
+//
+//         return Promise.reject(err);
+//     }
+// );
 export default API;
