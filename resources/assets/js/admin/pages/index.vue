@@ -147,7 +147,7 @@
     }
     .layout-breadcrumb{
         margin-top:1px;
-        padding: 10px 25px;
+        padding: 14px 25px;
         background-color: #fff;
         box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
     }
@@ -209,7 +209,7 @@
         padding:0px 24px;
     }
     .ivu-menu-vertical .ivu-menu-item, .ivu-menu-vertical .ivu-menu-submenu-title{
-        padding: 10px 24px;
+        padding: 14px 24px;
     }
     .ivu-menu.collapsed-menu{
         padding-top:14px;
