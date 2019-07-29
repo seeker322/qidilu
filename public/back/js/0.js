@@ -665,7 +665,7 @@ var render = function() {
                         [
                           _c("Icon", { attrs: { type: "ios-navigate" } }),
                           _vm._v(" "),
-                          _c("span", [_vm._v("Item 1")])
+                          _c("span", [_vm._v("类别管理")])
                         ],
                         1
                       ),
@@ -695,7 +695,7 @@ var render = function() {
                         [
                           _c("Icon", { attrs: { type: "ios-keypad" } }),
                           _vm._v(" "),
-                          _c("span", [_vm._v("Item 2")])
+                          _c("span", [_vm._v("内容管理")])
                         ],
                         1
                       ),
@@ -721,7 +721,7 @@ var render = function() {
                         [
                           _c("Icon", { attrs: { type: "ios-analytics" } }),
                           _vm._v(" "),
-                          _c("span", [_vm._v("Item 3")])
+                          _c("span", [_vm._v("测试")])
                         ],
                         1
                       ),

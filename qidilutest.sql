@@ -10,10 +10,53 @@ Target Server Type    : MYSQL
 Target Server Version : 50554
 File Encoding         : 65001
 
-Date: 2019-07-20 17:46:39
+Date: 2019-07-29 18:05:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for admin_permissions
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_permissions`;
+CREATE TABLE `admin_permissions` (
+  `id` int(11) NOT NULL,
+  `path` varchar(255) DEFAULT NULL COMMENT '需要验证的动作',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='权限表';
+
+-- ----------------------------
+-- Records of admin_permissions
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for admin_roles
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_roles`;
+CREATE TABLE `admin_roles` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL COMMENT '角色名称',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='角色表';
+
+-- ----------------------------
+-- Records of admin_roles
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for admin_role_permissions
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_role_permissions`;
+CREATE TABLE `admin_role_permissions` (
+  `id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='角色和权限中间表';
+
+-- ----------------------------
+-- Records of admin_role_permissions
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for admin_users
@@ -29,12 +72,27 @@ CREATE TABLE `admin_users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='后台用户表';
 
 -- ----------------------------
 -- Records of admin_users
 -- ----------------------------
 INSERT INTO `admin_users` VALUES ('4', 'admin', null, '$2y$10$AHOAvahN1pvTKqFZOdHE0.UcDOWDnDZ3ZCNXI/YwsrAS/zmdNjY5.', null, '2019-07-20 09:43:45', '2019-07-20 09:43:45');
+
+-- ----------------------------
+-- Table structure for admin_user_roles
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_user_roles`;
+CREATE TABLE `admin_user_roles` (
+  `id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户和角色中间表';
+
+-- ----------------------------
+-- Records of admin_user_roles
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for migrations

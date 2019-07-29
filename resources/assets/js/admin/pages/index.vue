@@ -13,7 +13,7 @@
                     <Submenu name="1">
                         <template slot="title">
                             <Icon type="ios-navigate"></Icon>
-                            <span>Item 1</span>
+                            <span>类别管理</span>
                         </template>
                         <MenuItem name="1-1" >Option 1</MenuItem>
                         <MenuItem name="1-2">Option 2</MenuItem>
@@ -22,7 +22,7 @@
                     <Submenu name="2">
                         <template slot="title">
                             <Icon type="ios-keypad"></Icon>
-                            <span>Item 2</span>
+                            <span>内容管理</span>
                         </template>
                         <MenuItem name="2-1">Option 1</MenuItem>
                         <MenuItem name="2-2">Option 2</MenuItem>
@@ -30,7 +30,7 @@
                     <Submenu name="3">
                         <template slot="title">
                             <Icon type="ios-analytics"></Icon>
-                            <span>Item 3</span>
+                            <span>测试</span>
                         </template>
                         <MenuItem name="3-1">Option 1</MenuItem>
                         <MenuItem name="3-2">Option 2</MenuItem>
