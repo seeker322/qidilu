@@ -1,14 +1,12 @@
 <template>
     <div>
-        <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
-        <div style="margin: 15px 0;"></div>
-        <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
-            <el-checkbox v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox>
-        </el-checkbox-group>
+        <el-button type="primary" @click="addMoudle">添加应用</el-button>
+
     </div>
 
 </template>
 <script>
+    import accessAdd from './access-add';
     const cityOptions = ['上海', '北京', '广州', '深圳'];
     export default {
         data() {
@@ -28,6 +26,20 @@
                 let checkedCount = value.length;
                 this.checkAll = checkedCount === this.cities.length;
                 this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
+            },
+            addMoudle(){
+
+                this.$layer.iframe({
+                    content: {
+                        content: accessAdd, //传递的组件对象
+                        parent: this,//当前的vue对象
+                        data: {}//props
+                    },
+                    area:['800px','500px'],
+                    shade: true,//是否显示遮罩
+                    title: '添加应用',
+                    shadeClose: false
+                });
             }
         }
     };
