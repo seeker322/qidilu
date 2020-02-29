@@ -5,9 +5,133 @@
   !*** ./node_modules/_babel-loader@8.0.6@babel-loader/lib??ref--4-0!./node_modules/_vue-loader@15.7.1@vue-loader/lib??vue-loader-options!./resources/assets/js/admin/pages/index.vue?vue&type=script&lang=js& ***!
   \***************************************************************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/_babel-loader@8.0.6@babel-loader/lib/index.js):\nSyntaxError: F:\\qidilu\\qidilu\\package.json: Error while parsing JSON - Unexpected token < in JSON at position 2271\n    at JSON.parse (<anonymous>)\n    at readConfigPackage (F:\\qidilu\\qidilu\\node_modules\\_@babel_core@7.5.5@@babel\\core\\lib\\config\\files\\package.js:57:20)\n    at F:\\qidilu\\qidilu\\node_modules\\_@babel_core@7.5.5@@babel\\core\\lib\\config\\files\\utils.js:29:12\n    at cachedFunction (F:\\qidilu\\qidilu\\node_modules\\_@babel_core@7.5.5@@babel\\core\\lib\\config\\caching.js:33:19)\n    at findPackageData (F:\\qidilu\\qidilu\\node_modules\\_@babel_core@7.5.5@@babel\\core\\lib\\config\\files\\package.js:33:11)\n    at buildRootChain (F:\\qidilu\\qidilu\\node_modules\\_@babel_core@7.5.5@@babel\\core\\lib\\config\\config-chain.js:105:85)\n    at loadPrivatePartialConfig (F:\\qidilu\\qidilu\\node_modules\\_@babel_core@7.5.5@@babel\\core\\lib\\config\\partial.js:85:55)\n    at Object.loadPartialConfig (F:\\qidilu\\qidilu\\node_modules\\_@babel_core@7.5.5@@babel\\core\\lib\\config\\partial.js:110:18)\n    at Object.<anonymous> (F:\\qidilu\\qidilu\\node_modules\\_babel-loader@8.0.6@babel-loader\\lib\\index.js:144:26)\n    at Generator.next (<anonymous>)\n    at asyncGeneratorStep (F:\\qidilu\\qidilu\\node_modules\\_babel-loader@8.0.6@babel-loader\\lib\\index.js:3:103)\n    at _next (F:\\qidilu\\qidilu\\node_modules\\_babel-loader@8.0.6@babel-loader\\lib\\index.js:5:194)\n    at F:\\qidilu\\qidilu\\node_modules\\_babel-loader@8.0.6@babel-loader\\lib\\index.js:5:364\n    at new Promise (<anonymous>)\n    at Object.<anonymous> (F:\\qidilu\\qidilu\\node_modules\\_babel-loader@8.0.6@babel-loader\\lib\\index.js:5:97)\n    at Object.loader (F:\\qidilu\\qidilu\\node_modules\\_babel-loader@8.0.6@babel-loader\\lib\\index.js:60:18)\n    at Object.<anonymous> (F:\\qidilu\\qidilu\\node_modules\\_babel-loader@8.0.6@babel-loader\\lib\\index.js:55:12)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      isCollapsed: false
+    };
+  },
+  computed: {
+    rotateIcon: function rotateIcon() {
+      return ['menu-icon', this.isCollapsed ? 'rotate-icon' : ''];
+    },
+    menuitemClasses: function menuitemClasses() {
+      return ['menu-item', this.isCollapsed ? 'collapsed-menu' : ''];
+    }
+  },
+  methods: {
+    collapsedSider: function collapsedSider() {
+      this.$refs.side1.toggleCollapse();
+    },
+    loginOut: function loginOut() {
+      var _this = this;
+
+      var that = this;
+      this.axios({
+        method: 'get',
+        url: '../loginOut',
+        data: "",
+        headers: {
+          'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        }
+      }).then(function (e) {
+        console.log(_this);
+
+        if (e.status == 200 && e.data.code == 200) {
+          _this.$Message.success(e.data.msg);
+
+          window.location.href = "/login";
+        } else {
+          _this.$Message.error(e.data.msg);
+        }
+      });
+    }
+  }
+});
 
 /***/ }),
 
