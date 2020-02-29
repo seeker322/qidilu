@@ -5,7 +5,7 @@
             <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
                 <div class="slider-logo" :class="menuitemClasses">
                     <Icon type="md-settings"></Icon>
-                    <span>后台</span>
+                    <span>后台2</span>
 
                 </div>
                 <Menu active-name="1-2" theme="dark" width="auto" :open-names="['1']" :class="menuitemClasses">

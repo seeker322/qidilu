@@ -19,5 +19,5 @@
 </div>
 </body>
 
-<script src="{{mix('/js/app.js', 'back')}}"></script>
+<script src="{{mix('js/app.js', 'back')}}"></script>
 </html>

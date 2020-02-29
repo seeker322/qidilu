@@ -11,10 +11,16 @@ let mix = require('laravel-mix');
  |
  */
 const { env } = require('minimist')(process.argv.slice(2));
+if (!mix.inProduction()) {  //只在本地监控
+    mix.browserSync('127.0.0.1:8000');
+    mix.browserSync({
+        proxy: '127.0.0.1:8000'
+    });
+}
+
 
 if (env && env.admin) {
     require(`${__dirname}\\webpack.admin.js`);
-
     return;
 }
 
@@ -28,9 +34,9 @@ mix.webpackConfig({
         chunkFilename: `js/[name].${mix.inProduction() ? '[chunkhash].' : ''}js` // 路由懒加载的时候打包出来的js文件
     }
 })
-
+//
+//
 mix.js('resources/assets/js/home/app.js', 'public/frontend/js')
     .sass('resources/assets/sass/home/app.scss', 'public/frontend/css')
-    .setResourceRoot('/frontend/') // 设置资源目录
+    .setResourceRoot('/frontend') // 设置资源目录
     .setPublicPath('public/frontend/') // 设置 mix-manifest.json 目录
-// browserSync

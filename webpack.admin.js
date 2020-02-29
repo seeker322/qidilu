@@ -28,4 +28,3 @@ mix.js('resources/assets/js/admin/app.js', 'public/back/js')
    .sass('resources/assets/sass/admin/app.scss', 'public/back/css')
     .setResourceRoot('/back/') // 设置资源目录
     .setPublicPath('public/back')
-// browserSync

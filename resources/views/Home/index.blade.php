@@ -17,5 +17,5 @@
 </div>
 </body>
 
-<script src="{{mix('/js/app.js', 'frontend')}}"></script>
+<script src="{{ mix('js/app.js', 'frontend')}} "></script>
 </html>
