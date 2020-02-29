@@ -35,5 +35,6 @@
   "dependencies": {
     "element-ui": "^2.13.0",
     "iview": "^3.4.2"
+
   }
 }

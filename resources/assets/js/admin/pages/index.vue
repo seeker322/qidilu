@@ -9,31 +9,30 @@
 
                 </div>
                 <Menu active-name="1-2" theme="dark" width="auto" :open-names="['1']" :class="menuitemClasses">
-
                     <Submenu name="1">
                         <template slot="title">
-                            <Icon type="ios-navigate"></Icon>
-                            <span>类别管理</span>
+                            <Icon type="ios-keypad"></Icon>
+                            <span>系统管理</span>
                         </template>
-                        <MenuItem name="1-1" >Option 1</MenuItem>
-                        <MenuItem name="1-2">Option 2</MenuItem>
-                        <MenuItem name="1-3">Option 3</MenuItem>
+                        <MenuItem name="2-1">系统设置</MenuItem>
+                        <MenuItem name="2-2">菜单管理</MenuItem>
                     </Submenu>
                     <Submenu name="2">
                         <template slot="title">
-                            <Icon type="ios-keypad"></Icon>
-                            <span>内容管理</span>
+                            <Icon type="ios-navigate"></Icon>
+                            <span>权限控制</span>
                         </template>
-                        <MenuItem name="2-1">Option 1</MenuItem>
-                        <MenuItem name="2-2">Option 2</MenuItem>
+                        <MenuItem name="1-1" to="/permissions">权限管理</MenuItem>
+                        <MenuItem name="1-2" to="/permissions-roles">角色管理</MenuItem>
+                        <MenuItem name="1-3" to="/permissions-users">用户管理</MenuItem>
                     </Submenu>
                     <Submenu name="3">
                         <template slot="title">
                             <Icon type="ios-analytics"></Icon>
-                            <span>测试</span>
+                            <span>文章管理</span>
                         </template>
-                        <MenuItem name="3-1">Option 1</MenuItem>
-                        <MenuItem name="3-2">Option 2</MenuItem>
+                        <MenuItem name="3-1">文章分类</MenuItem>
+                        <MenuItem name="3-2">文章列表</MenuItem>
                     </Submenu>
                 </Menu>
             </Sider>
@@ -69,7 +68,7 @@
                     </Breadcrumb>
                 </div>
                 <Content :style="{margin: '15px 20px 10px 20px', background: '#fff', minHeight: '260px'}">
-                    Content
+                    <router-view></router-view>
                 </Content>
                 <div class="layout-copy">
                     2011-2016 &copy; TalkingData

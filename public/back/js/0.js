@@ -5,134 +5,9 @@
   !*** ./node_modules/_babel-loader@8.0.6@babel-loader/lib??ref--4-0!./node_modules/_vue-loader@15.7.1@vue-loader/lib??vue-loader-options!./resources/assets/js/admin/pages/index.vue?vue&type=script&lang=js& ***!
   \***************************************************************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      isCollapsed: false
-    };
-  },
-  computed: {
-    rotateIcon: function rotateIcon() {
-      return ['menu-icon', this.isCollapsed ? 'rotate-icon' : ''];
-    },
-    menuitemClasses: function menuitemClasses() {
-      return ['menu-item', this.isCollapsed ? 'collapsed-menu' : ''];
-    }
-  },
-  methods: {
-    collapsedSider: function collapsedSider() {
-      this.$refs.side1.toggleCollapse();
-    },
-    loginOut: function loginOut() {
-      var _this = this;
-
-      var that = this;
-      this.axios({
-        method: 'get',
-        url: '../loginOut',
-        data: "",
-        headers: {
-          'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        }
-      }).then(function (e) {
-        console.log(_this);
-
-        if (e.status == 200 && e.data.code == 200) {
-          _this.$Message.success(e.data.msg);
-
-          window.location.href = "/login";
-        } else {
-          _this.$Message.error(e.data.msg);
-        }
-      });
-    }
-  }
-});
+throw new Error("Module build failed (from ./node_modules/_babel-loader@8.0.6@babel-loader/lib/index.js):\nSyntaxError: F:\\qidilu\\qidilu\\package.json: Error while parsing JSON - Unexpected token < in JSON at position 2271\n    at JSON.parse (<anonymous>)\n    at readConfigPackage (F:\\qidilu\\qidilu\\node_modules\\_@babel_core@7.5.5@@babel\\core\\lib\\config\\files\\package.js:57:20)\n    at F:\\qidilu\\qidilu\\node_modules\\_@babel_core@7.5.5@@babel\\core\\lib\\config\\files\\utils.js:29:12\n    at cachedFunction (F:\\qidilu\\qidilu\\node_modules\\_@babel_core@7.5.5@@babel\\core\\lib\\config\\caching.js:33:19)\n    at findPackageData (F:\\qidilu\\qidilu\\node_modules\\_@babel_core@7.5.5@@babel\\core\\lib\\config\\files\\package.js:33:11)\n    at buildRootChain (F:\\qidilu\\qidilu\\node_modules\\_@babel_core@7.5.5@@babel\\core\\lib\\config\\config-chain.js:105:85)\n    at loadPrivatePartialConfig (F:\\qidilu\\qidilu\\node_modules\\_@babel_core@7.5.5@@babel\\core\\lib\\config\\partial.js:85:55)\n    at Object.loadPartialConfig (F:\\qidilu\\qidilu\\node_modules\\_@babel_core@7.5.5@@babel\\core\\lib\\config\\partial.js:110:18)\n    at Object.<anonymous> (F:\\qidilu\\qidilu\\node_modules\\_babel-loader@8.0.6@babel-loader\\lib\\index.js:144:26)\n    at Generator.next (<anonymous>)\n    at asyncGeneratorStep (F:\\qidilu\\qidilu\\node_modules\\_babel-loader@8.0.6@babel-loader\\lib\\index.js:3:103)\n    at _next (F:\\qidilu\\qidilu\\node_modules\\_babel-loader@8.0.6@babel-loader\\lib\\index.js:5:194)\n    at F:\\qidilu\\qidilu\\node_modules\\_babel-loader@8.0.6@babel-loader\\lib\\index.js:5:364\n    at new Promise (<anonymous>)\n    at Object.<anonymous> (F:\\qidilu\\qidilu\\node_modules\\_babel-loader@8.0.6@babel-loader\\lib\\index.js:5:97)\n    at Object.loader (F:\\qidilu\\qidilu\\node_modules\\_babel-loader@8.0.6@babel-loader\\lib\\index.js:60:18)\n    at Object.<anonymous> (F:\\qidilu\\qidilu\\node_modules\\_babel-loader@8.0.6@babel-loader\\lib\\index.js:55:12)");
 
 /***/ }),
 
@@ -363,23 +238,19 @@ var render = function() {
                         "template",
                         { slot: "title" },
                         [
-                          _c("Icon", { attrs: { type: "ios-navigate" } }),
+                          _c("Icon", { attrs: { type: "ios-keypad" } }),
                           _vm._v(" "),
-                          _c("span", [_vm._v("类别管理")])
+                          _c("span", [_vm._v("系统管理")])
                         ],
                         1
                       ),
                       _vm._v(" "),
-                      _c("MenuItem", { attrs: { name: "1-1" } }, [
-                        _vm._v("Option 1")
+                      _c("MenuItem", { attrs: { name: "2-1" } }, [
+                        _vm._v("系统设置")
                       ]),
                       _vm._v(" "),
-                      _c("MenuItem", { attrs: { name: "1-2" } }, [
-                        _vm._v("Option 2")
-                      ]),
-                      _vm._v(" "),
-                      _c("MenuItem", { attrs: { name: "1-3" } }, [
-                        _vm._v("Option 3")
+                      _c("MenuItem", { attrs: { name: "2-2" } }, [
+                        _vm._v("菜单管理")
                       ])
                     ],
                     2
@@ -393,20 +264,30 @@ var render = function() {
                         "template",
                         { slot: "title" },
                         [
-                          _c("Icon", { attrs: { type: "ios-keypad" } }),
+                          _c("Icon", { attrs: { type: "ios-navigate" } }),
                           _vm._v(" "),
-                          _c("span", [_vm._v("内容管理")])
+                          _c("span", [_vm._v("权限控制")])
                         ],
                         1
                       ),
                       _vm._v(" "),
-                      _c("MenuItem", { attrs: { name: "2-1" } }, [
-                        _vm._v("Option 1")
-                      ]),
+                      _c(
+                        "MenuItem",
+                        { attrs: { name: "1-1", to: "/permissions" } },
+                        [_vm._v("权限管理")]
+                      ),
                       _vm._v(" "),
-                      _c("MenuItem", { attrs: { name: "2-2" } }, [
-                        _vm._v("Option 2")
-                      ])
+                      _c(
+                        "MenuItem",
+                        { attrs: { name: "1-2", to: "/permissions-roles" } },
+                        [_vm._v("角色管理")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "MenuItem",
+                        { attrs: { name: "1-3", to: "/permissions-users" } },
+                        [_vm._v("用户管理")]
+                      )
                     ],
                     2
                   ),
@@ -421,17 +302,17 @@ var render = function() {
                         [
                           _c("Icon", { attrs: { type: "ios-analytics" } }),
                           _vm._v(" "),
-                          _c("span", [_vm._v("测试")])
+                          _c("span", [_vm._v("文章管理")])
                         ],
                         1
                       ),
                       _vm._v(" "),
                       _c("MenuItem", { attrs: { name: "3-1" } }, [
-                        _vm._v("Option 1")
+                        _vm._v("文章分类")
                       ]),
                       _vm._v(" "),
                       _c("MenuItem", { attrs: { name: "3-2" } }, [
-                        _vm._v("Option 2")
+                        _vm._v("文章列表")
                       ])
                     ],
                     2
@@ -556,7 +437,8 @@ var render = function() {
                     minHeight: "260px"
                   }
                 },
-                [_vm._v("\n                Content\n            ")]
+                [_c("router-view")],
+                1
               ),
               _vm._v(" "),
               _c("div", { staticClass: "layout-copy" }, [
