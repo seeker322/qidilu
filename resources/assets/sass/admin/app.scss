@@ -12,5 +12,26 @@ body{
 }
 #app{
   height:100%;
-
+}
+.vl-notify-mask{
+  z-index:1004 !important;
+}
+.vl-notify{
+  z-index:1005 !important;
+}
+.layout{
+  background: #ffffff !important;
+}
+.ivu-layout{
+  background: #ffffff !important;
+}
+.content-block{
+  //margin-bottom:10px;
+}
+.operate{
+  margin-bottom:15px;
+}
+.iframe-block{
+  padding:20px 40px;
+  width:100%;
 }

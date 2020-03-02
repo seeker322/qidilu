@@ -61,11 +61,12 @@
                 </Header>
 
                 <div class="layout-breadcrumb">
-                    <Breadcrumb separator=">">
-                        <Breadcrumb-item href="#">首页</Breadcrumb-item>
-                        <Breadcrumb-item href="#">应用中心</Breadcrumb-item>
-                        <Breadcrumb-item>某应用</Breadcrumb-item>
-                    </Breadcrumb>
+                    <el-breadcrumb separator-class="el-icon-arrow-right">
+                        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+                        <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+                        <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+                        <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+                    </el-breadcrumb>
                 </div>
                 <Content :style="{margin: '15px 20px 10px 20px', background: '#fff', minHeight: '260px'}">
                     <router-view></router-view>

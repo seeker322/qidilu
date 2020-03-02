@@ -1,0 +1,26 @@
+//vue-layer 样式
+.vl-notify{
+  padding: 0 !important;
+  z-index: 999;
+  border: none !important;
+  display: flex;
+  flex-direction: column;
+  .vl-notice-title{
+    text-align: center;
+    font-size: 18px;
+    color: #FFFFFF;
+    font-weight: bold;
+    background-color: #439ec5 !important;
+    .icon-remove{
+      width: 50px !important;
+      color:#FFFFFF !important;
+      &:before{
+        content: "X" !important;
+      }
+    }
+  }
+  .vl-notify-content{
+    flex-grow: 1;
+    padding: 0;
+  }
+}
