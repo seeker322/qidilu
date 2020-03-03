@@ -26,7 +26,6 @@ Route::post('/login', 'Auth\LoginController@authenticate');
 Route::get('/loginOut', 'Auth\LoginController@loginOut');
 
 Route::group(['middleware' => ["auth:admin"],'namespace' => 'Admin', 'prefix' => 'admin'], function () {
-    //
     Route::get('/', function () {
         return view('admin.index');
     });
