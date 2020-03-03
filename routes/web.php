@@ -30,6 +30,10 @@ Route::group(['middleware' => ["auth:admin"],'namespace' => 'Admin', 'prefix' =>
         return view('admin.index');
     });
 
+    Route::resource('user', 'UserController');
+
+
+
 });
 
 

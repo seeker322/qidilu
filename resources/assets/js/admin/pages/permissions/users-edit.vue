@@ -34,6 +34,7 @@
 </template>
 
 <script>
+    import {mapState,mapActions} from 'vuex';
     export default {
         name: "users-edit",
         props: ['data'],
@@ -57,8 +58,12 @@
             }
         },
         methods: {
+            ...mapActions('user', ['addUser']),
             onSubmit() {
-                console.log('submit!');
+                let params=this.form;
+
+                console.log(params);
+                this.addUser(params);
             }
         }
     }
