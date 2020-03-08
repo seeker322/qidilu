@@ -4,7 +4,7 @@
             <el-button size="small" @click="addUser" type="primary">添加用户</el-button>
         </div>
         <el-table
-                :data="tableData"
+                :data="userList"
                 height="400"
                 border
                 size="small"
@@ -48,25 +48,30 @@
 </template>
 <script>
     import usersEdit from './users-edit';
+    import {mapState,mapActions} from 'vuex';
     export default {
         data () {
             return {
-                tableData: [{
-                    id: '1',
-                    name: '王小虎',
-                    email:"651598247@qq.com",
-                    role_name: '超级管理员',
-                    created:"2020-03-02 22:13:52"
-                }]
+
             }
         },
+        created(){
+            this.getUsers();
+        },
+        computed:{
+            ...mapState({
+                    userList:state => state.user.users
+                }),
+        },
         methods: {
+            ...mapActions("user",['getUsers']),
             handleEdit(index, row) {
+
                 this.$layer.iframe({
                     content: {
                         content: usersEdit, //传递的组件对象
                         parent: this,//当前的vue对象
-                        data: {}//props
+                        data: {info:row}//props
                     },
                     area:['800px','500px'],
                     shade: true,//是否显示遮罩

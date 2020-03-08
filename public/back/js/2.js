@@ -54,7 +54,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "users-edit",
-  props: ['data'],
+  props: ['info'],
   data: function data() {
     return {
       form: {
@@ -62,21 +62,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         email: '',
         password: '',
         confPassword: '',
-        role: "1"
-      },
-      roles: [{
-        value: '1',
-        label: '超级管理员'
-      }, {
-        value: '2',
-        label: '普通管理员'
-      }]
+        roles: []
+      }
     };
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('user', ['addUser']), {
+  created: function created() {},
+  mounted: function mounted() {
+    if (this.info) {
+      this.form = this.info;
+    } else {
+      this.getRoles();
+    }
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
+    roleList: function roleList(state) {
+      return state.role.roles;
+    }
+  })),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('user', ['addUser']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('role', ['getRoles']), {
     onSubmit: function onSubmit() {
       var params = this.form;
-      console.log(params);
       this.addUser(params);
     }
   })
@@ -94,6 +99,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _users_edit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./users-edit */ "./resources/assets/js/admin/pages/permissions/users-edit.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/_vuex@3.1.1@vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -143,19 +155,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
-      tableData: [{
-        id: '1',
-        name: '王小虎',
-        email: "651598247@qq.com",
-        role_name: '超级管理员',
-        created: "2020-03-02 22:13:52"
-      }]
-    };
+    return {};
   },
-  methods: {
+  created: function created() {
+    this.getUsers();
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
+    userList: function userList(state) {
+      return state.user.users;
+    }
+  })),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])("user", ['getUsers']), {
     handleEdit: function handleEdit(index, row) {
       this.$layer.iframe({
         content: {
@@ -163,7 +176,9 @@ __webpack_require__.r(__webpack_exports__);
           //传递的组件对象
           parent: this,
           //当前的vue对象
-          data: {} //props
+          data: {
+            info: row
+          } //props
 
         },
         area: ['800px', '500px'],
@@ -193,7 +208,7 @@ __webpack_require__.r(__webpack_exports__);
     handleDelete: function handleDelete(index, row) {
       console.log(index, row);
     }
-  }
+  })
 });
 
 /***/ }),
@@ -375,10 +390,7 @@ var render = function() {
     [
       _c(
         "el-form",
-        {
-          ref: "form",
-          attrs: { model: _vm.form, "label-width": "80px", size: "small" }
-        },
+        { attrs: { model: _vm.form, "label-width": "80px", size: "small" } },
         [
           _c(
             "el-form-item",
@@ -404,19 +416,24 @@ var render = function() {
               _c(
                 "el-select",
                 {
-                  attrs: { placeholder: "请选择" },
+                  staticStyle: { width: "100%" },
+                  attrs: {
+                    multiple: "",
+                    "collapse-tags": "",
+                    placeholder: "请选择"
+                  },
                   model: {
-                    value: _vm.form.role,
+                    value: _vm.form.roles,
                     callback: function($$v) {
-                      _vm.$set(_vm.form, "role", $$v)
+                      _vm.$set(_vm.form, "roles", $$v)
                     },
-                    expression: "form.role"
+                    expression: "form.roles"
                   }
                 },
-                _vm._l(_vm.roles, function(item) {
+                _vm._l(_vm.roleList, function(item) {
                   return _c("el-option", {
-                    key: item.value,
-                    attrs: { label: item.label, value: item.value }
+                    key: item.id,
+                    attrs: { label: item.name, value: item.id }
                   })
                 }),
                 1
@@ -547,7 +564,7 @@ var render = function() {
         {
           staticStyle: { width: "100%" },
           attrs: {
-            data: _vm.tableData,
+            data: _vm.userList,
             height: "400",
             border: "",
             size: "small"

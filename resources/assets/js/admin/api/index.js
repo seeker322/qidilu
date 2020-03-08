@@ -9,14 +9,19 @@ const API = {
     },
     userAdd:(params) => {
         return axios.post('/user',params);
+    },
+    getUsers:()=>{
+        return axios.get('/user');
+    },
+    getRoles:()=>{
+        return axios.get('/role');
     }
 }
 
 // //异步请求返回统一处理
 axios.interceptors.response.use((response) => {
 
-    console.log(response);
-      // return response;
+      return response.data;
     },
     (error) => {
         let message = error.response.data.message ? error.response.data.message : error.response.statusText

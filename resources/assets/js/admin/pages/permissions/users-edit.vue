@@ -1,17 +1,17 @@
 <template>
     <div class="iframe-block">
-        <el-form ref="form" :model="form" label-width="80px" size="small">
+        <el-form  :model="form" label-width="80px" size="small">
             <el-form-item label="用户名">
                 <el-input v-model="form.name"></el-input>
             </el-form-item>
 
             <el-form-item label="所属角色">
-                <el-select v-model="form.role" placeholder="请选择">
+                <el-select v-model="form.roles" multiple collapse-tags placeholder="请选择" style="width: 100%;">
                     <el-option
-                            v-for="item in roles"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
+                            v-for="item in roleList"
+                            :key="item.id"
+                            :label="item.name"
+                            :value="item.id">
                     </el-option>
                 </el-select>
             </el-form-item>
@@ -37,7 +37,7 @@
     import {mapState,mapActions} from 'vuex';
     export default {
         name: "users-edit",
-        props: ['data'],
+        props: ['info'],
         data() {
             return {
                 form: {
@@ -45,24 +45,31 @@
                     email:'',
                     password:'',
                     confPassword:'',
-                    role:"1"
-
-                },
-                roles: [{
-                    value: '1',
-                    label: '超级管理员'
-                }, {
-                    value: '2',
-                    label: '普通管理员'
-                }],
+                    roles:[]
+                }
             }
+        },
+        created(){
+
+        },
+
+        mounted() {
+            if(this.info){
+                this.form=this.info;
+            }else{
+                this.getRoles();
+            }
+        },
+        computed:{
+            ...mapState({
+                roleList:state => state.role.roles
+            }),
         },
         methods: {
             ...mapActions('user', ['addUser']),
+            ...mapActions('role', ['getRoles']),
             onSubmit() {
                 let params=this.form;
-
-                console.log(params);
                 this.addUser(params);
             }
         }
