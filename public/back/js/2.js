@@ -54,24 +54,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "users-edit",
-  props: ['info'],
+  props: ['info', 'layerid'],
   data: function data() {
     return {
       form: {
         name: '',
         email: '',
         password: '',
-        confPassword: '',
+        password_confirmation: '',
         roles: []
       }
     };
   },
   created: function created() {},
   mounted: function mounted() {
+    this.getRoles();
+
     if (this.info) {
+      this.info.roles = this.info.roles.map(function (item) {
+        return item.id;
+      });
       this.form = this.info;
-    } else {
-      this.getRoles();
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
@@ -79,10 +82,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return state.role.roles;
     }
   })),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('user', ['addUser']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('role', ['getRoles']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('user', ['addUser', 'editUser', 'getUsers']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('role', ['getRoles']), {
     onSubmit: function onSubmit() {
+      var _this = this;
+
       var params = this.form;
-      this.addUser(params);
+
+      if (this.info) {
+        //编辑
+        this.editUser(params).then(function (res) {
+          _this.getUsers();
+
+          _this.$layer.close(_this.layerid);
+        });
+      } else {
+        //新增
+        this.addUser(params).then(function (res) {
+          _this.getUsers();
+
+          _this.$layer.close(_this.layerid);
+        });
+      }
+    },
+    onReset: function onReset() {
+      this.form = {
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        roles: []
+      };
     }
   })
 });
@@ -154,6 +183,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -168,7 +207,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return state.user.users;
     }
   })),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])("user", ['getUsers']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])("user", ['getUsers', 'delUser']), {
     handleEdit: function handleEdit(index, row) {
       this.$layer.iframe({
         content: {
@@ -206,7 +245,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     handleDelete: function handleDelete(index, row) {
-      console.log(index, row);
+      var _this = this;
+
+      this.$layer.confirm("删除后不可恢复，确定删除吗？", function (layerid) {
+        _this.delUser(row).then(function (res) {
+          _this.getUsers();
+
+          _this.$layer.close(layerid);
+        });
+      });
     }
   })
 });
@@ -482,11 +529,11 @@ var render = function() {
             [
               _c("el-input", {
                 model: {
-                  value: _vm.form.confPassword,
+                  value: _vm.form.password_confirmation,
                   callback: function($$v) {
-                    _vm.$set(_vm.form, "confPassword", $$v)
+                    _vm.$set(_vm.form, "password_confirmation", $$v)
                   },
-                  expression: "form.confPassword"
+                  expression: "form.password_confirmation"
                 }
               })
             ],
@@ -506,7 +553,11 @@ var render = function() {
                 [_vm._v("立即提交")]
               ),
               _vm._v(" "),
-              _c("el-button", { attrs: { size: "small" } }, [_vm._v("重置")])
+              _c(
+                "el-button",
+                { attrs: { size: "small" }, on: { click: _vm.onReset } },
+                [_vm._v("重置")]
+              )
             ],
             1
           )
@@ -576,7 +627,37 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "role_name", label: "用户角色", width: "180" }
+            attrs: { label: "用户角色", width: "180" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return _vm._l(scope.row.roles, function(item, i) {
+                    return _c(
+                      "span",
+                      [
+                        i < scope.row.roles.length - 1
+                          ? [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(item.name) +
+                                  " |\n                    "
+                              )
+                            ]
+                          : [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(item.name) +
+                                  "\n                    "
+                              )
+                            ]
+                      ],
+                      2
+                    )
+                  })
+                }
+              }
+            ])
           }),
           _vm._v(" "),
           _c("el-table-column", { attrs: { prop: "name", label: "用户名" } }),

@@ -23,11 +23,11 @@
                 <el-input v-model="form.password"></el-input>
             </el-form-item>
             <el-form-item label="确认密码">
-                <el-input v-model="form.confPassword"></el-input>
+                <el-input v-model="form.password_confirmation"></el-input>
             </el-form-item>
             <el-form-item size="large">
                 <el-button type="primary" size="small" @click="onSubmit">立即提交</el-button>
-                <el-button size="small">重置</el-button>
+                <el-button size="small" @click="onReset">重置</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -37,14 +37,14 @@
     import {mapState,mapActions} from 'vuex';
     export default {
         name: "users-edit",
-        props: ['info'],
+        props: ['info','layerid'],
         data() {
             return {
                 form: {
                     name: '',
                     email:'',
                     password:'',
-                    confPassword:'',
+                    password_confirmation:'',
                     roles:[]
                 }
             }
@@ -52,12 +52,13 @@
         created(){
 
         },
-
         mounted() {
+            this.getRoles();
             if(this.info){
+                this.info.roles=this.info.roles.map(item=>{
+                    return item.id;
+                })
                 this.form=this.info;
-            }else{
-                this.getRoles();
             }
         },
         computed:{
@@ -66,11 +67,31 @@
             }),
         },
         methods: {
-            ...mapActions('user', ['addUser']),
+            ...mapActions('user', ['addUser','editUser','getUsers']),
             ...mapActions('role', ['getRoles']),
             onSubmit() {
                 let params=this.form;
-                this.addUser(params);
+                if(this.info){ //编辑
+                    this.editUser(params).then(res=>{
+                        this.getUsers();
+                        this.$layer.close(this.layerid);
+                    });
+                }else{ //新增
+                    this.addUser(params).then(res=>{
+                        this.getUsers();
+                        this.$layer.close(this.layerid);
+                    });
+                }
+
+            },
+            onReset(){
+                this.form={
+                        name: '',
+                        email:'',
+                        password:'',
+                        password_confirmation:'',
+                        roles:[]
+                }
             }
         }
     }

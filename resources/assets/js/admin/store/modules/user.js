@@ -14,8 +14,36 @@ export default {
     },
     actions:{
         addUser({commit},params){
-            api.userAdd(params).then(e => {
-                // commit('SetData',e.data);
+            return new Promise((resolve, reject) => {
+                api.userAdd(params).then(e => {
+                    if(e.code=='200'){
+                        resolve(e);
+                    }else{
+                        reject(e);
+                    }
+
+                });
+            })
+        },
+        editUser({commit},params){
+            return new Promise((resolve, reject) => {
+                api.editUser(params).then(e => {
+                    if(e.code=='200'){
+                        resolve(e);
+                    }else{
+                        reject(e);
+                    }
+
+                });
+            })
+        },
+        delUser({commit},params){
+            api.delUser(params).then(e=>{
+                if(e.code=='200'){
+                    resolve(e);
+                }else{
+                    reject(e);
+                }
             });
         },
         getUsers({commit}){

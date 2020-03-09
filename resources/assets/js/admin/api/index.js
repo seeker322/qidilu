@@ -15,6 +15,12 @@ const API = {
     },
     getRoles:()=>{
         return axios.get('/role');
+    },
+    editUser:(params)=>{
+        return axios.patch(`/user/${params.id}`,params);
+    },
+    delUser:(params)=>{
+        return axios.delete(`/user/${params.id}`,params);
     }
 }
 

@@ -15,9 +15,19 @@
                     width="180">
             </el-table-column>
             <el-table-column
-                    prop="role_name"
                     label="用户角色"
                     width="180">
+                <template slot-scope="scope">
+                    <span v-for="(item,i) in scope.row.roles">
+                        <template v-if="i< scope.row.roles.length-1">
+                            {{item.name}} |
+                        </template>
+                        <template v-else>
+                            {{item.name}}
+                        </template>
+                    </span>
+
+                </template>
             </el-table-column>
             <el-table-column
                     prop="name"
@@ -64,7 +74,7 @@
                 }),
         },
         methods: {
-            ...mapActions("user",['getUsers']),
+            ...mapActions("user",['getUsers','delUser']),
             handleEdit(index, row) {
 
                 this.$layer.iframe({
@@ -93,7 +103,15 @@
                 });
             },
             handleDelete(index, row) {
-                console.log(index, row);
+
+                this.$layer.confirm("删除后不可恢复，确定删除吗？",(layerid)=>{
+                    this.delUser(row).then(res=>{
+                        this.getUsers();
+                        this.$layer.close(layerid);
+                    });
+
+                })
+
             }
         }
     }
