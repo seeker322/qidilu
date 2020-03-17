@@ -10,17 +10,39 @@ const API = {
     userAdd:(params) => {
         return axios.post('/user',params);
     },
-    getUsers:()=>{
-        return axios.get('/user');
-    },
-    getRoles:()=>{
-        return axios.get('/role');
-    },
     editUser:(params)=>{
         return axios.patch(`/user/${params.id}`,params);
     },
     delUser:(params)=>{
         return axios.delete(`/user/${params.id}`,params);
+    },
+    getUsers:()=>{
+        return axios.get('/user');
+    },
+    addPermission:(params) => {
+        return axios.post('/permission',params);
+    },
+    editPermission:(params)=>{
+        return axios.patch(`/permission/${params.id}`,params);
+    },
+    delPermission:(params)=>{
+        return axios.delete(`/permission/${params.id}`,params);
+    },
+    getPermissions:()=>{
+        return axios.get('/permission');
+    },
+
+    addRole:(params) => {
+        return axios.post('/role',params);
+    },
+    editRole:(params)=>{
+        return axios.patch(`/role/${params.id}`,params);
+    },
+    delRole:(params)=>{
+        return axios.delete(`/role/${params.id}`,params);
+    },
+    getRoles:()=>{
+        return axios.get('/role');
     }
 }
 

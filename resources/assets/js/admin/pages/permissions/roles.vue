@@ -15,24 +15,19 @@
                     width="180">
             </el-table-column>
             <el-table-column
-                    prop="role_sign"
-                    label="角色标识"
-                    width="180">
-            </el-table-column>
-            <el-table-column
-                    prop="role_name"
+                    prop="name"
                     label="角色名称">
             </el-table-column>
             <el-table-column
-                    prop="role_des"
+                    prop="description"
                     label="角色描述">
             </el-table-column>
             <el-table-column
-                    prop="created"
+                    prop="created_at"
                     label="创建时间">
             </el-table-column>
             <el-table-column
-                    prop="updated"
+                    prop="updated_at"
                     label="修改时间">
             </el-table-column>
             <el-table-column label="操作" width="200px">
@@ -52,26 +47,30 @@
 </template>
 <script>
     import rolesEdit from './roles-edit';
+    import {mapState,mapActions} from 'vuex';
     export default {
         data () {
             return {
-                tableData: [{
-                    id: '1',
-                    role_sign: 'admin',
-                    role_name: '超级管理员',
-                    role_des:"拥有最高权限",
-                    created:"2020-03-02 22:13:52",
-                    updated:"2020-03-02 22:13:52"
-                }]
+
             }
         },
+        created(){
+            this.getRoles();
+        },
+        computed:{
+            ...mapState({
+                tableData:state => state.role.roles
+            })
+        },
+
         methods: {
+            ...mapActions('role', ['getRoles','delRole']),
             handleEdit(index, row) {
                 this.$layer.iframe({
                     content: {
                         content: rolesEdit, //传递的组件对象
                         parent: this,//当前的vue对象
-                        data: {}//props
+                        data: {info:row}//props
                     },
                     area:['800px','500px'],
                     shade: true,//是否显示遮罩
@@ -93,7 +92,14 @@
                 });
             },
             handleDelete(index, row) {
-                console.log(index, row);
+                this.$layer.confirm("删除后不可恢复，确定删除吗？",(layerid)=>{
+                    this.delRole(row).then(res=>{
+                        this.getRoles();
+                        this.$layer.close(layerid);
+                    });
+
+                })
+
             }
         }
     }

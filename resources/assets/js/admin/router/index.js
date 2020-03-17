@@ -24,7 +24,7 @@ export default new VueRouter({
                     meta: {
                         title: '权限管理'
                     },
-                    component: resolve => void(require(['../pages/permissions/access.vue'], resolve))
+                    component: resolve => void(require(['../pages/permissions/permission.vue'], resolve))
                 },
                 {
                     name: 'permissions-roles',

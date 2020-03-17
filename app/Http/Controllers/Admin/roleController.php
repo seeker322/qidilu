@@ -11,7 +11,59 @@ class roleController extends Controller
     //
     public function index(Request $request)
     {
-        $roles=Role::get();
-        return ["code"=>200,"data"=>$roles];
+        $role=Role::get();
+        return ["code"=>200,"data"=>$role];
+    }
+
+    public function create(Request $request)
+    {
+
+
+    }
+
+    public function update($id,Request $request){
+
+        $this->validate($request,[
+            'name'=>'required',
+            'description'=>'required',
+        ],[
+            'name.required'=>'权限标识必填',
+            'description.required'=>'权限描述必填',
+//            "roles.min"=>'请选择权限所属角色'
+        ]);
+        $role = Role::find($id);
+        $role->name=$request->input('name');
+        $role->description=$request->input('description');
+        $role->save();
+//        $role->roles()->sync($request->input('roles'));
+        return ["code"=>200,"msg"=>"修改成功"];
+
+    }
+
+    public function store(Request $request)
+    {
+        $this->validate($request,[
+            'name'=>'required',
+            'description'=>'required',
+//            'roles'=>"array|min:1"
+        ],[
+            'name.required'=>'权限标识必填',
+            'description.required'=>'权限描述必填',
+//            "roles.min"=>'请选择权限所属角色'
+        ]);
+        $role =Role::create([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+        ]);
+//        $role->roles()->attach($request->input('roles'));
+        return ["code"=>200,"msg"=>"新增成功"];
+
+    }
+
+    public function destroy($id,Request $request){
+        $role = Role::find($id);
+//        $role->roles()->detach();
+        $role::destroy($id);
+        return ["code"=>200,"msg"=>"删除成功"];
     }
 }

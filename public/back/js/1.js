@@ -9,6 +9,13 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/_vuex@3.1.1@vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -39,18 +46,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
+
 var cityOptions = ['上海', '北京', '广州', '深圳'];
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "roles-edit",
-  props: ['data'],
+  props: ['info', 'layerid'],
   data: function data() {
     return {
       form: {
-        sign: '',
         name: '',
-        desc: ''
+        description: ''
       },
       checkAll: false,
       checkedCities: ['上海', '北京'],
@@ -58,9 +63,36 @@ var cityOptions = ['上海', '北京', '广州', '深圳'];
       isIndeterminate: true
     };
   },
-  methods: {
+  mounted: function mounted() {
+    if (this.info) {
+      // this.getPermissions();
+      this.form = this.info;
+    }
+  },
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('permission', ['getPermissions']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('role', ['getRoles', 'addRole', 'editRole']), {
     onSubmit: function onSubmit() {
-      console.log('submit!');
+      var _this = this;
+
+      var params = this.form;
+
+      if (this.info) {
+        //编辑
+        this.editRole(params).then(function (res) {
+          _this.getRoles();
+
+          _this.$layer.close(_this.layerid);
+        });
+      } else {
+        //新增
+        this.addRole(params).then(function (res) {
+          _this.getRoles();
+
+          _this.$layer.close(_this.layerid);
+        });
+      }
+    },
+    onCancel: function onCancel() {
+      this.$layer.close(this.layerid);
     },
     handleCheckAllChange: function handleCheckAllChange(val) {
       this.checkedCities = val ? cityOptions : [];
@@ -71,7 +103,7 @@ var cityOptions = ['上海', '北京', '广州', '深圳'];
       this.checkAll = checkedCount === this.cities.length;
       this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
     }
-  }
+  })
 });
 
 /***/ }),
@@ -86,11 +118,13 @@ var cityOptions = ['上海', '北京', '广州', '深圳'];
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _roles_edit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./roles-edit */ "./resources/assets/js/admin/pages/permissions/roles-edit.vue");
-//
-//
-//
-//
-//
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/_vuex@3.1.1@vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -139,20 +173,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
-      tableData: [{
-        id: '1',
-        role_sign: 'admin',
-        role_name: '超级管理员',
-        role_des: "拥有最高权限",
-        created: "2020-03-02 22:13:52",
-        updated: "2020-03-02 22:13:52"
-      }]
-    };
+    return {};
   },
-  methods: {
+  created: function created() {
+    this.getRoles();
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
+    tableData: function tableData(state) {
+      return state.role.roles;
+    }
+  })),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])('role', ['getRoles', 'delRole']), {
     handleEdit: function handleEdit(index, row) {
       this.$layer.iframe({
         content: {
@@ -160,7 +194,9 @@ __webpack_require__.r(__webpack_exports__);
           //传递的组件对象
           parent: this,
           //当前的vue对象
-          data: {} //props
+          data: {
+            info: row
+          } //props
 
         },
         area: ['800px', '500px'],
@@ -188,9 +224,17 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     handleDelete: function handleDelete(index, row) {
-      console.log(index, row);
+      var _this = this;
+
+      this.$layer.confirm("删除后不可恢复，确定删除吗？", function (layerid) {
+        _this.delRole(row).then(function (res) {
+          _this.getRoles();
+
+          _this.$layer.close(layerid);
+        });
+      });
     }
-  }
+  })
 });
 
 /***/ }),
@@ -379,23 +423,6 @@ var render = function() {
         [
           _c(
             "el-form-item",
-            { attrs: { label: "角色标识" } },
-            [
-              _c("el-input", {
-                model: {
-                  value: _vm.form.sign,
-                  callback: function($$v) {
-                    _vm.$set(_vm.form, "sign", $$v)
-                  },
-                  expression: "form.sign"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
             { attrs: { label: "角色名称" } },
             [
               _c("el-input", {
@@ -418,11 +445,11 @@ var render = function() {
               _c("el-input", {
                 attrs: { type: "textarea" },
                 model: {
-                  value: _vm.form.desc,
+                  value: _vm.form.description,
                   callback: function($$v) {
-                    _vm.$set(_vm.form, "desc", $$v)
+                    _vm.$set(_vm.form, "description", $$v)
                   },
-                  expression: "form.desc"
+                  expression: "form.description"
                 }
               })
             ],
@@ -525,7 +552,7 @@ var render = function() {
                 [_vm._v("立即提交")]
               ),
               _vm._v(" "),
-              _c("el-button", { attrs: { size: "small" } }, [_vm._v("重置")])
+              _c("el-button", { attrs: { size: "small" } }, [_vm._v("取消")])
             ],
             1
           )
@@ -594,24 +621,18 @@ var render = function() {
             attrs: { prop: "id", label: "id", width: "180" }
           }),
           _vm._v(" "),
+          _c("el-table-column", { attrs: { prop: "name", label: "角色名称" } }),
+          _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "role_sign", label: "角色标识", width: "180" }
+            attrs: { prop: "description", label: "角色描述" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "role_name", label: "角色名称" }
+            attrs: { prop: "created_at", label: "创建时间" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "role_des", label: "角色描述" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "created", label: "创建时间" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "updated", label: "修改时间" }
+            attrs: { prop: "updated_at", label: "修改时间" }
           }),
           _vm._v(" "),
           _c("el-table-column", {

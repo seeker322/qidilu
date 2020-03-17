@@ -58,6 +58,7 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         $this->validateLogin($request);
+
         //admin登录密码123456
         if (Auth::guard('admin')->attempt(['name' => $request->name, 'password' => $request->password])) {
             return ['code'=>200,'msg'=>'登录成功,正在跳转','url'=>$this->redirectTo()];

@@ -38,13 +38,15 @@ export default {
             })
         },
         delUser({commit},params){
-            api.delUser(params).then(e=>{
-                if(e.code=='200'){
-                    resolve(e);
-                }else{
-                    reject(e);
-                }
-            });
+            return new Promise((resolve, reject) => {
+                api.delUser(params).then(e=>{
+                    if(e.code=='200'){
+                        resolve(e);
+                    }else{
+                        reject(e);
+                    }
+                });
+            })
         },
         getUsers({commit}){
              api.getUsers().then(e=>{

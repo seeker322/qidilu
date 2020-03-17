@@ -29,12 +29,9 @@ Route::group(['middleware' => ["auth:admin"],'namespace' => 'Admin', 'prefix' =>
     Route::get('/', function () {
         return view('admin.index');
     });
-
     Route::resource('user', 'UserController');
     Route::resource('role', 'RoleController');
-
-
-
+    Route::resource('permission', 'PermissionController');
 });
 
 

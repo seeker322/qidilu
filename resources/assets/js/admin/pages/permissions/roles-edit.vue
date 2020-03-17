@@ -1,14 +1,12 @@
 <template>
     <div class="iframe-block">
         <el-form ref="form" :model="form" label-width="80px" size="small">
-            <el-form-item label="角色标识">
-                <el-input v-model="form.sign"></el-input>
-            </el-form-item>
+
             <el-form-item label="角色名称">
                 <el-input v-model="form.name"></el-input>
             </el-form-item>
             <el-form-item label="角色描述">
-                <el-input type="textarea" v-model="form.desc"></el-input>
+                <el-input type="textarea" v-model="form.description"></el-input>
             </el-form-item>
             <el-form-item label="角色权限">
                 <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">系统管理</el-checkbox>
@@ -24,23 +22,23 @@
 
             <el-form-item size="large">
                 <el-button type="primary" size="small" @click="onSubmit">立即提交</el-button>
-                <el-button size="small">重置</el-button>
+                <el-button size="small">取消</el-button>
             </el-form-item>
         </el-form>
     </div>
 </template>
 
 <script>
+    import {mapState,mapActions} from 'vuex';
     const cityOptions = ['上海', '北京', '广州', '深圳'];
     export default {
         name: "roles-edit",
-        props: ['data'],
+        props: ['info','layerid'],
         data() {
             return {
                 form: {
-                    sign:'',
                     name: '',
-                    desc:'',
+                    description:'',
                 },
                 checkAll: false,
                 checkedCities: ['上海', '北京'],
@@ -48,9 +46,32 @@
                 isIndeterminate: true
             }
         },
+        mounted() {
+            if(this.info){
+                // this.getPermissions();
+                this.form=this.info;
+            }
+        },
         methods: {
+            ...mapActions('permission', ['getPermissions']),
+            ...mapActions('role', ['getRoles','addRole','editRole']),
             onSubmit() {
-                console.log('submit!');
+                let params=this.form;
+                if(this.info){ //编辑
+                    this.editRole(params).then(res=>{
+                        this.getRoles();
+                        this.$layer.close(this.layerid);
+                    });
+                }else{ //新增
+                    this.addRole(params).then(res=>{
+                        this.getRoles();
+                        this.$layer.close(this.layerid);
+                    });
+                }
+
+            },
+            onCancel(){
+                this.$layer.close(this.layerid);
             },
             handleCheckAllChange(val) {
                 this.checkedCities = val ? cityOptions : [];
