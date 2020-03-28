@@ -18,7 +18,6 @@ Vue.use(iView);
 Vue.use(ElementUI);
 Vue.prototype.axios = axios;
 Vue.use(VueRouter);
-
 //vue-layer
 import layer from 'vue-layer';
 Vue.prototype.$layer = layer(Vue, {

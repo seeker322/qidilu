@@ -399,7 +399,7 @@ var render = function() {
                       _c(
                         "MenuItem",
                         { attrs: { name: "1-1", to: "/permissions" } },
-                        [_vm._v("权限管理")]
+                        [_vm._v("菜单规则")]
                       ),
                       _vm._v(" "),
                       _c(

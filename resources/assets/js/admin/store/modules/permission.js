@@ -50,6 +50,7 @@ export default {
         },
         getPermissions({commit}){
             api.getPermissions().then(e=>{
+
                 commit('SetPermissonsData',e.data);
             });
         }

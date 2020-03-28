@@ -44,6 +44,46 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "permission-edit",
@@ -52,9 +92,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       form: {
         name: '',
-        display_name: '',
         description: '',
-        controller: '',
+        pid: null,
+        action: null,
+        is_menu: 0,
+        icon: "",
         roles: []
       }
     };
@@ -64,6 +106,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
     roleList: function roleList(state) {
       return state.role.roles;
+    },
+    permissionList: function permissionList(state) {
+      return state.permission.permissions;
     }
   })),
   mounted: function mounted() {
@@ -77,6 +122,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('permission', ['addPermission', 'editPermission', 'getPermissions']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('role', ['getRoles']), {
+    getName: function getName(row) {
+      var name = "";
+
+      switch (row.level) {
+        case 0:
+          name = row.name;
+          break;
+
+        case 1:
+          name = "&nbsp;&nbsp;├ &nbsp;" + row.name;
+          break;
+
+        case 2:
+          name = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├ &nbsp;" + row.name;
+          break;
+
+        default:
+          name = row.name;
+      }
+
+      return name;
+    },
+    formatName: function formatName(leavel) {},
     onSubmit: function onSubmit() {
       var _this = this;
 
@@ -179,6 +247,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -194,7 +277,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   })),
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("permission", ["getPermissions", "delPermission"]), {
-    handleEdit: function handleEdit(index, row) {
+    getName: function getName(row) {
+      var name = "";
+      console.log(row.level);
+
+      switch (row.level) {
+        case 0:
+          name = row.name;
+          break;
+
+        case 1:
+          name = "&nbsp;&nbsp;├ &nbsp;" + row.name;
+          break;
+
+        case 2:
+          name = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├ &nbsp;" + row.name;
+          break;
+
+        default:
+          name = row.name;
+      }
+
+      return name;
+    },
+    handleEdit: function handleEdit(row) {
       this.$layer.iframe({
         content: {
           content: _permission_edit__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -209,7 +315,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         area: ['800px', '500px'],
         shade: true,
         //是否显示遮罩
-        title: '添加应用',
+        title: '编辑',
         shadeClose: false
       });
     },
@@ -220,17 +326,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           //传递的组件对象
           parent: this,
           //当前的vue对象
-          data: {} //props
+          data: {
+            info: null
+          } //props
 
         },
         area: ['800px', '500px'],
         shade: true,
         //是否显示遮罩
-        title: '添加应用',
+        title: '添加',
         shadeClose: false
       });
     },
-    handleDelete: function handleDelete(index, row) {
+    handleDelete: function handleDelete(row) {
       var _this = this;
 
       this.$layer.confirm("删除后不可恢复，确定删除吗？", function (layerid) {
@@ -258,7 +366,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, "/*@import \"@/\";*/", ""]);
+exports.push([module.i, ".el-table .el-table_1_column_1 .cell {\n  display: flex;\n  flex-direction: row-reverse;\n  justify-content: flex-end;\n}\n.warp-block tag-group {\n  margin-bottom: 10px;\n}\n.warp-block .box-card {\n  margin-bottom: 10px;\n}\n.warp-block .box-card .el-card__body {\n  padding: 5px 10px;\n}\n.warp-block .box-card .el-card__header {\n  background: #F2F6FC;\n  padding: 0px 10px;\n}\n.warp-block .box-card .el-card__header span.title {\n  font-size: 16px;\n  margin-right: 10px;\n}\n.warp-block .box-card .item {\n  display: flex;\n  flex-direction: row;\n}\n.warp-block .box-card .item .item-list {\n  margin-left: 15px;\n}\n.warp-block .box-card .item .item-list span.title {\n  font-size: 14px;\n  margin-right: 10px;\n}\n.warp-block .tag-group__title {\n  padding-left: 10px;\n  padding-right: 10px;\n  font-size: 20px;\n}", ""]);
 
 // exports
 
@@ -425,12 +533,93 @@ var render = function() {
         "el-form",
         {
           ref: "form",
-          attrs: { model: _vm.form, "label-width": "80px", size: "small" }
+          attrs: { model: _vm.form, "label-width": "100px", size: "small" }
         },
         [
           _c(
             "el-form-item",
-            { attrs: { label: "权限标识" } },
+            { attrs: { label: "父级菜单" } },
+            [
+              _c(
+                "el-select",
+                {
+                  attrs: { placeholder: "父级菜单" },
+                  model: {
+                    value: _vm.form.pid,
+                    callback: function($$v) {
+                      _vm.$set(_vm.form, "pid", $$v)
+                    },
+                    expression: "form.pid"
+                  }
+                },
+                [
+                  _c("el-option", { key: 0, attrs: { label: "无", value: 0 } }),
+                  _vm._v(" "),
+                  _vm._l(_vm.permissionList, function(item) {
+                    return [
+                      _c("el-option", {
+                        key: item.id,
+                        attrs: { label: item.name, value: item.id }
+                      }),
+                      _vm._v(" "),
+                      _vm._l(item.child, function(itemone) {
+                        return [
+                          _c(
+                            "el-option",
+                            {
+                              key: itemone.id,
+                              attrs: { label: itemone.name, value: itemone.id }
+                            },
+                            [
+                              [
+                                _c("span", {
+                                  domProps: {
+                                    innerHTML: _vm._s(_vm.getName(itemone))
+                                  }
+                                })
+                              ]
+                            ],
+                            2
+                          ),
+                          _vm._v(" "),
+                          _vm._l(itemone.child, function(itemtwo) {
+                            return [
+                              _c(
+                                "el-option",
+                                {
+                                  key: itemtwo.id,
+                                  attrs: {
+                                    label: itemtwo.name,
+                                    value: itemtwo.id
+                                  }
+                                },
+                                [
+                                  [
+                                    _c("span", {
+                                      domProps: {
+                                        innerHTML: _vm._s(_vm.getName(itemtwo))
+                                      }
+                                    })
+                                  ]
+                                ],
+                                2
+                              )
+                            ]
+                          })
+                        ]
+                      })
+                    ]
+                  })
+                ],
+                2
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "菜单名称" } },
             [
               _c("el-input", {
                 model: {
@@ -447,15 +636,16 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "权限名称" } },
+            { attrs: { label: "规则路径" } },
             [
               _c("el-input", {
+                attrs: { placeholder: "xxxController@xxx" },
                 model: {
-                  value: _vm.form.display_name,
+                  value: _vm.form.action,
                   callback: function($$v) {
-                    _vm.$set(_vm.form, "display_name", $$v)
+                    _vm.$set(_vm.form, "action", $$v)
                   },
-                  expression: "form.display_name"
+                  expression: "form.action"
                 }
               })
             ],
@@ -464,7 +654,42 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "权限描述" } },
+            { attrs: { label: "图标" } },
+            [
+              _c("el-input", {
+                attrs: { placeholder: "fa fa-angle-double-left" },
+                model: {
+                  value: _vm.form.icon,
+                  callback: function($$v) {
+                    _vm.$set(_vm.form, "icon", $$v)
+                  },
+                  expression: "form.icon"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "是否菜单显示" } },
+            [
+              _c("el-switch", {
+                model: {
+                  value: _vm.form.is_menu,
+                  callback: function($$v) {
+                    _vm.$set(_vm.form, "is_menu", $$v)
+                  },
+                  expression: "form.is_menu"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "备注" } },
             [
               _c("el-input", {
                 attrs: { type: "textarea" },
@@ -474,23 +699,6 @@ var render = function() {
                     _vm.$set(_vm.form, "description", $$v)
                   },
                   expression: "form.description"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { label: "权限控制" } },
-            [
-              _c("el-input", {
-                model: {
-                  value: _vm.form.controller,
-                  callback: function($$v) {
-                    _vm.$set(_vm.form, "controller", $$v)
-                  },
-                  expression: "form.controller"
                 }
               })
             ],
@@ -535,7 +743,7 @@ var render = function() {
                   attrs: { type: "primary", size: "small" },
                   on: { click: _vm.onSubmit }
                 },
-                [_vm._v("立即提交")]
+                [_vm._v("确定")]
               ),
               _vm._v(" "),
               _c(
@@ -575,109 +783,126 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "content-block" },
-    [
-      _c(
-        "div",
-        { staticClass: "operate" },
-        [
-          _c(
-            "el-button",
-            {
-              attrs: { size: "small", type: "primary" },
-              on: { click: _vm.addPermisson }
-            },
-            [_vm._v("添加权限")]
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "el-table",
-        {
-          staticStyle: { width: "100%" },
-          attrs: {
-            data: _vm.tableData,
-            height: "400",
-            border: "",
-            size: "small"
-          }
-        },
-        [
-          _c("el-table-column", {
-            attrs: { prop: "id", label: "id", width: "180" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "name", label: "权限标识", width: "180" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "display_name", label: "权限名称" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "controller", label: "控制器操作" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "description", label: "权限描述" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "created_at", label: "创建时间" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "updated_at", label: "修改时间" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { label: "操作", width: "200px" },
-            scopedSlots: _vm._u([
+  return _c("div", { staticClass: "content-block" }, [
+    _c(
+      "div",
+      { staticClass: "warp-block" },
+      [
+        _c(
+          "div",
+          { staticClass: "operate" },
+          [
+            _c(
+              "el-button",
               {
-                key: "default",
-                fn: function(scope) {
-                  return [
-                    _c(
-                      "el-button",
-                      {
-                        attrs: { size: "mini" },
-                        on: {
-                          click: function($event) {
-                            return _vm.handleEdit(scope.$index, scope.row)
-                          }
-                        }
-                      },
-                      [_vm._v("编辑")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "el-button",
-                      {
-                        attrs: { size: "mini", type: "danger" },
-                        on: {
-                          click: function($event) {
-                            return _vm.handleDelete(scope.$index, scope.row)
-                          }
-                        }
-                      },
-                      [_vm._v("删除")]
-                    )
-                  ]
+                attrs: { size: "small", type: "primary" },
+                on: {
+                  click: function($event) {
+                    return _vm.addPermisson()
+                  }
                 }
-              }
-            ])
-          })
-        ],
-        1
-      )
-    ],
-    1
-  )
+              },
+              [_vm._v("添加菜单")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "el-table",
+          {
+            staticStyle: { width: "100%" },
+            attrs: {
+              data: _vm.tableData,
+              height: "400",
+              border: "",
+              size: "mini",
+              "default-expand-all": true,
+              "row-key": "id",
+              "tree-props": { children: "child", hasChildren: "hasChildren" }
+            }
+          },
+          [
+            _c("el-table-column", {
+              attrs: { prop: "name", label: "权限名称" },
+              scopedSlots: _vm._u([
+                {
+                  key: "default",
+                  fn: function(scope) {
+                    return [
+                      _c("span", {
+                        domProps: { innerHTML: _vm._s(_vm.getName(scope.row)) }
+                      })
+                    ]
+                  }
+                }
+              ])
+            }),
+            _vm._v(" "),
+            _c("el-table-column", {
+              attrs: { prop: "icon", label: "图标", width: "180" }
+            }),
+            _vm._v(" "),
+            _c("el-table-column", {
+              attrs: { prop: "action", label: "菜单规则" }
+            }),
+            _vm._v(" "),
+            _c("el-table-column", {
+              attrs: { prop: "description", label: "权限描述" }
+            }),
+            _vm._v(" "),
+            _c("el-table-column", {
+              attrs: { prop: "created_at", label: "创建时间" }
+            }),
+            _vm._v(" "),
+            _c("el-table-column", {
+              attrs: { prop: "updated_at", label: "修改时间" }
+            }),
+            _vm._v(" "),
+            _c("el-table-column", {
+              attrs: { label: "操作", width: "200px" },
+              scopedSlots: _vm._u([
+                {
+                  key: "default",
+                  fn: function(scope) {
+                    return [
+                      _c(
+                        "el-button",
+                        {
+                          attrs: { size: "mini" },
+                          on: {
+                            click: function($event) {
+                              return _vm.handleEdit(scope.row)
+                            }
+                          }
+                        },
+                        [_vm._v("编辑")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-button",
+                        {
+                          attrs: { size: "mini", type: "danger" },
+                          on: {
+                            click: function($event) {
+                              return _vm.handleDelete(scope.row)
+                            }
+                          }
+                        },
+                        [_vm._v("删除")]
+                      )
+                    ]
+                  }
+                }
+              ])
+            })
+          ],
+          1
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

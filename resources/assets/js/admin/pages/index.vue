@@ -22,7 +22,7 @@
                             <Icon type="ios-navigate"></Icon>
                             <span>权限控制</span>
                         </template>
-                        <MenuItem name="1-1" to="/permissions">权限管理</MenuItem>
+                        <MenuItem name="1-1" to="/permissions">菜单规则</MenuItem>
                         <MenuItem name="1-2" to="/permissions-roles">角色管理</MenuItem>
                         <MenuItem name="1-3" to="/permissions-users">用户管理</MenuItem>
                     </Submenu>

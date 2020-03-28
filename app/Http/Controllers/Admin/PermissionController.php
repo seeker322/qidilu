@@ -10,8 +10,9 @@ class PermissionController extends Controller
 {
     public function index(Request $request)
     {
-        $permission=Permission::with("roles")->get();
-        return ["code"=>200,"data"=>$permission];
+        $permission=Permission::with("roles")->get()->toArray();
+        $menu=$this->getLoopMenu($permission);
+        return ["code"=>200,"data"=>$menu];
     }
 
     public function create(Request $request)
@@ -20,66 +21,128 @@ class PermissionController extends Controller
 
     }
 
-    public function update($id,Request $request){
+    public function  getLoopMenu($data, $pid = 0,$level = 0)
+    {
+        $arr = [];
 
-        $this->validate($request,[
-            'name'=>'required',
-            'display_name'=>'required',
-            'description'=>'required',
-            'controller' => 'required',
-            'roles'=>"array|min:1"
-        ],[
-            'name.required'=>'权限标识必填',
-//            'name.unique'=>'权限标识已存在',
-            'display_name.required'=>'权限名称必填',
-            'description.required'=>'权限描述必填',
-            'controller.required'=>'控制器操作必填',
-//            'controller.unique'=>'控制器操作已存在',
-            "roles.min"=>'请选择权限所属角色'
-        ]);
+        foreach ($data as $v) {
+            if($v["pid"]==$pid){
+                $v['level'] = $level;
+                $v["child"]=$this->getLoopMenu($data,$v["id"],$level+1);
+                $arr[]=$v;
+            }
+
+        }
+        return $arr;
+    }
+    //递归获取要删除的id数组
+    public function  getLoopIds($data, $pid = 0,$level = 0)
+    {
+        static $list = [];
+        foreach ($data as  $value){
+            //第一次遍历,找到父节点为根节点的节点 也就是pid=0的节点
+            if ($value['pid'] == $pid){
+                //父节点为根节点的节点,级别为0，也就是第一级
+                $value['level'] = $level;
+                //把数组放到list中
+                $list[] = $value['id'];
+                //把这个节点从数组中移除,减少后续递归消耗
+                //unset($array[$key]);  #尽量注释下这个
+                //开始递归,查找父ID为该节点ID的节点,级别则为原级别+1
+                $this->getLoopIds($data, $value['id'], $level+1);
+            }
+        }
+        return $list;
+    }
+
+
+
+    public function update($id,Request $request){
+        $this->customValidate($request,2);
         $permission = Permission::find($id);
+        $permission->pid=$request->input("pid")?$request->input("pid"):0;
+        $permission->is_menu=$request->input("is_menu")?$request->input("is_menu"):0;
         $permission->name=$request->input('name');
-        $permission->display_name=$request->input('display_name');
+        $permission->icon=$request->input('icon');
         $permission->description=$request->input('description');
-        $permission->controller=$request->input('controller');
+        $permission->action=$request->input('action');
         $permission->save();
         $permission->roles()->sync($request->input('roles'));
         return ["code"=>200,"msg"=>"修改成功"];
-
     }
 
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'name'=>'required|unique:admin_permissions,name',
-            'display_name'=>'required',
-            'description'=>'required',
-            'controller' => 'required|unique:admin_permissions,controller',
-            'roles'=>"array|min:1"
-        ],[
-            'name.required'=>'权限标识必填',
-            'name.unique'=>'权限标识已存在',
-            'display_name.required'=>'权限名称必填',
-            'description.required'=>'权限描述必填',
-            'controller.required'=>'控制器操作必填',
-            'controller.unique'=>'控制器操作已存在',
-            "roles.min"=>'请选择权限所属角色'
-        ]);
+        $this->customValidate($request,1);
         $permission =Permission::create([
             'name' => $request->input('name'),
-            'display_name' => $request->input('display_name'),
+            'icon' => $request->input('icon'),
             'description' => $request->input('description'),
-            'controller' => $request->input('controller'),
+            'pid'=>empty($request->input("pid"))?0:$request->input("pid"),
+            'is_menu'=>empty($request->input("is_menu"))?0:$request->input("is_menu"),
+            'action'=>$request->input("action")
         ]);
         $permission->roles()->attach($request->input('roles'));
         return ["code"=>200,"msg"=>"新增成功"];
-
     }
 
     public function destroy($id,Request $request){
-        $permission = Permission::find($id);
-        $permission->roles()->detach();
-        $permission::destroy($id);
+        $permission=Permission::get();
+
+        $permissionArr=clone $permission;
+        $permissionArr=$permissionArr->toArray();
+        $ids=$this->getLoopIds($permissionArr,$id); //获取要删除的权限id数组
+        array_push($ids,(int)$id);
+        $delData = Permission::whereIn('id', $ids)->with("roles")->get();
+        foreach($delData as $v) {
+            $v->roles()->detach(); //删除中间表数据
+        }
+        Permission::destroy($ids);
         return ["code"=>200,"msg"=>"删除成功"];
+    }
+
+    public function customValidate($request,$tag){
+        if(empty($request->input("action"))){ //应用及模块
+            $this->validate($request,[
+                'name'=>'required',
+                'description'=>'required',
+                'roles'=>"array|min:1"
+            ],[
+                'name.required'=>'标识必填',
+                'description.required'=>'描述必填',
+                "roles.min"=>'请选择权限所属角色'
+            ]);
+        }else{ //控制器及操作
+            if($tag==1){  //1:新增，2：编辑
+                $this->validate($request,[
+                    'name'=>'required',
+                    'description'=>'required',
+                    'action' => 'required|unique:admin_permissions,action',
+                    'roles'=>"array|min:1"
+                ],[
+                    'name.required'=>'标识必填',
+                    'name.unique'=>'标识已存在',
+                    'description.required'=>'描述必填',
+                    'action.required'=>'路径必填',
+                    'action.unique'=>'路径已存在',
+                    "roles.min"=>'请选择权限所属角色'
+                ]);
+            }else{
+                $this->validate($request,[
+                    'name'=>'required',
+                    'description'=>'required',
+                    "pid"=>'required',
+                    'action' => 'required',
+                    'roles'=>"array|min:1"
+                ],[
+                    'name.required'=>'标识必填',
+                    'description.required'=>'描述必填',
+                    'pid.required'=>'参数缺失',
+                    'action.required'=>'路径必填',
+                    "roles.min"=>'请选择权限所属角色'
+                ]);
+            }
+        }
+
     }
 }
