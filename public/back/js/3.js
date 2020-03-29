@@ -9,6 +9,13 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/_vuex@3.1.1@vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -90,26 +97,73 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      isCollapsed: false
+      isCollapsed: false,
+      activeId: 0,
+      openId: 0
     };
   },
-  computed: {
+  created: function created() {
+    var _this = this;
+
+    this.getPermissions().then(function (res) {
+      _this.getActiveData(res);
+    });
+  },
+  computed: _objectSpread({
     rotateIcon: function rotateIcon() {
       return ['menu-icon', this.isCollapsed ? 'rotate-icon' : ''];
     },
     menuitemClasses: function menuitemClasses() {
       return ['menu-item', this.isCollapsed ? 'collapsed-menu' : ''];
     }
+  }, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
+    permissionList: function permissionList(state) {
+      return state.permission.permissions;
+    }
+  })),
+  mounted: function mounted() {
+    var _this2 = this;
+
+    this.getPermissions().then(function (res) {
+      _this2.getActiveData(res);
+
+      _this2.$nextTick(function () {
+        _this2.$refs.side_menu.updateOpened();
+
+        _this2.$refs.side_menu.updateActiveName();
+      });
+    });
   },
-  methods: {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("permission", ["getPermissions"]), {
+    getActiveData: function getActiveData(source) {
+      for (var key in source) {
+        if ('/' + source[key].url == this.$route.path) {
+          this.activeId = source[key].id;
+          this.openId = source[key].pid;
+          console.log(this.openId);
+        }
+
+        if (source[key].child) {
+          this.getActiveData(source[key].child);
+        }
+      }
+    },
     collapsedSider: function collapsedSider() {
       this.$refs.side1.toggleCollapse();
     },
     loginOut: function loginOut() {
-      var _this = this;
+      var _this3 = this;
 
       var that = this;
       this.axios({
@@ -120,18 +174,18 @@ __webpack_require__.r(__webpack_exports__);
           'X-CSRF-TOKEN': '{{ csrf_token() }}'
         }
       }).then(function (e) {
-        console.log(_this);
+        console.log(_this3);
 
         if (e.status == 200 && e.data.code == 200) {
-          _this.$Message.success(e.data.msg);
+          _this3.$Message.success(e.data.msg);
 
           window.location.href = "/login";
         } else {
-          _this.$Message.error(e.data.msg);
+          _this3.$Message.error(e.data.msg);
         }
       });
     }
-  }
+  })
 });
 
 /***/ }),
@@ -148,7 +202,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/_
 
 
 // module
-exports.push([module.i, ".layout {\n  border: 1px solid #d7dde4;\n  background: #f5f7f9;\n  position: relative;\n  border-radius: 4px;\n  overflow: hidden;\n  height: 100%;\n}\n.layout .ivu-layout {\n  height: 100%;\n}\n.layout-breadcrumb {\n  margin-top: 1px;\n  padding: 14px 25px;\n  background-color: #fff;\n  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);\n}\n.ivu-layout-sider {\n  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);\n}\n.ivu-layout-header {\n  height: 50px;\n  line-height: 50px;\n}\n.slider-logo {\n  height: 50px;\n  line-height: 50px;\n  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);\n  box-sizing: border-box;\n  font-size: 18px;\n  text-align: center;\n  color: rgba(255, 255, 255, 0.7);\n  margin-bottom: 1px;\n}\n.layout-header-bar {\n  background: #fff;\n  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);\n}\n.layout-logo-left {\n  width: 90%;\n  height: 30px;\n  background: #5b6270;\n  border-radius: 3px;\n  margin: 15px auto;\n}\n.menu-icon {\n  transition: all 0.3s;\n}\n.rotate-icon {\n  transform: rotate(-90deg);\n}\n.menu-item span {\n  display: inline-block;\n  overflow: hidden;\n  width: 69px;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  vertical-align: bottom;\n  transition: width 0.2s ease 0.2s;\n}\n.menu-item i {\n  transform: translateX(0px);\n  transition: font-size 0.2s ease, transform 0.2s ease;\n  vertical-align: middle;\n  font-size: 16px;\n}\n.collapsed-menu span {\n  width: 0px;\n  transition: width 0.2s ease;\n}\n.ivu-menu-vertical.collapsed-menu .ivu-menu-submenu-title {\n  padding: 0px 24px;\n}\n.ivu-menu-vertical .ivu-menu-item, .ivu-menu-vertical .ivu-menu-submenu-title {\n  padding: 14px 24px;\n}\n.ivu-menu.collapsed-menu {\n  padding-top: 14px;\n}\n.collapsed-menu .ivu-icon-ios-arrow-down:before, .collapsed-menu .ivu-icon-ios-arrow-up:before {\n  display: none;\n}\n.collapsed-menu ul {\n  display: none;\n}\n.collapsed-menu i {\n  transform: translateX(5px);\n  transition: font-size 0.2s ease 0.2s, transform 0.2s ease 0.2s;\n  vertical-align: middle;\n  font-size: 22px;\n}\n.layout-copy {\n  text-align: center;\n  padding: 0px 0 0px;\n  color: #9ea7b4;\n}\n.qi-header-menu {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n}\n.qi-header-menu .qi-header-menu-dropdwon {\n  margin-right: 25px;\n}", ""]);
+exports.push([module.i, ".ivu-menu-submenu .ivu-menu-item {\n  padding-left: 52px !important;\n}\n.ivu-menu-item-selected {\n  border-right: none;\n  color: #fff !important;\n  background: #2d8cf0 !important;\n}\n.layout {\n  border: 1px solid #d7dde4;\n  background: #f5f7f9;\n  position: relative;\n  border-radius: 4px;\n  overflow: hidden;\n  height: 100%;\n}\n.layout .ivu-layout {\n  height: 100%;\n}\n.layout-breadcrumb {\n  margin-top: 1px;\n  padding: 14px 25px;\n  background-color: #fff;\n  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);\n}\n.ivu-layout-sider {\n  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);\n}\n.ivu-layout-header {\n  height: 50px;\n  line-height: 50px;\n}\n.slider-logo {\n  height: 50px;\n  line-height: 50px;\n  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);\n  box-sizing: border-box;\n  font-size: 18px;\n  text-align: center;\n  color: rgba(255, 255, 255, 0.7);\n  margin-bottom: 1px;\n}\n.layout-header-bar {\n  background: #fff;\n  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);\n}\n.layout-logo-left {\n  width: 90%;\n  height: 30px;\n  background: #5b6270;\n  border-radius: 3px;\n  margin: 15px auto;\n}\n.menu-icon {\n  transition: all 0.3s;\n}\n.rotate-icon {\n  transform: rotate(-90deg);\n}\n.menu-item span {\n  display: inline-block;\n  overflow: hidden;\n  width: 69px;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  vertical-align: bottom;\n  transition: width 0.2s ease 0.2s;\n}\n.menu-item i {\n  transform: translateX(0px);\n  transition: font-size 0.2s ease, transform 0.2s ease;\n  vertical-align: middle;\n  font-size: 16px;\n}\n.collapsed-menu span {\n  width: 0px;\n  transition: width 0.2s ease;\n}\n.ivu-menu-vertical.collapsed-menu .ivu-menu-submenu-title {\n  padding: 0px 24px;\n}\n.ivu-menu-vertical .ivu-menu-item, .ivu-menu-vertical .ivu-menu-submenu-title {\n  padding: 14px 24px;\n}\n.ivu-menu.collapsed-menu {\n  padding-top: 14px;\n}\n.collapsed-menu .ivu-icon-ios-arrow-down:before, .collapsed-menu .ivu-icon-ios-arrow-up:before {\n  display: none;\n}\n.collapsed-menu ul {\n  display: none;\n}\n.collapsed-menu i {\n  transform: translateX(5px);\n  transition: font-size 0.2s ease 0.2s, transform 0.2s ease 0.2s;\n  vertical-align: middle;\n  font-size: 22px;\n}\n.layout-copy {\n  text-align: center;\n  padding: 0px 0 0px;\n  color: #9ea7b4;\n}\n.qi-header-menu {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n}\n.qi-header-menu .qi-header-menu-dropdwon {\n  margin-right: 25px;\n}", ""]);
 
 // exports
 
@@ -346,104 +400,88 @@ var render = function() {
               _c(
                 "Menu",
                 {
+                  ref: "side_menu",
                   class: _vm.menuitemClasses,
                   attrs: {
-                    "active-name": "1-2",
+                    "active-name": _vm.activeId,
                     theme: "dark",
                     width: "auto",
-                    "open-names": ["1"]
+                    "open-names": [_vm.openId]
                   }
                 },
                 [
-                  _c(
-                    "Submenu",
-                    { attrs: { name: "1" } },
-                    [
-                      _c(
-                        "template",
-                        { slot: "title" },
-                        [
-                          _c("Icon", { attrs: { type: "ios-keypad" } }),
-                          _vm._v(" "),
-                          _c("span", [_vm._v("系统管理")])
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("MenuItem", { attrs: { name: "2-1" } }, [
-                        _vm._v("系统设置")
-                      ]),
-                      _vm._v(" "),
-                      _c("MenuItem", { attrs: { name: "2-2" } }, [
-                        _vm._v("菜单管理")
-                      ])
-                    ],
-                    2
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "Submenu",
-                    { attrs: { name: "2" } },
-                    [
-                      _c(
-                        "template",
-                        { slot: "title" },
-                        [
-                          _c("Icon", { attrs: { type: "ios-navigate" } }),
-                          _vm._v(" "),
-                          _c("span", [_vm._v("权限控制")])
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "MenuItem",
-                        { attrs: { name: "1-1", to: "/permissions" } },
-                        [_vm._v("菜单规则")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "MenuItem",
-                        { attrs: { name: "1-2", to: "/permissions-roles" } },
-                        [_vm._v("角色管理")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "MenuItem",
-                        { attrs: { name: "1-3", to: "/permissions-users" } },
-                        [_vm._v("用户管理")]
-                      )
-                    ],
-                    2
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "Submenu",
-                    { attrs: { name: "3" } },
-                    [
-                      _c(
-                        "template",
-                        { slot: "title" },
-                        [
-                          _c("Icon", { attrs: { type: "ios-analytics" } }),
-                          _vm._v(" "),
-                          _c("span", [_vm._v("文章管理")])
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("MenuItem", { attrs: { name: "3-1" } }, [
-                        _vm._v("文章分类")
-                      ]),
-                      _vm._v(" "),
-                      _c("MenuItem", { attrs: { name: "3-2" } }, [
-                        _vm._v("文章列表")
-                      ])
-                    ],
-                    2
-                  )
+                  _vm._l(_vm.permissionList, function(item) {
+                    return [
+                      item.is_menu == "1"
+                        ? [
+                            item.child.length > 0
+                              ? [
+                                  _c(
+                                    "Submenu",
+                                    { attrs: { name: item.id } },
+                                    [
+                                      _c(
+                                        "template",
+                                        { slot: "title" },
+                                        [
+                                          _c("Icon", {
+                                            attrs: { type: item.icon }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("span", [
+                                            _vm._v(_vm._s(item.name))
+                                          ])
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _vm._l(item.child, function(itemone) {
+                                        return [
+                                          itemone.is_menu == "1"
+                                            ? [
+                                                _c(
+                                                  "MenuItem",
+                                                  {
+                                                    attrs: {
+                                                      name: itemone.id,
+                                                      to: "/" + itemone.url
+                                                    }
+                                                  },
+                                                  [_vm._v(_vm._s(itemone.name))]
+                                                )
+                                              ]
+                                            : _vm._e()
+                                        ]
+                                      })
+                                    ],
+                                    2
+                                  )
+                                ]
+                              : [
+                                  _c(
+                                    "MenuItem",
+                                    {
+                                      attrs: {
+                                        name: item.id,
+                                        to: "/" + item.url
+                                      }
+                                    },
+                                    [
+                                      _c("Icon", {
+                                        attrs: { type: item.icon }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("span", [_vm._v(_vm._s(item.name))])
+                                    ],
+                                    1
+                                  )
+                                ]
+                          ]
+                        : _vm._e()
+                    ]
+                  })
                 ],
-                1
+                2
               )
             ],
             1
@@ -494,7 +532,7 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\n                                Admin\n                                "
+                                  "\n                                    Admin\n                                    "
                                 ),
                                 _c("Icon", {
                                   attrs: { type: "md-arrow-dropdown" }
@@ -570,7 +608,7 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "layout-copy" }, [
                 _vm._v(
-                  "\n                2011-2016 © TalkingData\n            "
+                  "\n                    2011-2016 © TalkingData\n                "
                 )
               ])
             ],

@@ -10,7 +10,7 @@ class PermissionController extends Controller
 {
     public function index(Request $request)
     {
-        $permission=Permission::with("roles")->get()->toArray();
+        $permission=Permission::with("roles")->orderBy('sort','asc')->get()->toArray();
         $menu=$this->getLoopMenu($permission);
         return ["code"=>200,"data"=>$menu];
     }
@@ -63,9 +63,11 @@ class PermissionController extends Controller
         $permission->pid=$request->input("pid")?$request->input("pid"):0;
         $permission->is_menu=$request->input("is_menu")?$request->input("is_menu"):0;
         $permission->name=$request->input('name');
+        $permission->sort=$request->input('sort');
         $permission->icon=$request->input('icon');
         $permission->description=$request->input('description');
         $permission->action=$request->input('action');
+        $permission->url=$request->input('url');
         $permission->save();
         $permission->roles()->sync($request->input('roles'));
         return ["code"=>200,"msg"=>"修改成功"];
@@ -79,6 +81,8 @@ class PermissionController extends Controller
             'icon' => $request->input('icon'),
             'description' => $request->input('description'),
             'pid'=>empty($request->input("pid"))?0:$request->input("pid"),
+            'url'=>$request->input('url'),
+            'sort'=>empty($request->input("sort"))?0:$request->input("sort"),
             'is_menu'=>empty($request->input("is_menu"))?0:$request->input("is_menu"),
             'action'=>$request->input("action")
         ]);
@@ -123,8 +127,8 @@ class PermissionController extends Controller
                     'name.required'=>'标识必填',
                     'name.unique'=>'标识已存在',
                     'description.required'=>'描述必填',
-                    'action.required'=>'路径必填',
-                    'action.unique'=>'路径已存在',
+                    'action.required'=>'操作规则必填',
+                    'action.unique'=>'操作规则已存在',
                     "roles.min"=>'请选择权限所属角色'
                 ]);
             }else{
@@ -138,7 +142,7 @@ class PermissionController extends Controller
                     'name.required'=>'标识必填',
                     'description.required'=>'描述必填',
                     'pid.required'=>'参数缺失',
-                    'action.required'=>'路径必填',
+                    'action.required'=>'操作规则必填',
                     "roles.min"=>'请选择权限所属角色'
                 ]);
             }

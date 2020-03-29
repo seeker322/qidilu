@@ -11,12 +11,28 @@ export default new VueRouter({
             component: resolve => void(require(['../pages/index.vue'], resolve)),
             children: [
                 {
-                    path: '/index-main',
-                    name: '/index-main',
+                    path: '/control-board',
+                    name: '/control-board',
                     meta: {
-                        title: '首页'
+                        title: '控制台'
                     },
-                    component: resolve => void(require(['../pages/index/main.vue'], resolve)),
+                    component: resolve => void(require(['../pages/index/index.vue'], resolve)),
+                },
+                {
+                    path: '/article',
+                    name: '/article',
+                    meta: {
+                        title: '内容管理'
+                    },
+                    component: resolve => void(require(['../pages/article/index.vue'], resolve)),
+                },
+                {
+                    path: '/system',
+                    name: '/system',
+                    meta: {
+                        title: '系统管理'
+                    },
+                    component: resolve => void(require(['../pages/system/index.vue'], resolve)),
                 },
                 {
                     name: 'permissions',

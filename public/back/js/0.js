@@ -84,6 +84,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "permission-edit",
@@ -95,7 +101,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         description: '',
         pid: null,
         action: null,
-        is_menu: 0,
+        url: null,
+        sort: null,
+        is_menu: false,
         icon: "",
         roles: []
       }
@@ -118,6 +126,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.info.roles = this.info.roles.map(function (item) {
         return item.id;
       });
+
+      if (this.info.is_menu == '0') {
+        this.info.is_menu = false;
+      }
+
+      if (this.info.is_menu == '1') {
+        this.info.is_menu = true;
+      }
+
       this.form = this.info;
     }
   },
@@ -131,11 +148,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           break;
 
         case 1:
-          name = "&nbsp;&nbsp;├ &nbsp;" + row.name;
+          name = "├ &nbsp;" + row.name;
           break;
 
         case 2:
-          name = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├ &nbsp;" + row.name;
+          name = ";&nbsp;&nbsp;&nbsp;&nbsp;├ &nbsp;" + row.name;
           break;
 
         default:
@@ -253,15 +270,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -279,7 +287,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("permission", ["getPermissions", "delPermission"]), {
     getName: function getName(row) {
       var name = "";
-      console.log(row.level);
 
       switch (row.level) {
         case 0:
@@ -366,7 +373,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, ".el-table .el-table_1_column_1 .cell {\n  display: flex;\n  flex-direction: row-reverse;\n  justify-content: flex-end;\n}\n.warp-block tag-group {\n  margin-bottom: 10px;\n}\n.warp-block .box-card {\n  margin-bottom: 10px;\n}\n.warp-block .box-card .el-card__body {\n  padding: 5px 10px;\n}\n.warp-block .box-card .el-card__header {\n  background: #F2F6FC;\n  padding: 0px 10px;\n}\n.warp-block .box-card .el-card__header span.title {\n  font-size: 16px;\n  margin-right: 10px;\n}\n.warp-block .box-card .item {\n  display: flex;\n  flex-direction: row;\n}\n.warp-block .box-card .item .item-list {\n  margin-left: 15px;\n}\n.warp-block .box-card .item .item-list span.title {\n  font-size: 14px;\n  margin-right: 10px;\n}\n.warp-block .tag-group__title {\n  padding-left: 10px;\n  padding-right: 10px;\n  font-size: 20px;\n}", ""]);
+exports.push([module.i, ".warp-block {\n  margin-bottom: 20px;\n}\n.warp-block .el-table tr td:first-child .cell {\n  display: flex;\n  flex-direction: row-reverse;\n  justify-content: flex-end;\n}", ""]);
 
 // exports
 
@@ -636,7 +643,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "规则路径" } },
+            { attrs: { label: "操作规则" } },
             [
               _c("el-input", {
                 attrs: { placeholder: "xxxController@xxx" },
@@ -646,6 +653,41 @@ var render = function() {
                     _vm.$set(_vm.form, "action", $$v)
                   },
                   expression: "form.action"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "页面路径" } },
+            [
+              _c("el-input", {
+                attrs: { placeholder: "页面访问地址" },
+                model: {
+                  value: _vm.form.url,
+                  callback: function($$v) {
+                    _vm.$set(_vm.form, "url", $$v)
+                  },
+                  expression: "form.url"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "排序" } },
+            [
+              _c("el-input", {
+                model: {
+                  value: _vm.form.sort,
+                  callback: function($$v) {
+                    _vm.$set(_vm.form, "sort", $$v)
+                  },
+                  expression: "form.sort"
                 }
               })
             ],
@@ -814,7 +856,6 @@ var render = function() {
             staticStyle: { width: "100%" },
             attrs: {
               data: _vm.tableData,
-              height: "400",
               border: "",
               size: "mini",
               "default-expand-all": true,
@@ -839,12 +880,14 @@ var render = function() {
               ])
             }),
             _vm._v(" "),
+            _c("el-table-column", { attrs: { prop: "icon", label: "图标" } }),
+            _vm._v(" "),
             _c("el-table-column", {
-              attrs: { prop: "icon", label: "图标", width: "180" }
+              attrs: { prop: "url", label: "页面路径" }
             }),
             _vm._v(" "),
             _c("el-table-column", {
-              attrs: { prop: "action", label: "菜单规则" }
+              attrs: { prop: "action", label: "操作规则" }
             }),
             _vm._v(" "),
             _c("el-table-column", {

@@ -41,13 +41,19 @@
             <el-form-item label="菜单名称" >
                 <el-input v-model="form.name" ></el-input>
             </el-form-item>
-            <el-form-item label="规则路径">
+            <el-form-item label="操作规则">
                 <el-input v-model="form.action" placeholder="xxxController@xxx"></el-input>
+            </el-form-item>
+            <el-form-item label="页面路径">
+                <el-input v-model="form.url" placeholder="页面访问地址"></el-input>
+            </el-form-item>
+            <el-form-item label="排序" >
+                <el-input v-model="form.sort" ></el-input>
             </el-form-item>
             <el-form-item label="图标">
                 <el-input v-model="form.icon" placeholder="fa fa-angle-double-left"></el-input>
             </el-form-item>
-            <el-form-item label="是否菜单显示">
+            <el-form-item label="是否菜单显示" >
                 <el-switch v-model="form.is_menu"></el-switch>
             </el-form-item>
             <el-form-item label="备注">
@@ -78,7 +84,9 @@
                     description:'',
                     pid:null,
                     action:null,
-                    is_menu:0,
+                    url:null,
+                    sort:null,
+                    is_menu:false,
                     icon:"",
                     roles:[],
                 },
@@ -100,6 +108,12 @@
                 this.info.roles=this.info.roles.map(item=>{
                     return item.id;
                 })
+                if(this.info.is_menu=='0'){
+                    this.info.is_menu=false;
+                }
+                if(this.info.is_menu=='1'){
+                    this.info.is_menu=true;
+                }
                 this.form=this.info;
             }
 
@@ -115,10 +129,10 @@
                         name=row.name;
                         break;
                     case 1:
-                        name="&nbsp;&nbsp;├ &nbsp;"+row.name;
+                        name="├ &nbsp;"+row.name;
                         break;
                     case 2:
-                        name="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├ &nbsp;"+row.name;
+                        name=";&nbsp;&nbsp;&nbsp;&nbsp;├ &nbsp;"+row.name;
                         break;
                     default:
                         name=row.name;

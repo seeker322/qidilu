@@ -8,32 +8,39 @@
                     <span>后台2</span>
 
                 </div>
-                <Menu active-name="1-2" theme="dark" width="auto" :open-names="['1']" :class="menuitemClasses">
-                    <Submenu name="1">
-                        <template slot="title">
-                            <Icon type="ios-keypad"></Icon>
-                            <span>系统管理</span>
+                <Menu ref="side_menu" :active-name="activeId" theme="dark" width="auto" :open-names="[openId]" :class="menuitemClasses">
+                    <template v-for="item in permissionList">
+                        <template v-if="item.is_menu=='1'">
+                            <template v-if="item.child.length>0">
+                                <Submenu :name="item.id">
+                                    <template slot="title">
+                                        <Icon :type="item.icon"></Icon>
+                                        <span>{{item.name}}</span>
+                                    </template>
+                                    <template v-for="itemone in item.child">
+                                        <template v-if="itemone.is_menu=='1'" >
+                                            <MenuItem :name="itemone.id" :to="'/'+itemone.url">{{itemone.name}}</MenuItem>
+                                        </template>
+                                    </template>
+                                </Submenu>
+                            </template>
+                            <template v-else>
+                                 <MenuItem :name="item.id" :to="'/'+item.url">
+                                     <Icon :type="item.icon"></Icon>
+                                     <span>{{item.name}}</span>
+                                 </MenuItem>
+<!--                                <Submenu :name="item.id">-->
+<!--                                    <template slot="title">-->
+<!--                                        <Icon :type="item.icon"></Icon>-->
+<!--                                        <span>{{item.name}}</span>-->
+<!--                                    </template>-->
+<!--                                    -->
+<!--                                </Submenu>-->
+                            </template>
+
                         </template>
-                        <MenuItem name="2-1">系统设置</MenuItem>
-                        <MenuItem name="2-2">菜单管理</MenuItem>
-                    </Submenu>
-                    <Submenu name="2">
-                        <template slot="title">
-                            <Icon type="ios-navigate"></Icon>
-                            <span>权限控制</span>
-                        </template>
-                        <MenuItem name="1-1" to="/permissions">菜单规则</MenuItem>
-                        <MenuItem name="1-2" to="/permissions-roles">角色管理</MenuItem>
-                        <MenuItem name="1-3" to="/permissions-users">用户管理</MenuItem>
-                    </Submenu>
-                    <Submenu name="3">
-                        <template slot="title">
-                            <Icon type="ios-analytics"></Icon>
-                            <span>文章管理</span>
-                        </template>
-                        <MenuItem name="3-1">文章分类</MenuItem>
-                        <MenuItem name="3-2">文章列表</MenuItem>
-                    </Submenu>
+
+                    </template>
                 </Menu>
             </Sider>
             <Layout>
@@ -80,11 +87,20 @@
 </template>
 
 <script>
+    import {mapState,mapActions} from 'vuex';
     export default {
         data () {
             return {
-                isCollapsed: false
+                isCollapsed: false,
+                activeId:0,
+                openId:0,
             }
+        },
+        created(){
+            this.getPermissions().then(res=>{
+                this.getActiveData(res);
+            });
+
         },
         computed: {
             rotateIcon () {
@@ -98,13 +114,37 @@
                     'menu-item',
                     this.isCollapsed ? 'collapsed-menu' : ''
                 ]
-            }
+            },
+            ...mapState({
+                permissionList:state => state.permission.permissions
+            })
+        },
+        mounted(){
+            this.getPermissions().then(res=>{
+                this.getActiveData(res);
+                this.$nextTick(()=>{
+                    this.$refs.side_menu.updateOpened();
+                    this.$refs.side_menu.updateActiveName()
+                })
+            });
         },
         methods: {
+            ...mapActions("permission",["getPermissions"]),
+            getActiveData(source){
+                for (var key in source) {
+                    if('/'+source[key].url==this.$route.path){
+                        this.activeId=source[key].id;
+                        this.openId=source[key].pid;
+                        console.log(this.openId);
+                    }
+                    if (source[key].child) {
+                        this.getActiveData(source[key].child)
+                    }
+                }
+            },
             collapsedSider () {
                 this.$refs.side1.toggleCollapse();
             },
-
             loginOut(){
                 var that=this;
                 this.axios({
@@ -133,6 +173,16 @@
 </script>
 
 <style lang="scss">
+    .ivu-menu-submenu{
+        .ivu-menu-item{
+            padding-left:52px !important;
+        }
+    }
+    .ivu-menu-item-selected{
+        border-right: none;
+        color: #fff !important;
+        background: #2d8cf0!important;
+    }
     .layout{
         border: 1px solid #d7dde4;
         background: #f5f7f9;

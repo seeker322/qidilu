@@ -49,10 +49,12 @@ export default {
             })
         },
         getPermissions({commit}){
-            api.getPermissions().then(e=>{
-
-                commit('SetPermissonsData',e.data);
-            });
+            return new Promise((resolve, reject) => {
+                api.getPermissions().then(e=>{
+                    commit('SetPermissonsData',e.data);
+                    resolve(e.data)
+                });
+            })
         }
     }
 }

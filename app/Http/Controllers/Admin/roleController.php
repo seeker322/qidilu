@@ -11,16 +11,18 @@ class roleController extends Controller
     //
     public function index(Request $request)
     {
-        $role=Role::get();
+        $role=Role::with("permissions")->get()->toArray();
         return ["code"=>200,"data"=>$role];
     }
-
+    public function show($id,Request $request)
+    {
+//        $role=Role::with("permissions")->get()->toArray();
+//        return ["code"=>200,"data"=>$role];
+    }
     public function create(Request $request)
     {
 
-
     }
-
     public function update($id,Request $request){
 
         $this->validate($request,[
@@ -35,7 +37,7 @@ class roleController extends Controller
         $role->name=$request->input('name');
         $role->description=$request->input('description');
         $role->save();
-//        $role->roles()->sync($request->input('roles'));
+        $role->permissions()->sync($request->input('permissions'));
         return ["code"=>200,"msg"=>"修改成功"];
 
     }

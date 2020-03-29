@@ -1,20 +1,17 @@
 <template>
     <div class="content-block">
-
         <div class="warp-block">
             <div class="operate">
                 <el-button size="small" @click="addPermisson()" type="primary">添加菜单</el-button>
             </div>
             <el-table
                     :data="tableData"
-                    height="400"
                     border
                     size="mini"
                     style="width: 100%"
                     :default-expand-all="true"
                     row-key="id"
                     :tree-props="{children: 'child', hasChildren: 'hasChildren'}">
-
                 <el-table-column
                         prop="name"
                         label="权限名称">
@@ -22,23 +19,17 @@
                         <span v-html="getName(scope.row)"></span>
                     </template>
                 </el-table-column>
-<!--                <el-table-column-->
-<!--                        prop="id"-->
-<!--                        label="id">-->
-<!--                </el-table-column>-->
-<!--                <el-table-column-->
-<!--                        prop="pid"-->
-<!--                        label="pid"-->
-<!--                        width="180">-->
-<!--                </el-table-column>-->
                 <el-table-column
                         prop="icon"
-                        label="图标"
-                        width="180">
+                        label="图标">
+                </el-table-column>
+                <el-table-column
+                        prop="url"
+                        label="页面路径">
                 </el-table-column>
                 <el-table-column
                         prop="action"
-                        label="菜单规则">
+                        label="操作规则">
                 </el-table-column>
                 <el-table-column
                         prop="description"
@@ -84,12 +75,12 @@
             ...mapState({
                 tableData:state => state.permission.permissions
             })
+
         },
         methods: {
             ...mapActions("permission",["getPermissions","delPermission"]),
             getName(row){
                 let name="";
-                console.log(row.level);
                 switch(row.level) {
                     case 0:
                         name=row.name;
@@ -143,55 +134,18 @@
         }
     }
 </script>
-<style lang="scss">
-    .el-table{
-        .el-table_1_column_1{
-            .cell{
-                display: flex;
-                flex-direction: row-reverse;
-                justify-content:flex-end;
-            }
-        }
-    }
-
+<style lang="scss" >
     .warp-block{
-        tag-group{
-            margin-bottom:10px;
-        }
-        .box-card{
-            margin-bottom:10px;
-            .el-card__body{
-                padding:5px 10px;
+        margin-bottom:20px;
+        .el-table{
+            tr td:first-child{
+                .cell{
+                    display: flex;
+                    flex-direction: row-reverse;
+                    justify-content:flex-end;
+                }
             }
-            .el-card__header{
-                background:#F2F6FC;
-                padding:0px 10px;
-                span{
-                    &.title{
-                        font-size:16px;
-                        margin-right:10px;
-                    }
+        }
 
-                }
-            }
-            .item{
-                display: flex;
-                flex-direction: row;
-                .item-list{
-                    span{
-                        &.title{
-                            font-size:14px;
-                            margin-right:10px;
-                        }
-                    }
-                    margin-left:15px;
-                }
-            }
-        }
-        .tag-group__title{
-            padding-left:10px;
-            padding-right:10px;
-            font-size:20px;
-        }
     }
 </style>
