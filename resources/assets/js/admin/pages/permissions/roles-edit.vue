@@ -80,7 +80,7 @@
             ...mapActions('permission', ['getPermissions']),
             ...mapActions('role', ['getRoles','addRole','editRole']),
             onSubmit() {
-                
+
                 let parentArr = this.$refs.tree.getHalfCheckedKeys();
                 let childeArr = this.$refs.tree.getCheckedKeys();
                 let arr = childeArr.concat(parentArr);
@@ -115,14 +115,6 @@
             },
             onCancel(){
                 this.$layer.close(this.layerid);
-            },
-            setCheckedKeys() {
-                this.defaultCheckedKeys=this.info.permissions.map(item=>{
-                    return item.id;
-                });
-
-                console.log(this.defaultCheckedKeys);
-                this.$refs.tree.setCheckedKeys(this.defaultCheckedKeys);
             },
             resetChecked() {
                 // this.$refs.tree.setCheckedKeys([]);

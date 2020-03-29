@@ -142,13 +142,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     onCancel: function onCancel() {
       this.$layer.close(this.layerid);
     },
-    setCheckedKeys: function setCheckedKeys() {
-      this.defaultCheckedKeys = this.info.permissions.map(function (item) {
-        return item.id;
-      });
-      console.log(this.defaultCheckedKeys);
-      this.$refs.tree.setCheckedKeys(this.defaultCheckedKeys);
-    },
     resetChecked: function resetChecked() {// this.$refs.tree.setCheckedKeys([]);
     }
   })

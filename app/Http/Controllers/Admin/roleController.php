@@ -57,15 +57,28 @@ class roleController extends Controller
             'name' => $request->input('name'),
             'description' => $request->input('description'),
         ]);
-//        $role->roles()->attach($request->input('roles'));
+        $role->permissions()->attach($request->input('permissions'));
         return ["code"=>200,"msg"=>"新增成功"];
 
     }
 
     public function destroy($id,Request $request){
-        $role = Role::find($id);
-//        $role->roles()->detach();
-        $role::destroy($id);
+
+        $role=Role::get();
+        $roleArr=clone $role;
+        $roleArr=$roleArr->toArray();
+        $ids=$this->getLoopIds($roleArr,$id); //获取要删除的权限id数组
+        array_push($ids,(int)$id);
+        $delData = Role::whereIn('id', $ids)->with("roles")->get();
+        foreach($delData as $v) {
+            $v->roles()->detach(); //删除中间表数据
+        }
+        Role::destroy($ids);
         return ["code"=>200,"msg"=>"删除成功"];
+//
+//        $role = Role::find($id);
+////        $role->roles()->detach();
+//        $role::destroy($id);
+//        return ["code"=>200,"msg"=>"删除成功"];
     }
 }
