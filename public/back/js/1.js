@@ -84,7 +84,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.$nextTick(function () {
       _this.defaultCheckedKeys = _this.info.permissions.map(function (item) {
         return item.id;
-      }); //default-checked-keys会把节点下的所有子节点都选中处理
+      }); //default-checked-keys会把节点下的所有子节点都选中的bug处理
 
       var newArr = [];
       var item = "";

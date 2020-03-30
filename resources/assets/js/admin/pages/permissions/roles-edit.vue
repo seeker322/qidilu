@@ -65,7 +65,7 @@
                 this.defaultCheckedKeys=this.info.permissions.map(item=>{
                     return item.id;
                 });
-                //default-checked-keys会把节点下的所有子节点都选中处理
+                //default-checked-keys会把节点下的所有子节点都选中的bug处理
                 let newArr = [];
                 let item = "";
                 if (this.defaultCheckedKeys && this.defaultCheckedKeys.length !== 0) {

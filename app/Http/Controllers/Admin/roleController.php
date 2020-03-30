@@ -64,21 +64,29 @@ class roleController extends Controller
 
     public function destroy($id,Request $request){
 
-        $role=Role::get();
-        $roleArr=clone $role;
-        $roleArr=$roleArr->toArray();
-        $ids=$this->getLoopIds($roleArr,$id); //获取要删除的权限id数组
-        array_push($ids,(int)$id);
-        $delData = Role::whereIn('id', $ids)->with("roles")->get();
-        foreach($delData as $v) {
-            $v->roles()->detach(); //删除中间表数据
-        }
-        Role::destroy($ids);
+        $role = Role::find($id);
+        $role->permissions()->detach();
+        $role::destroy($id);
         return ["code"=>200,"msg"=>"删除成功"];
-//
-//        $role = Role::find($id);
-////        $role->roles()->detach();
-//        $role::destroy($id);
-//        return ["code"=>200,"msg"=>"删除成功"];
+    }
+
+    //递归获取要删除的id数组
+    public function  getLoopIds($data, $pid = 0,$level = 0)
+    {
+        static $list = [];
+        foreach ($data as  $value){
+            //第一次遍历,找到父节点为根节点的节点 也就是pid=0的节点
+            if ($value['pid'] == $pid){
+                //父节点为根节点的节点,级别为0，也就是第一级
+                $value['level'] = $level;
+                //把数组放到list中
+                $list[] = $value['id'];
+                //把这个节点从数组中移除,减少后续递归消耗
+                //unset($array[$key]);  #尽量注释下这个
+                //开始递归,查找父ID为该节点ID的节点,级别则为原级别+1
+                $this->getLoopIds($data, $value['id'], $level+1);
+            }
+        }
+        return $list;
     }
 }
