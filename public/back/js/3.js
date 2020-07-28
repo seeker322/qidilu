@@ -568,32 +568,6 @@ var render = function() {
               ),
               _vm._v(" "),
               _c(
-                "div",
-                { staticClass: "layout-breadcrumb" },
-                [
-                  _c(
-                    "el-breadcrumb",
-                    { attrs: { "separator-class": "el-icon-arrow-right" } },
-                    [
-                      _c(
-                        "el-breadcrumb-item",
-                        { attrs: { to: { path: "/" } } },
-                        [_vm._v("首页")]
-                      ),
-                      _vm._v(" "),
-                      _c("el-breadcrumb-item", [_vm._v("活动管理")]),
-                      _vm._v(" "),
-                      _c("el-breadcrumb-item", [_vm._v("活动列表")]),
-                      _vm._v(" "),
-                      _c("el-breadcrumb-item", [_vm._v("活动详情")])
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
                 "Content",
                 {
                   style: {
@@ -607,9 +581,7 @@ var render = function() {
               ),
               _vm._v(" "),
               _c("div", { staticClass: "layout-copy" }, [
-                _vm._v(
-                  "\n                    2011-2016 © TalkingData\n                "
-                )
+                _vm._v("\n                    2011-2020\n                ")
               ])
             ],
             1

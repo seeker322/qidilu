@@ -67,19 +67,19 @@
                     
                 </Header>
 
-                <div class="layout-breadcrumb">
-                    <el-breadcrumb separator-class="el-icon-arrow-right">
-                        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                        <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-                        <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-                        <el-breadcrumb-item>活动详情</el-breadcrumb-item>
-                    </el-breadcrumb>
-                </div>
+<!--                <div class="layout-breadcrumb">-->
+<!--                    <el-breadcrumb separator-class="el-icon-arrow-right">-->
+<!--                        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>-->
+<!--                        <el-breadcrumb-item>活动管理</el-breadcrumb-item>-->
+<!--                        <el-breadcrumb-item>活动列表</el-breadcrumb-item>-->
+<!--                        <el-breadcrumb-item>活动详情</el-breadcrumb-item>-->
+<!--                    </el-breadcrumb>-->
+<!--                </div>-->
                 <Content :style="{margin: '15px 20px 10px 20px', background: '#fff', minHeight: '260px'}">
                     <router-view></router-view>
                 </Content>
                 <div class="layout-copy">
-                    2011-2016 &copy; TalkingData
+                    2011-2020
                 </div>
             </Layout>
         </Layout>

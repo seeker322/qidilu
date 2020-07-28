@@ -59,6 +59,7 @@ class LoginController extends Controller
     {
         $this->validateLogin($request);
 
+//        dd(Auth::guard('admin')->attempt(['name' => $request->name, 'password' => $request->password]));
         //admin登录密码123456
         if (Auth::guard('admin')->attempt(['name' => $request->name, 'password' => $request->password])) {
             return ['code'=>200,'msg'=>'登录成功,正在跳转','url'=>$this->redirectTo()];

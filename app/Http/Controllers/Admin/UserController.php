@@ -35,7 +35,7 @@ class UserController extends Controller
             'email.required'=>'邮箱必填',
         ]);
         $user = User::find($id);
-        $user->password=bcrypt($request->input['password']);
+        $user->password=\Hash::make($request->input['password']);
         $user->email=$request->input('email');
         $user->save();
         $user->roles()->sync($request->input('roles'));

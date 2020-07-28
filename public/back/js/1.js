@@ -580,7 +580,11 @@ var render = function() {
                 [_vm._v("立即提交")]
               ),
               _vm._v(" "),
-              _c("el-button", { attrs: { size: "small" } }, [_vm._v("取消")])
+              _c(
+                "el-button",
+                { attrs: { size: "small" }, on: { click: _vm.onCancel } },
+                [_vm._v("取消")]
+              )
             ],
             1
           )
