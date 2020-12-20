@@ -55,6 +55,20 @@ return [
             'visibility' => 'public',
         ],
 
+        'upload' => [
+            'driver' => 'local',
+            'root' => public_path('/upload/img'), // public_path 就是public的路径
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
+        'artical' => [
+            'driver' => 'local',
+            'root' => public_path('/upload/artical'), // public_path 就是public的路径
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

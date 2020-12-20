@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Admin\User;
 
 class UserController extends Controller
@@ -35,8 +36,8 @@ class UserController extends Controller
             'email.required'=>'邮箱必填',
         ]);
         $user = User::find($id);
-        $user->password=\Hash::make($request->input['password']);
-        $user->email=$request->input('email');
+        $user->password=\Hash::make($request->password);
+        $user->email=$request->email;
         $user->save();
         $user->roles()->sync($request->input('roles'));
         return ["code"=>200,"msg"=>"修改成功"];
@@ -57,9 +58,9 @@ class UserController extends Controller
             'email.required'=>'邮箱必填',
         ]);
         $user =User::create([
-            'name' => $request->input('name'),
-            'password' => bcrypt($request->input['password']),
-            'email' => $request->input('email'),
+            'name' => $request->name,
+            'password' => \Hash::make($request->password),
+            'email'=>$request->email
         ]);
         $user->roles()->attach($request->input('roles'));
         return ["code"=>200,"msg"=>"新增成功"];

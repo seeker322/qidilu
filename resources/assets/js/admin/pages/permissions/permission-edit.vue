@@ -47,6 +47,10 @@
             <el-form-item label="页面路径">
                 <el-input v-model="form.url" placeholder="页面访问地址"></el-input>
             </el-form-item>
+            <el-form-item label="页面路径是否带参">
+
+              <el-switch v-model="form.has_params"></el-switch>
+            </el-form-item>
             <el-form-item label="排序" >
                 <el-input v-model="form.sort" ></el-input>
             </el-form-item>
@@ -87,6 +91,7 @@
                     url:null,
                     sort:null,
                     is_menu:false,
+                    has_params:false,
                     icon:"",
                     roles:[],
                 },
@@ -114,7 +119,13 @@
                 if(this.info.is_menu=='1'){
                     this.info.is_menu=true;
                 }
+
+                if(this.info.is_menu=='1'){
+                  this.info.is_menu=true;
+                }
+                this.info.has_params=Boolean(this.info.has_params);
                 this.form=this.info;
+                console.log(this.form);
             }
 
         },

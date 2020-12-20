@@ -43,7 +43,63 @@ const API = {
     },
     getRoles:()=>{
         return axios.get('/role');
-    }
+    },
+
+    addArtical:(params) => {
+        return axios.post('/artical',params);
+    },
+    editArtical:(params)=>{
+        return axios.patch(`/artical/${params.id}`,params);
+    },
+    delArtical:(params)=>{
+        return axios.delete(`/artical/${params.id}`,params);
+    },
+    getArticalList:(params)=>{
+        return axios.get(`/artical/${params.pid}`);
+    },
+
+    editSingle:(params)=>{
+        return axios.patch(`/single/${params.pid}`,params);
+    },
+
+    getSingleInfo:(params)=>{
+        return axios.get(`/single/${params.pid}`);
+    },
+
+    editApp:(params)=>{
+        return axios.patch(`/download/${params.pid}`,params);
+    },
+
+    getAppInfo:(params)=>{
+        return axios.get(`/download/${params.pid}`);
+    },
+
+    addComment:(params) => {
+        return axios.post('/comment',params);
+    },
+    delComment:(params)=>{
+        return axios.delete(`/comment/${params.id}`,params);
+    },
+
+    getCommentList:(params)=>{
+        return axios.get(`/comment`);
+    },
+
+    //视频
+    addVideo:(params) => {
+        return axios.post('/video',params);
+    },
+    editVideo:(params)=>{
+        return axios.patch(`/video/${params.id}`,params);
+    },
+    delVideo:(params)=>{
+        return axios.delete(`/video/${params.id}`,params);
+    },
+    getVideoList:(params)=>{
+        return axios.get(`/video/${params.pid}`);
+    },
+
+
 }
 
 // //异步请求返回统一处理
@@ -52,9 +108,11 @@ axios.interceptors.response.use((response) => {
       return response.data;
     },
     (error) => {
+        console.log(1111);
         let message = error.response.data.message ? error.response.data.message : error.response.statusText
         let dangerouslyUseHTMLString = false
         // 错误代码 422，laravel validate返回
+        console.log(error);
         if (error.response.status === 422 && error.response.data.hasOwnProperty('errors')) {
             for (let key in error.response.data.errors) {
                 let items = error.response.data.errors[key]
@@ -79,7 +137,7 @@ axios.interceptors.response.use((response) => {
         }else{
             const ERR_CODE_LIST = { //常见错误码列表
                 [400]: "请求错误",
-                [401]: "登录失效或在其他地方已登录",
+                [401]: "登录失效",
                 [403]: "拒绝访问",
                 [404]: "请求地址出错",
                 [408]: "请求超时",

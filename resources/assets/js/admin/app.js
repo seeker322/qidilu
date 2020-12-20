@@ -18,6 +18,13 @@ Vue.use(iView);
 Vue.use(ElementUI);
 Vue.prototype.axios = axios;
 Vue.use(VueRouter);
+
+import CKEditor from 'ckeditor4-vue';
+Vue.use( CKEditor );
+
+Vue.prototype.$config={
+    img_url:process.env.MIX_IMG_URL
+}
 //vue-layer
 import layer from 'vue-layer';
 Vue.prototype.$layer = layer(Vue, {

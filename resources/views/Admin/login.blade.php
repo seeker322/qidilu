@@ -72,6 +72,7 @@
     </div>
 </div>
 <script>
+
     new Vue({
         el: '#app',
         data: function() {
@@ -82,6 +83,60 @@
                 captcha:"",
                 captchaSrc:'{{captcha_src()}}'+Math.random()
             }
+        },
+        created() {
+            axios.interceptors.response.use((response) => {
+
+                    return response;
+                },
+                (error) => {
+
+                    let message = error.response.data.message ? error.response.data.message : error.response.statusText
+                    let dangerouslyUseHTMLString = false
+                    // 错误代码 422，laravel validate返回
+
+                    if (error.response.status === 422 && error.response.data.hasOwnProperty('errors')) {
+                        for (let key in error.response.data.errors) {
+                            let items = error.response.data.errors[key]
+                            if (typeof items === 'string') {
+                                message = `${items} `
+                                break;
+                            } else {
+                                this.getCaptcha();
+                                try {
+                                    error.response.data.errors[key].forEach(item => {
+                                        message=`${item}`;
+                                        throw new Error(message);
+                                    })
+                                } catch (e) {
+                                    this.$message.error(message);
+                                    throw e;
+                                    console.log(e);
+                                }
+                            }
+                        }
+                        this.$message.error(message);
+                        dangerouslyUseHTMLString = true
+                    }else{
+                        const ERR_CODE_LIST = { //常见错误码列表
+                            [400]: "请求错误",
+                            [401]: "登录失效",
+                            [403]: "拒绝访问",
+                            [404]: "请求地址出错",
+                            [408]: "请求超时",
+                            [500]: "服务器内部错误",
+                            [501]: "服务未实现",
+                            [502]: "网关错误",
+                            [503]: "服务不可用",
+                            [504]: "网关超时",
+                            [505]: "HTTP版本不受支持"
+
+                        };
+                        this.$message.error(ERR_CODE_LIST[error.response.status]);
+                    }
+                    return Promise.reject(error);
+                }
+            );
         },
         methods:{
            getCaptcha(){

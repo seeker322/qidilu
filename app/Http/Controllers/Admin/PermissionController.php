@@ -68,6 +68,7 @@ class PermissionController extends Controller
         $permission->description=$request->input('description');
         $permission->action=$request->input('action');
         $permission->url=$request->input('url');
+        $permission->has_params=(int)$request->input('has_params');
         $permission->save();
         $permission->roles()->sync($request->input('roles'));
         return ["code"=>200,"msg"=>"修改成功"];
@@ -82,6 +83,7 @@ class PermissionController extends Controller
             'description' => $request->input('description'),
             'pid'=>empty($request->input("pid"))?0:$request->input("pid"),
             'url'=>$request->input('url'),
+            'has_params'=>(int)$request->input('has_params'),
             'sort'=>empty($request->input("sort"))?0:$request->input("sort"),
             'is_menu'=>empty($request->input("is_menu"))?0:$request->input("is_menu"),
             'action'=>$request->input("action")
@@ -121,14 +123,15 @@ class PermissionController extends Controller
                 $this->validate($request,[
                     'name'=>'required',
                     'description'=>'required',
-                    'action' => 'required|unique:admin_permissions,action',
+//                    'action' => 'required|unique:admin_permissions,action',
+                    'action' => 'required',
                     'roles'=>"array|min:1"
                 ],[
                     'name.required'=>'标识必填',
                     'name.unique'=>'标识已存在',
                     'description.required'=>'描述必填',
                     'action.required'=>'操作规则必填',
-                    'action.unique'=>'操作规则已存在',
+//                    'action.unique'=>'操作规则已存在',
                     "roles.min"=>'请选择权限所属角色'
                 ]);
             }else{

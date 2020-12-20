@@ -14,6 +14,8 @@
                     :tree-props="{children: 'child', hasChildren: 'hasChildren'}">
                 <el-table-column
                         prop="name"
+                        fixed="left"
+                        width="150"
                         label="权限名称">
                     <template slot-scope="scope">
                         <span v-html="getName(scope.row)"></span>
@@ -26,6 +28,13 @@
                 <el-table-column
                         prop="url"
                         label="页面路径">
+                </el-table-column>
+                <el-table-column
+
+                    label="Url是否带参">
+                  <template slot-scope="scope">
+                    {{scope.row.has_params?"是":"否"}}
+                  </template>
                 </el-table-column>
                 <el-table-column
                         prop="action"
@@ -43,7 +52,7 @@
                         prop="updated_at"
                         label="修改时间">
                 </el-table-column>
-                <el-table-column label="操作" width="200px">
+                <el-table-column label="操作" width="150px" fixed="right">
                     <template slot-scope="scope">
                         <el-button
                                 size="mini"

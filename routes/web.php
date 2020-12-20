@@ -26,12 +26,23 @@ Route::post('/login', 'Auth\LoginController@authenticate');
 Route::get('/loginOut', 'Auth\LoginController@loginOut');
 
 Route::group(['middleware' => ["auth:admin"],'namespace' => 'Admin', 'prefix' => 'admin'], function () {
-    Route::get('/', function () {
-        return view('admin.index');
-    });
+//    Route::get('/', function () {
+//        return view('admin.index');
+//    });
+    Route::get('/', 'indexController@index');
     Route::resource('user', 'UserController');
     Route::resource('role', 'RoleController');
     Route::resource('permission', 'PermissionController');
+
+    Route::resource('artical', 'ArticalController');
+    Route::resource('video', 'VideoController');
+    Route::resource('single', 'SingleController');
+    Route::resource('download', 'DownLoadController');
+    Route::resource('comment', 'CommentController');
+    Route::post('/uploadImg', 'UploadController@uploadImg');
+    Route::post('/uploadAticalImg', 'UploadController@uploadAticalImg');
+
+
 });
 
 

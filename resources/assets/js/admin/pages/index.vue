@@ -2,7 +2,7 @@
     <div class="layout">
         <Layout>
 
-            <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
+            <Sider :style="{width:'250px', maxWidth:'250px',flex: '0 0 250px', left: 0, overflow: 'auto'}" ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
                 <div class="slider-logo" :class="menuitemClasses">
                     <Icon type="md-settings"></Icon>
                     <span>后台2</span>
@@ -19,13 +19,13 @@
                                     </template>
                                     <template v-for="itemone in item.child">
                                         <template v-if="itemone.is_menu=='1'" >
-                                            <MenuItem :name="itemone.id" :to="'/'+itemone.url">{{itemone.name}}</MenuItem>
+                                            <MenuItem :name="itemone.id" :to="'/'+(itemone.has_params?itemone.url+'/'+itemone.id:itemone.url)">{{itemone.name}}</MenuItem>
                                         </template>
                                     </template>
                                 </Submenu>
                             </template>
                             <template v-else>
-                                 <MenuItem :name="item.id" :to="'/'+item.url">
+                                 <MenuItem :name="item.id" :to="'/'+(item.has_params?item.url+'/'+item.id:item.url)">
                                      <Icon :type="item.icon"></Icon>
                                      <span>{{item.name}}</span>
                                  </MenuItem>
@@ -51,7 +51,7 @@
                         <div class="qi-header-menu-dropdwon">
                             <Dropdown trigger="click"  style="margin-left: 20px;">
                                 <a href="javascript:void(0)" style="color:#999">
-                                    Admin
+                                    {{userInfo.name}}
                                     <Icon type="md-arrow-dropdown" />
                                 </a>
                                 <DropdownMenu slot="list">
@@ -100,6 +100,7 @@
             this.getPermissions().then(res=>{
                 this.getActiveData(res);
             });
+            this.getUserInfo();
 
         },
         computed: {
@@ -116,7 +117,8 @@
                 ]
             },
             ...mapState({
-                permissionList:state => state.permission.permissions
+                permissionList:state => state.permission.permissions,
+                userInfo:state => state.globs.userInfo
             })
         },
         mounted(){
@@ -130,6 +132,7 @@
         },
         methods: {
             ...mapActions("permission",["getPermissions"]),
+            ...mapActions("globs",["getUserInfo"]),
             getActiveData(source){
                 for (var key in source) {
                     if('/'+source[key].url==this.$route.path){
@@ -155,13 +158,12 @@
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     }
                 }).then((e)=>{
-                    console.log(this);
-                        if (e.status == 200 && e.data.code == 200){
-
-                            this.$Message.success(e.data.msg);
+                          console.log(e);
+                        if ( e.code == 200){
+                            this.$Message.success(e.msg);
                             window.location.href = "/login";
                         }else{
-                            this.$Message.error(e.data.msg);
+                            this.$Message.error(e.msg);
                         }
                     }
                 )
@@ -238,7 +240,7 @@
     .menu-item span{
         display: inline-block;
         overflow: hidden;
-        width: 69px;
+        width: 120px;
         text-overflow: ellipsis;
         white-space: nowrap;
         vertical-align: bottom;
@@ -290,5 +292,32 @@
         .qi-header-menu-dropdwon{
             margin-right: 25px;
         }
+    }
+
+    .avatar-uploader .el-upload {
+      border: 1px dashed #d9d9d9;
+      border-radius: 6px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+
+    }
+    .avatar-uploader .el-upload:hover {
+      border-color: #409EFF;
+    }
+    .avatar-uploader-icon {
+      font-size: 28px;
+      color: #8c939d;
+      width: 178px;
+      height: 178px;
+      line-height: 178px;
+      text-align: center;
+    }
+    .avatar {
+      width: 178px;
+      height: 178px;
+      display: block;
+      object-fit: contain;
+
     }
 </style>
