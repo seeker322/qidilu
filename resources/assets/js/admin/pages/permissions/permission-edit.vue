@@ -47,8 +47,7 @@
             <el-form-item label="页面路径">
                 <el-input v-model="form.url" placeholder="页面访问地址"></el-input>
             </el-form-item>
-            <el-form-item label="页面路径是否带参">
-
+            <el-form-item label="是否是单页">
               <el-switch v-model="form.has_params"></el-switch>
             </el-form-item>
             <el-form-item label="排序" >

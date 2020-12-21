@@ -58,6 +58,23 @@ const API = {
         return axios.get(`/artical/${params.pid}`);
     },
 
+    uploadArticalBanner:(params) => {
+        return axios.post('/articalBanner',params);
+    },
+
+    addBanner:(params) => {
+        return axios.post('/banner',params);
+    },
+    editBanner:(params)=>{
+        return axios.patch(`/banner/${params.id}`,params);
+    },
+    delBanner:(params)=>{
+        return axios.delete(`/banner/${params.id}`,params);
+    },
+    getBannerList:(params)=>{
+        return axios.get(`/banner`);
+    },
+
     editSingle:(params)=>{
         return axios.patch(`/single/${params.pid}`,params);
     },

@@ -42,6 +42,7 @@ body {
 
 .operate {
   margin-bottom: 15px;
+  display: flex;
 }
 
 .iframe-block {

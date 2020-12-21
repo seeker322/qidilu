@@ -38,6 +38,7 @@ class CommentController extends Controller
 //    创建资源
     public function store(Request $request)
     {
+
         $data=[
             'name'=>$request->input('name'),
             'phone'=>$request->input('phone'),
@@ -46,7 +47,7 @@ class CommentController extends Controller
         ];
 
         Comment::create($data);
-        return ["code"=>200,"msg"=>"保存成功"];
+        return ["code"=>200,"msg"=>"提交成功"];
     }
 
     //根据id删除对应的资源 user/{id}

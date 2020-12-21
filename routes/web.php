@@ -33,16 +33,16 @@ Route::group(['middleware' => ["auth:admin"],'namespace' => 'Admin', 'prefix' =>
     Route::resource('user', 'UserController');
     Route::resource('role', 'RoleController');
     Route::resource('permission', 'PermissionController');
-
     Route::resource('artical', 'ArticalController');
+    Route::resource('artical', 'ArticalController');
+    Route::post('/articalBanner', 'ArticalController@updateBanner');
+    Route::resource('banner', 'BannerController');
     Route::resource('video', 'VideoController');
     Route::resource('single', 'SingleController');
     Route::resource('download', 'DownLoadController');
     Route::resource('comment', 'CommentController');
     Route::post('/uploadImg', 'UploadController@uploadImg');
     Route::post('/uploadAticalImg', 'UploadController@uploadAticalImg');
-
-
 });
 
 

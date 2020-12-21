@@ -1,8 +1,24 @@
 <template>
     <div class="content-block">
+
         <div class="warp-block">
             <div class="operate">
-                <el-button size="small" @click="handleAdd()" type="primary">新增</el-button>
+                <el-button size="small"  @click="handleAdd()" type="primary">新增</el-button>
+                <el-upload
+                    style="margin-left:10px;"
+                    action="/admin/uploadImg"
+                    :headers="headers"
+                    :show-file-list="false"
+                    :limit="1"
+                    :on-success="handleUploadSuccess"
+                    >
+                    <el-button size="small" type="primary">BANNER图片上传</el-button>
+                </el-upload>
+                <el-input v-model="bannerImg" v-if="bannerImg" @focus="showViewer=true" readonly style="margin-left:10px;width:300px;" size="small" placeholder="请选择图片上传"></el-input>
+                <el-image-viewer
+                    v-if="showViewer"
+                    :on-close="()=>{showViewer=false}"
+                    :url-list="[bannerImg]" />
             </div>
           <template>
             <el-table
@@ -66,10 +82,17 @@
     import {mapState,mapActions} from 'vuex';
     import edit from './edit';
     export default {
+        components: {
+          'el-image-viewer':()=>import('element-ui/packages/image/src/image-viewer')
+        },
         data () {
             return {
               pid:"",
 
+              showViewer:false,
+              headers: {
+                "X-CSRF-TOKEN":document.querySelector("meta[name='csrf-token']").getAttribute("content")
+              },
             }
         },
         created(){
@@ -78,7 +101,8 @@
         },
         computed:{
             ...mapState({
-                tableData:state => state.artical.articalList
+                tableData:state => state.artical.articalList,
+                bannerImg:state => state.artical.banner
             })
 
         },
@@ -93,7 +117,10 @@
           console.log(this.$route.params.id);
         },
         methods: {
-            ...mapActions("artical",["getArticalList","delArtical"]),
+            ...mapActions("artical",["getArticalList","delArtical","uploadArticalBanner"]),
+            handleUploadSuccess(res, file) {
+              this.uploadArticalBanner({pid:this.pid,banner:res.data});
+            },
             handleEdit(row) {
                 this.$layer.iframe({
                     content: {

@@ -5,9 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Admin\Artical;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Admin\Permission;
 
 class ArticalController extends Controller
 {
+    //
+    public function updateBanner(Request $request){
+        $permission = Permission::where("id",$request->input('pid'))->first();
+        $permission->banner=$request->input('banner');
+        $permission->save();
+        return ["code"=>200,"msg"=>"修改成功"];
+    }
     //显示所有的用户
     public function index(Request $request)
     {
@@ -22,8 +30,12 @@ class ArticalController extends Controller
     public function show($id,Request $request){
 
         $articalLsit= Artical::where("pid",$id)->get()->toArray();
-
-        return ["code"=>200,'data'=>$articalLsit,"msg"=>"修改成功"];
+        $permission = Permission::where("id",$id)->first();
+        $data=array(
+            "list"=>$articalLsit,
+            "banner"=>$permission->banner
+        );
+        return ["code"=>200,'data'=>$data,"msg"=>"获取成功"];
     }
     //根据id显示对应的资源编辑界面 {id}/edit
     public function edit($id,Request $request){

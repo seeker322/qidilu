@@ -109,6 +109,14 @@ export default new VueRouter({
                         title: '公司介绍'
                     },
                     component: resolve => void(require(['../pages/app/index.vue'], resolve))
+                },
+                {
+                    name: 'banner',
+                    path: '/banner',
+                    meta: {
+                        title: '轮播图'
+                    },
+                    component: resolve => void(require(['../pages/banner/list.vue'], resolve))
                 }
             ]
         },
