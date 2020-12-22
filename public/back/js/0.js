@@ -232,7 +232,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     'el-image-viewer': function elImageViewer() {
-      return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! element-ui/packages/image/src/image-viewer */ "./node_modules/element-ui/packages/image/src/image-viewer.vue"));
+      return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! element-ui/packages/image/src/image-viewer */ "./node_modules/element-ui/packages/image/src/image-viewer.vue"));
     }
   },
   data: function data() {

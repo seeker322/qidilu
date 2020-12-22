@@ -70,6 +70,14 @@ export default new VueRouter({
                     component: resolve => void(require(['../pages/artical/list.vue'], resolve))
                 },
                 {
+                    name: 'news',
+                    path: '/news/:id',
+                    meta: {
+                        title: '新闻中心'
+                    },
+                    component: resolve => void(require(['../pages/artical/list.vue'], resolve))
+                },
+                {
                     name: 'company',
                     path: '/company/:id',
                     meta: {

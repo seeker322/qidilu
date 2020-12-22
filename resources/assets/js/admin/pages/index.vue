@@ -4,8 +4,8 @@
 
             <Sider :style="{width:'250px', maxWidth:'250px',flex: '0 0 250px', left: 0, overflow: 'auto'}" ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
                 <div class="slider-logo" :class="menuitemClasses">
-                    <Icon type="md-settings"></Icon>
-                    <span>后台2</span>
+<!--                    <Icon type="md-settings"></Icon>-->
+                    <span>E汇客后台</span>
 
                 </div>
                 <Menu ref="side_menu" :active-name="activeId" theme="dark" width="auto" :open-names="[openId]" :class="menuitemClasses">
@@ -47,7 +47,10 @@
                 <Header :style="{padding: 0}" class="layout-header-bar">
                     <div class="qi-header-menu">
 
-                        <div class="qi-header-menu-icon"><Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon></div>
+                        <div class="qi-header-menu-icon">
+
+<!--                          <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon>-->
+                        </div>
                         <div class="qi-header-menu-dropdwon">
                             <Dropdown trigger="click"  style="margin-left: 20px;">
                                 <a href="javascript:void(0)" style="color:#999">

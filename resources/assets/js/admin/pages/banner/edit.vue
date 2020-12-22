@@ -4,7 +4,7 @@
             <el-form-item label="标题" >
                 <el-input v-model="form.title" placeholder="请输入标题"></el-input>
             </el-form-item>
-            <el-form-item label="图片">
+            <el-form-item label="PC端图片">
               <el-upload
                   class="avatar-uploader"
                   action="/admin/uploadImg"
@@ -13,6 +13,18 @@
                   :on-success="handleCoverSuccess"
                   >
                 <img v-if="form.img" :src="$config.img_url+form.img" class="avatar">
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload>
+            </el-form-item>
+            <el-form-item label="移动端图片">
+              <el-upload
+                  class="avatar-uploader"
+                  action="/admin/uploadImg"
+                  :headers="headers"
+                  :show-file-list="false"
+                  :on-success="handleMobileSuccess"
+              >
+                <img v-if="form.mobile_img" :src="$config.img_url+form.mobile_img" class="avatar">
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
             </el-form-item>
@@ -47,6 +59,7 @@
                     title:"",
                     url:'',
                     img:"",
+                    mobile_img:"",
                     sort:""
                 },
             }
@@ -71,6 +84,9 @@
 
             handleCoverSuccess(res, file) {
               this.form.img =res.data;
+            },
+            handleMobileSuccess(res, file) {
+              this.form.mobile_img =res.data;
             },
             onSubmit() {
 

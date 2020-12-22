@@ -35,7 +35,9 @@ class BannerController extends Controller
         $banner = Banner::find($id);
         $banner->title=$request->input('title');
         $banner->img=$request->input('img');
+        $banner->mobile_img=$request->input('mobile_img');
         $banner->sort=$request->input('sort');
+
         $banner->url=$request->input('url');
         $banner->save();
         return ["code"=>200,"msg"=>"修改成功"];
@@ -46,6 +48,7 @@ class BannerController extends Controller
         $data=[
             'title'=>$request->input('title'),
             'img'=>$request->input('img'),
+            'mobile_img'=>$request->input('mobile_img'),
             'sort'=>$request->input('sort'),
             'url'=>$request->input('url')
         ];

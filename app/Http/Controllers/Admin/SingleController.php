@@ -39,6 +39,7 @@ class SingleController extends Controller
             $single->content=$request->input('content');
             $single->cover_img=$request->input('cover_img');
             $single->icon=$request->input('icon');
+            $single->hover_icon=$request->input('hover_icon');
             $single->save();
             return ["code"=>200,"msg"=>"保存成功"];
         }else{
@@ -56,7 +57,8 @@ class SingleController extends Controller
             'description'=>$request->input('description'),
             'content'=>$request->input('content'),
             'cover_img'=>$request->input('cover_img'),
-            'icon'=>$request->input('icon')
+            'icon'=>$request->input('icon'),
+            'hover_icon'=>$request->input('hover_icon')
         ];
 
         Single::create($data);

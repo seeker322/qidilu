@@ -8,25 +8,50 @@
             <el-form-item label="描述">
               <el-input type="textarea" v-model="form.description" placeholder="请输入描述"></el-input>
             </el-form-item>
+            <div style="display: flex">
+              <el-form-item label="banner图">
+                <el-upload
+                    class="avatar-uploader"
+                    action="/admin/uploadImg"
+                    :headers="headers"
+                    :show-file-list="false"
+                    :on-success="handleCoverSuccess"
+                >
+                  <img v-if="form.cover_img" :src="$config.img_url+form.cover_img" class="avatar">
+                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+              </el-form-item>
+              <el-form-item label="icon图" style="margin-left:20px;">
+                <el-upload
+                    class="avatar-uploader"
+                    action="/admin/uploadImg"
+                    :headers="headers"
+                    :show-file-list="false"
+                    :on-success="handleIconSuccess"
+                >
+                  <img v-if="form.icon" :src="$config.img_url+form.icon" class="avatar">
+                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+              </el-form-item>
+              <el-form-item label="鼠标经过icon" style="margin-left:20px;">
+                <el-upload
+                    class="avatar-uploader"
+                    action="/admin/uploadImg"
+                    :headers="headers"
+                    :show-file-list="false"
+                    :on-success="handleHoverIconSuccess"
+                >
+                  <img v-if="form.hover_icon" :src="$config.img_url+form.hover_icon" class="avatar">
+                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+              </el-form-item>
+            </div>
 
-            <el-form-item label="图片">
-              <el-upload
-                  class="avatar-uploader"
-                  action="/admin/uploadImg"
-                  :headers="headers"
-                  :show-file-list="false"
-                  :on-success="handleCoverSuccess"
-                  >
-                <img v-if="form.cover_img" :src="$config.img_url+form.cover_img" class="avatar">
-                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-              </el-upload>
-            </el-form-item>
             <el-form-item label="内容" >
               <ckeditor v-model="form.content"></ckeditor>
             </el-form-item>
             <el-form-item size="large">
                 <el-button type="primary" size="small" @click="onSubmit">确定</el-button>
-
             </el-form-item>
         </el-form>
     </div>
@@ -47,6 +72,8 @@
                     description:'',
                     content:"",
                     cover_img:"",
+                    icon:"",
+                    hover_icon:""
                 },
             }
         },
@@ -65,6 +92,8 @@
                   description:'',
                   content:"",
                   cover_img:"",
+                  icon:"",
+                  hover_icon:""
               }
             }
 
@@ -87,6 +116,8 @@
                   description:'',
                   content:"",
                   cover_img:"",
+                  icon:"",
+                  hover_icon:""
                 }
               }
 
@@ -102,6 +133,12 @@
 
             handleCoverSuccess(res, file) {
               this.form.cover_img =res.data;
+            },
+            handleHoverIconSuccess(res, file) {
+              this.form.hover_icon =res.data;
+            },
+            handleIconSuccess(res, file) {
+              this.form.icon =res.data;
             },
 
             onSubmit() {

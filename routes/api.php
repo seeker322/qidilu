@@ -18,3 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('addComment','Admin\CommentController@store');
+
+Route::get('getBanner','Admin\BannerController@index');
+Route::get('getPosChannel','Admin\PermissionController@getPosChannel');
+Route::get('getTenChannel','Admin\PermissionController@getTenChannel');
+
+

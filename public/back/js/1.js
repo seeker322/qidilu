@@ -50,6 +50,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "edit",
@@ -63,7 +88,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         title: "",
         description: '',
         content: "",
-        cover_img: ""
+        cover_img: "",
+        icon: "",
+        hover_icon: ""
       }
     };
   },
@@ -82,7 +109,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           title: "",
           description: '',
           content: "",
-          cover_img: ""
+          cover_img: "",
+          icon: "",
+          hover_icon: ""
         };
       }
     });
@@ -104,7 +133,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             title: "",
             description: '',
             content: "",
-            cover_img: ""
+            cover_img: "",
+            icon: "",
+            hover_icon: ""
           };
         }
       });
@@ -115,6 +146,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('single', ['getSingleInfo', 'editSingle'])), {}, {
     handleCoverSuccess: function handleCoverSuccess(res, file) {
       this.form.cover_img = res.data;
+    },
+    handleHoverIconSuccess: function handleHoverIconSuccess(res, file) {
+      this.form.hover_icon = res.data;
+    },
+    handleIconSuccess: function handleIconSuccess(res, file) {
+      this.form.icon = res.data;
     },
     onSubmit: function onSubmit() {
       var _this3 = this;
@@ -189,30 +226,107 @@ var render = function() {
           ),
           _vm._v(" "),
           _c(
-            "el-form-item",
-            { attrs: { label: "图片" } },
+            "div",
+            { staticStyle: { display: "flex" } },
             [
               _c(
-                "el-upload",
+                "el-form-item",
+                { attrs: { label: "banner图" } },
+                [
+                  _c(
+                    "el-upload",
+                    {
+                      staticClass: "avatar-uploader",
+                      attrs: {
+                        action: "/admin/uploadImg",
+                        headers: _vm.headers,
+                        "show-file-list": false,
+                        "on-success": _vm.handleCoverSuccess
+                      }
+                    },
+                    [
+                      _vm.form.cover_img
+                        ? _c("img", {
+                            staticClass: "avatar",
+                            attrs: {
+                              src: _vm.$config.img_url + _vm.form.cover_img
+                            }
+                          })
+                        : _c("i", {
+                            staticClass: "el-icon-plus avatar-uploader-icon"
+                          })
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
                 {
-                  staticClass: "avatar-uploader",
-                  attrs: {
-                    action: "/admin/uploadImg",
-                    headers: _vm.headers,
-                    "show-file-list": false,
-                    "on-success": _vm.handleCoverSuccess
-                  }
+                  staticStyle: { "margin-left": "20px" },
+                  attrs: { label: "icon图" }
                 },
                 [
-                  _vm.form.cover_img
-                    ? _c("img", {
-                        staticClass: "avatar",
-                        attrs: { src: _vm.$config.img_url + _vm.form.cover_img }
-                      })
-                    : _c("i", {
-                        staticClass: "el-icon-plus avatar-uploader-icon"
-                      })
-                ]
+                  _c(
+                    "el-upload",
+                    {
+                      staticClass: "avatar-uploader",
+                      attrs: {
+                        action: "/admin/uploadImg",
+                        headers: _vm.headers,
+                        "show-file-list": false,
+                        "on-success": _vm.handleIconSuccess
+                      }
+                    },
+                    [
+                      _vm.form.icon
+                        ? _c("img", {
+                            staticClass: "avatar",
+                            attrs: { src: _vm.$config.img_url + _vm.form.icon }
+                          })
+                        : _c("i", {
+                            staticClass: "el-icon-plus avatar-uploader-icon"
+                          })
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                {
+                  staticStyle: { "margin-left": "20px" },
+                  attrs: { label: "鼠标经过icon" }
+                },
+                [
+                  _c(
+                    "el-upload",
+                    {
+                      staticClass: "avatar-uploader",
+                      attrs: {
+                        action: "/admin/uploadImg",
+                        headers: _vm.headers,
+                        "show-file-list": false,
+                        "on-success": _vm.handleHoverIconSuccess
+                      }
+                    },
+                    [
+                      _vm.form.hover_icon
+                        ? _c("img", {
+                            staticClass: "avatar",
+                            attrs: {
+                              src: _vm.$config.img_url + _vm.form.hover_icon
+                            }
+                          })
+                        : _c("i", {
+                            staticClass: "el-icon-plus avatar-uploader-icon"
+                          })
+                    ]
+                  )
+                ],
+                1
               )
             ],
             1

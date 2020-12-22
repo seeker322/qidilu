@@ -15,6 +15,22 @@ class PermissionController extends Controller
         return ["code"=>200,"data"=>$menu];
     }
 
+
+    public function getPosChannel()
+    {
+        $permission=Permission::orderBy('sort','asc')->get()->toArray();
+        $menu=$this->getLoopMenu($permission,53);
+        return ["code"=>200,"data"=>$menu];
+    }
+
+    public function getTenChannel()
+    {
+        $permission=Permission::orderBy('sort','asc')->get()->toArray();
+        $menu=$this->getLoopMenu($permission,58);
+        return ["code"=>200,"data"=>$menu];
+    }
+
+
     public function create(Request $request)
     {
 
