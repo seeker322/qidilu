@@ -8,11 +8,17 @@
             <el-form-item label="描述">
               <el-input type="textarea" v-model="form.description" placeholder="请输入描述"></el-input>
             </el-form-item>
+            <el-form-item label="是否推荐首页">
+              <el-switch v-model="form.recommend"></el-switch>
+            </el-form-item>
             <el-form-item label="作者">
               <el-input v-model="form.author" placeholder="请输入作者"></el-input>
             </el-form-item>
             <el-form-item label="来源">
               <el-input v-model="form.origin" placeholder="请输入来源"></el-input>
+            </el-form-item>
+            <el-form-item label="视频地址">
+              <el-input v-model="form.video_url" placeholder="请输入视频地址"></el-input>
             </el-form-item>
             <el-form-item label="封面图">
               <el-upload
@@ -59,7 +65,9 @@
                     author:"",
                     origin:"",
                     sort:"",
+                    video_url:"",
                     cover_img:"",
+                    recommend:0,
                 },
             }
         },
@@ -71,16 +79,14 @@
 
         },
         mounted() {
-            // this.$layer.full(this.layerid);
+          // this.$layer.full(this.layerid);
           if(this.info){
+            this.info.recommend=Boolean(this.info.recommend)
             this.form=this.info;
           }
-
-
         },
         methods: {
             ...mapActions('artical', ['addArtical','editArtical','getArticalList']),
-
             handleCoverSuccess(res, file) {
               this.form.cover_img =res.data;
             },
@@ -89,8 +95,11 @@
             },
 
             onSubmit() {
+
                 this.form.pid=this.pid;
-                let params=this.form;
+                let params=JSON.parse(JSON.stringify(this.form));
+                params.recommend=Number(params.recommend);
+
                 if(this.info){ //编辑
                     this.editArtical(params).then(res=>{
                         this.getArticalList({pid:this.pid});

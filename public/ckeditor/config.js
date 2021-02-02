@@ -36,6 +36,9 @@ CKEDITOR.editorConfig = function( config ) {
     config.filebrowserImageUploadUrl= "admin/uploadAticalImg";
     // Simplify the dialog windows.
     config.removeDialogTabs = 'image:advanced;link:advanced';
+    //
+    // config.uploadUrl = 'admin/uploadAticalImg';
+    // config.filebrowserUploadUrl = "admin/uploadAticalImg";
 
     // config.toolbar = 'Full';
     // config.toolbar_Full = [

@@ -115,8 +115,38 @@ const API = {
     getVideoList:(params)=>{
         return axios.get(`/video/${params.pid}`);
     },
+    getWebInfo:()=>{
+        return axios.get(`/getWebInfo`);
+    },
+    saveVideo:(params) => {
+        return axios.post('/saveVideo',params);
+    },
+    saveSearchKey:(params) => {
+        return axios.post('/setSearchKey',params);
+    },
+    saveSeo:(params) => {
+        return axios.post('/saveSeo',params);
+    },
+    addCertificate:(params) => {
+        return axios.post('/addCertificate',params);
+    },
 
+    editCertificate:(params) => {
+        return axios.post(`/updateCertificate/${params.id}`,params);
+    },
+    delCertificate:(params)=>{
+        return axios.get(`/delCertificate/${params.id}`,params);
+    },
+    addPartner:(params) => {
+        return axios.post('/addPartner',params);
+    },
 
+    editPartner:(params) => {
+        return axios.post(`/updatePartner/${params.id}`,params);
+    },
+    delPartner:(params)=>{
+        return axios.get(`/delPartner/${params.id}`,params);
+    },
 }
 
 // //异步请求返回统一处理

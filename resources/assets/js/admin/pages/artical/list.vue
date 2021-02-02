@@ -27,9 +27,11 @@
                 style="width: 100%">
               <el-table-column
                   fixed
-                  prop="title"
                   label="标题"
-                  width="150">
+                  width="300">
+                  <template slot-scope="scope">
+                    <div style="width: 100%;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">{{scope.row.title}}</div>
+                  </template>
               </el-table-column>
               <el-table-column
                   prop="author"
@@ -42,9 +44,14 @@
                   width="120">
               </el-table-column>
               <el-table-column
-                  prop="description"
+
                   label="描述"
+                  style="overflow: hidden;"
                   width="200">
+                  <template slot-scope="scope">
+                    <div style="width: 100%;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">{{scope.row.description}}</div>
+                  </template>
+
               </el-table-column>
               <el-table-column
                   prop="sort"
@@ -122,7 +129,7 @@
               this.uploadArticalBanner({pid:this.pid,banner:res.data});
             },
             handleEdit(row) {
-                this.$layer.iframe({
+                let layer=this.$layer.iframe({
                     content: {
                         content: edit, //传递的组件对象
                         parent: this,//当前的vue对象
@@ -131,11 +138,13 @@
                     area:['800px','600px'],
                     shade: true,//是否显示遮罩
                     title: '编辑',
+                    maxmin: true,
                     shadeClose: false
                 });
+
             },
             handleAdd(){
-                this.$layer.iframe({
+                let layer=this.$layer.iframe({
                     content: {
                         content: edit, //传递的组件对象
                         parent: this,//当前的vue对象
@@ -147,6 +156,7 @@
                     title: '添加',
                     shadeClose: false
                 });
+
             },
             handleDelete(row) {
                 this.$layer.confirm("删除后不可恢复，确定删除吗？",(layerid)=>{

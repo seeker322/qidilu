@@ -3,16 +3,12 @@ CKEDITOR.plugins.setLang( 'html5video', 'es', {
     title: 'Video HTML5',
     infoLabel: 'Información del video',
     allowed: 'Extensiones de archivo permitidas: MP4, WebM, Ogv',
-    urlMissing: 'La URL del video no puede estar vacía.',
+    urlMissing: 'La URL del video no puede estar vacia.',
     videoProperties: 'Propiedades del video',
     upload: 'Cargar',
     btnUpload: 'Enviar al servidor',
     advanced: 'Avanzado',
     autoplay: '¿Reproducir automáticamente?',
-    allowdownload: 'Allow download?',
-    advisorytitle: 'Advisory title',
-    yes: 'Sí',
-    no: 'No',
-    responsive: '¿Responsive?',
-    controls: 'Mostrar controles'
+    yes: 'Si',
+    no: 'No'
 } );

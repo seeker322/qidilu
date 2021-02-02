@@ -9,9 +9,6 @@ CKEDITOR.plugins.setLang( 'html5video', 'uz', {
     btnUpload: 'Serverga jo‘natish',
     advanced: 'Kengaytrilgan',
     autoplay: 'Avtoijro?',
-    allowdownload: 'Allow download?',
-    advisorytitle: 'Advisory title',
     yes: 'Ha',
-    no: 'Yo‘q',
-    controls: 'Tekshiruvlarni ko‘rsatish'
+    no: 'Yo‘q'
 } );

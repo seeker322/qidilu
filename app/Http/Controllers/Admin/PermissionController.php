@@ -16,12 +16,23 @@ class PermissionController extends Controller
     }
 
 
-    public function getPosChannel()
+    public function getPeerChannel($id,Request $request)
     {
+        $channel=Permission::find($id);
+        $pid=$channel->pid;
         $permission=Permission::orderBy('sort','asc')->get()->toArray();
-        $menu=$this->getLoopMenu($permission,53);
+        $menu=$this->getLoopMenu($permission,$pid);
         return ["code"=>200,"data"=>$menu];
     }
+
+    public function getSonChannel($id,Request $request)
+    {
+        $permission=Permission::orderBy('sort','asc')->get()->toArray();
+        $menu=$this->getLoopMenu($permission,$id);
+        return ["code"=>200,"data"=>$menu];
+    }
+
+
 
     public function getTenChannel()
     {
@@ -84,6 +95,9 @@ class PermissionController extends Controller
         $permission->description=$request->input('description');
         $permission->action=$request->input('action');
         $permission->url=$request->input('url');
+        //这两项在栏目单页设置
+        $permission->menu_icon=$request->input('menu_icon');
+        $permission->menu_hover_icon=$request->input('menu_hover_icon');
         $permission->has_params=(int)$request->input('has_params');
         $permission->save();
         $permission->roles()->sync($request->input('roles'));
@@ -110,7 +124,6 @@ class PermissionController extends Controller
 
     public function destroy($id,Request $request){
         $permission=Permission::get();
-
         $permissionArr=clone $permission;
         $permissionArr=$permissionArr->toArray();
         $ids=$this->getLoopIds($permissionArr,$id); //获取要删除的权限id数组

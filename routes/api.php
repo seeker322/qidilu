@@ -20,7 +20,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('addComment','Admin\CommentController@store');
 
 Route::get('getBanner','Admin\BannerController@index');
-Route::get('getPosChannel','Admin\PermissionController@getPosChannel');
-Route::get('getTenChannel','Admin\PermissionController@getTenChannel');
+//获取相同级别的栏目数据
+Route::get('getSonChannel/{id}','Admin\PermissionController@getSonChannel');
+Route::get('getPeerChannel/{id}','Admin\PermissionController@getPeerChannel');
+Route::get('getArticalList/{id}','Admin\ArticalController@show');
 
+Route::post('getSearchList','Admin\ArticalController@getSearchList');
+Route::get('getArticalInfo/{id}','Admin\ArticalController@getArticalInfo');
+Route::get('getTenChannel','Admin\PermissionController@getTenChannel');
+Route::get('getSingleInfo/{id}','Admin\SingleController@show');
+Route::get('getAllArtical/{id}','Admin\ArticalController@getAllArtical');
+Route::get('getWebInfo','Admin\WebInfoController@index');
+Route::get('getAppInfo','Admin\DownLoadController@index');
+
+Route::get('getVideoList/{id}','Admin\VideoController@show');
+Route::get('getVideoInfo/{id}','Admin\VideoController@getVideoInfo');
 

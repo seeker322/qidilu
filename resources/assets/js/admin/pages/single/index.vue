@@ -1,6 +1,6 @@
 <template>
     <div class="iframe-block">
-        <el-form ref="form" :model="form" label-width="100px">
+        <el-form ref="form" :model="form"  label-width="100px">
 
             <el-form-item label="标题" >
                 <el-input v-model="form.title" placeholder="请输入标题"></el-input>
@@ -29,7 +29,7 @@
                     :show-file-list="false"
                     :on-success="handleIconSuccess"
                 >
-                  <img v-if="form.icon" :src="$config.img_url+form.icon" class="avatar">
+                  <img v-if="form.menu_icon" :src="$config.img_url+form.menu_icon" class="avatar">
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
               </el-form-item>
@@ -41,12 +41,15 @@
                     :show-file-list="false"
                     :on-success="handleHoverIconSuccess"
                 >
-                  <img v-if="form.hover_icon" :src="$config.img_url+form.hover_icon" class="avatar">
+                  <img v-if="form.menu_hover_icon" :src="$config.img_url+form.menu_hover_icon" class="avatar">
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
               </el-form-item>
-            </div>
 
+            </div>
+            <el-form-item label="排序" >
+              <el-input v-model="form.sort" type="Number" placeholder="请输入排序"></el-input>
+            </el-form-item>
             <el-form-item label="内容" >
               <ckeditor v-model="form.content"></ckeditor>
             </el-form-item>
@@ -72,8 +75,9 @@
                     description:'',
                     content:"",
                     cover_img:"",
-                    icon:"",
-                    hover_icon:""
+                    sort:"",
+                    menu_icon:"",
+                    menu_hover_icon:""
                 },
             }
         },
@@ -92,8 +96,8 @@
                   description:'',
                   content:"",
                   cover_img:"",
-                  icon:"",
-                  hover_icon:""
+                  menu_icon:"",
+                  menu_hover_icon:""
               }
             }
 
@@ -116,8 +120,8 @@
                   description:'',
                   content:"",
                   cover_img:"",
-                  icon:"",
-                  hover_icon:""
+                  menu_icon:"",
+                  menu_hover_icon:""
                 }
               }
 
@@ -132,13 +136,14 @@
             ...mapActions('single', ['getSingleInfo','editSingle']),
 
             handleCoverSuccess(res, file) {
+              console.log(res);
               this.form.cover_img =res.data;
             },
             handleHoverIconSuccess(res, file) {
-              this.form.hover_icon =res.data;
+              this.form.menu_hover_icon =res.data;
             },
             handleIconSuccess(res, file) {
-              this.form.icon =res.data;
+              this.form.menu_icon =res.data;
             },
 
             onSubmit() {

@@ -12,6 +12,8 @@ class IndexController extends Controller
     public function index(Request $request)
     {
         $user=Auth::user();
-        return view('admin.index',["userInfo"=>array("name"=>$user->name,"email"=>$user->email)]);
+        return view('Admin.index',["userInfo"=>array("name"=>$user->name,"email"=>$user->email)]);
     }
+
+
 }

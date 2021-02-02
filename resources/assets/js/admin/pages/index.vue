@@ -19,13 +19,13 @@
                                     </template>
                                     <template v-for="itemone in item.child">
                                         <template v-if="itemone.is_menu=='1'" >
-                                            <MenuItem :name="itemone.id" :to="'/'+(itemone.has_params?itemone.url+'/'+itemone.id:itemone.url)">{{itemone.name}}</MenuItem>
+                                            <MenuItem :name="itemone.id" @click.native="setCurrentPageData(itemone)"  :to="'/'+(itemone.has_params?itemone.url+'/'+itemone.id:itemone.url)">{{itemone.name}}</MenuItem>
                                         </template>
                                     </template>
                                 </Submenu>
                             </template>
                             <template v-else>
-                                 <MenuItem :name="item.id" :to="'/'+(item.has_params?item.url+'/'+item.id:item.url)">
+                                 <MenuItem :name="item.id" @click.native="setCurrentPageData(item)"  :to="'/'+(item.has_params?item.url+'/'+item.id:item.url)">
                                      <Icon :type="item.icon"></Icon>
                                      <span>{{item.name}}</span>
                                  </MenuItem>
@@ -49,6 +49,7 @@
 
                         <div class="qi-header-menu-icon">
 
+                          <Button type="text" style="font-size:20px;">{{curPageTitle}}</Button>
 <!--                          <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon>-->
                         </div>
                         <div class="qi-header-menu-dropdwon">
@@ -78,7 +79,7 @@
 <!--                        <el-breadcrumb-item>活动详情</el-breadcrumb-item>-->
 <!--                    </el-breadcrumb>-->
 <!--                </div>-->
-                <Content :style="{margin: '15px 20px 10px 20px', background: '#fff', minHeight: '260px'}">
+                <Content :style="{margin: '15px 20px 10px 20px', background: '#fff'}">
                     <router-view></router-view>
                 </Content>
                 <div class="layout-copy">
@@ -97,6 +98,7 @@
                 isCollapsed: false,
                 activeId:0,
                 openId:0,
+                curPageTitle:""
             }
         },
         created(){
@@ -104,6 +106,15 @@
                 this.getActiveData(res);
             });
             this.getUserInfo();
+            let curPageTitle=localStorage.getItem("curPageTitle");
+            if(curPageTitle){
+              this.curPageTitle=curPageTitle
+            }else{
+              localStorage.setItem("curPageTitle", "控制台");
+              this.curPageTitle="控制台"
+
+            }
+
 
         },
         computed: {
@@ -136,6 +147,10 @@
         methods: {
             ...mapActions("permission",["getPermissions"]),
             ...mapActions("globs",["getUserInfo"]),
+            setCurrentPageData(item){
+              localStorage.setItem("curPageTitle", item.name);
+              this.curPageTitle= item.name
+            },
             getActiveData(source){
                 for (var key in source) {
                     if('/'+source[key].url==this.$route.path){
@@ -268,6 +283,10 @@
     }
     .ivu-menu.collapsed-menu{
         padding-top:14px;
+    }
+    .ivu-layout-content{
+      height:auto;
+      min-height: auto;
     }
     .collapsed-menu{
         .ivu-icon-ios-arrow-down:before,.ivu-icon-ios-arrow-up:before{

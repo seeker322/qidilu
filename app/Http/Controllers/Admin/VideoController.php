@@ -18,11 +18,18 @@ class VideoController extends Controller
     {
 
     }
+
+    //根据id显示对应的资源  user/{id}
+    public function getVideoInfo($id,Request $request){
+
+        $videoInfo= Video::find($id);
+        return ["code"=>200,'data'=>$videoInfo,"msg"=>"修改成功"];
+    }
+
     //根据id显示对应的资源  user/{id}
     public function show($id,Request $request){
 
         $videoLsit= Video::where("pid",$id)->get()->toArray();
-
         return ["code"=>200,'data'=>$videoLsit,"msg"=>"修改成功"];
     }
     //根据id显示对应的资源编辑界面 {id}/edit

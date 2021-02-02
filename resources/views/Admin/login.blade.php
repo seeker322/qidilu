@@ -8,13 +8,13 @@
     <link rel="stylesheet" type="text/css" href="/common/css/zui.css" media="all">
     <link rel="stylesheet" type="text/css" href="/common/css/login.css" media="all">
     <link href="/common/css/animate.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="/common/css/index.css">
     <script src="/common/js/vue.js"></script>
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="/common/js/index.js"></script>
     <script src="/common/js/axios.min.js"></script>
 
     <style>
-        /*body { background-image: url("/common/img/loginbg.jpg");}*/
+        body { background-image: url("/common/img/loginbg.jpg");}
         #app{width: 100%;height:100%;}
     </style>
 </head>
@@ -178,8 +178,6 @@
                        }
                    }
                )
-
-
            }
         }
     })

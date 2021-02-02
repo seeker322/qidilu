@@ -58,6 +58,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "edit",
@@ -75,7 +81,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         author: "",
         origin: "",
         sort: "",
-        cover_img: ""
+        video_url: "",
+        cover_img: "",
+        recommend: 0
       }
     };
   },
@@ -86,6 +94,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     // this.$layer.full(this.layerid);
     if (this.info) {
+      this.info.recommend = Boolean(this.info.recommend);
       this.form = this.info;
     }
   },
@@ -100,7 +109,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       this.form.pid = this.pid;
-      var params = this.form;
+      var params = JSON.parse(JSON.stringify(this.form));
+      params.recommend = Number(params.recommend);
 
       if (this.info) {
         //编辑
@@ -227,12 +237,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     'el-image-viewer': function elImageViewer() {
-      return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! element-ui/packages/image/src/image-viewer */ "./node_modules/element-ui/packages/image/src/image-viewer.vue"));
+      return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! element-ui/packages/image/src/image-viewer */ "./node_modules/element-ui/packages/image/src/image-viewer.vue"));
     }
   },
   data: function data() {
@@ -277,7 +294,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     handleEdit: function handleEdit(row) {
-      this.$layer.iframe({
+      var layer = this.$layer.iframe({
         content: {
           content: _edit__WEBPACK_IMPORTED_MODULE_1__["default"],
           //传递的组件对象
@@ -293,11 +310,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         shade: true,
         //是否显示遮罩
         title: '编辑',
+        maxmin: true,
         shadeClose: false
       });
     },
     handleAdd: function handleAdd() {
-      this.$layer.iframe({
+      var layer = this.$layer.iframe({
         content: {
           content: _edit__WEBPACK_IMPORTED_MODULE_1__["default"],
           //传递的组件对象
@@ -445,6 +463,23 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
+            { attrs: { label: "是否推荐首页" } },
+            [
+              _c("el-switch", {
+                model: {
+                  value: _vm.form.recommend,
+                  callback: function($$v) {
+                    _vm.$set(_vm.form, "recommend", $$v)
+                  },
+                  expression: "form.recommend"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
             { attrs: { label: "作者" } },
             [
               _c("el-input", {
@@ -473,6 +508,24 @@ var render = function() {
                     _vm.$set(_vm.form, "origin", $$v)
                   },
                   expression: "form.origin"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "视频地址" } },
+            [
+              _c("el-input", {
+                attrs: { placeholder: "请输入视频地址" },
+                model: {
+                  value: _vm.form.video_url,
+                  callback: function($$v) {
+                    _vm.$set(_vm.form, "video_url", $$v)
+                  },
+                  expression: "form.video_url"
                 }
               })
             ],
@@ -682,7 +735,28 @@ var render = function() {
             },
             [
               _c("el-table-column", {
-                attrs: { fixed: "", prop: "title", label: "标题", width: "150" }
+                attrs: { fixed: "", label: "标题", width: "300" },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(scope) {
+                      return [
+                        _c(
+                          "div",
+                          {
+                            staticStyle: {
+                              width: "100%",
+                              overflow: "hidden",
+                              "text-overflow": "ellipsis",
+                              "white-space": "nowrap"
+                            }
+                          },
+                          [_vm._v(_vm._s(scope.row.title))]
+                        )
+                      ]
+                    }
+                  }
+                ])
               }),
               _vm._v(" "),
               _c("el-table-column", {
@@ -694,7 +768,29 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { prop: "description", label: "描述", width: "200" }
+                staticStyle: { overflow: "hidden" },
+                attrs: { label: "描述", width: "200" },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(scope) {
+                      return [
+                        _c(
+                          "div",
+                          {
+                            staticStyle: {
+                              width: "100%",
+                              overflow: "hidden",
+                              "text-overflow": "ellipsis",
+                              "white-space": "nowrap"
+                            }
+                          },
+                          [_vm._v(_vm._s(scope.row.description))]
+                        )
+                      ]
+                    }
+                  }
+                ])
               }),
               _vm._v(" "),
               _c("el-table-column", {

@@ -43,7 +43,7 @@ class LoginController extends Controller
 
     protected function redirectTo()
     {
-        return '/admin';
+        return '/admin#/control-board';
     }
 
     protected function guard()

@@ -11,7 +11,8 @@ class DownLoadController extends Controller
     //显示所有的用户
     public function index(Request $request)
     {
-
+        $appInfo= DownLoad::first();
+        return ["code"=>200,'data'=>$appInfo,"msg"=>"获取成功"];
     }
     //显示创建用户的表单界面
     public function create(Request $request)

@@ -1,6 +1,6 @@
 CKEDITOR.plugins.add( 'html5video', {
     requires: 'widget',
-    lang: 'zh-cn',
+    lang: 'zh-cn,en,eu,es,ru,uk,fr',
     icons: 'html5video',
     init: function( editor ) {
         editor.widgets.add( 'html5video', {
@@ -11,8 +11,8 @@ CKEDITOR.plugins.add( 'html5video', {
              *  - div-s with text-align,float,margin-left,margin-right inline style rules and required ckeditor-html5-video class.
              *  - video tags with src, controls, width and height attributes.
              */
-            allowedContent: 'div[data-responsive](!ckeditor-html5-video){text-align,float,margin-left,margin-right}; video[src,poster,controls,autoplay,width, height,loop]{max-width,height};',
-            requiredContent: 'div(ckeditor-html5-video); video[src];',
+            allowedContent: 'div[data-responsive](!ckeditor-html5-video){text-align,float,margin-left,margin-right}; video[src,controls,autoplay,width, height, poster]{max-width,height};',
+            requiredContent: 'div(ckeditor-html5-video); video[src,controls];',
             upcast: function( element ) {
                 return element.name === 'div' && element.hasClass( 'ckeditor-html5-video' );
             },
@@ -20,8 +20,6 @@ CKEDITOR.plugins.add( 'html5video', {
             init: function() {
                 var src = '';
                 var autoplay = '';
-                var loop = '';
-                var controls = '';
                 var align = this.element.getStyle( 'text-align' );
 
                 var width = '';
@@ -34,13 +32,9 @@ CKEDITOR.plugins.add( 'html5video', {
                     src = this.element.getChild( 0 ).getAttribute( 'src' );
                     width = this.element.getChild( 0 ).getAttribute( 'width' );
                     height = this.element.getChild( 0 ).getAttribute( 'height' );
-                    autoplay = this.element.getChild(0).getAttribute('autoplay');
-                    allowdownload = !this.element.getChild( 0 ).getAttribute( 'controlslist' );
-                    loop = this.element.getChild( 0 ).getAttribute( 'loop' );
-                    advisorytitle = this.element.getChild( 0 ).getAttribute( 'title' );
-                    controls = this.element.getChild(0).getAttribute('controls');
-					responsive = this.element.getAttribute( 'data-responsive' );
-                    poster = this.element.getChild( 0 ).getAttribute( 'poster' );
+                    autoplay = this.element.getChild( 0 ).getAttribute( 'autoplay' );
+                    responsive = this.element.getAttribute('data-responsive');
+                    poster = this.element.getChild(0).getAttribute('poster');
                 }
 
                 if ( src ) {
@@ -63,28 +57,12 @@ CKEDITOR.plugins.add( 'html5video', {
                     if ( autoplay ) {
                         this.setData( 'autoplay', 'yes' );
                     }
-
-                    if ( allowdownload ) {
-                        this.setData( 'allowdownload', 'yes' );
-                    }
-
-                    if ( loop ) {
-                        this.setData( 'loop', 'yes' );
-                    }
-
-                    if ( advisorytitle ) {
-                        this.setData( 'advisorytitle', advisorytitle );
-                    }
-
+										
                     if ( responsive ) {
-                        this.setData( 'responsive', responsive );
+                        this.setData( 'responsive', responsive );	
                     }
 
-                    if (controls) {
-                        this.setData('controls', controls);
-                    }
-
-                    if ( poster ) {
+                    if (poster) {
                         this.setData('poster', poster);
                     }
                 }
@@ -97,9 +75,7 @@ CKEDITOR.plugins.add( 'html5video', {
                         // Create a new <video> element.
                         var videoElement = new CKEDITOR.dom.element( 'video' );
                         // Set the controls attribute.
-                        if (this.data.controls) {
-                            videoElement.setAttribute('controls', 'controls');
-                        }
+                        videoElement.setAttribute( 'controls', 'controls' );
                         // Append it to the container of the plugin.
                         this.element.append( videoElement );
                     }
@@ -112,12 +88,11 @@ CKEDITOR.plugins.add( 'html5video', {
                             this.element.getChild( 0 ).setStyle( 'max-width', '100%' );
                             this.element.getChild( 0 ).setStyle( 'height', 'auto' );
                     } else {
-			    this.element.removeAttribute("data-responsive");
                             this.element.getChild( 0 ).removeStyle( 'max-width' );
                             this.element.getChild( 0 ).removeStyle( 'height' );
                     }
 
-                    if (this.data.poster) this.element.getChild( 0 ).setAttribute('poster', this.data.poster);
+                    if (this.data.poster) this.element.getChild(0).setAttribute('poster', this.data.poster);
                 }
 
                 this.element.removeStyle( 'float' );
@@ -143,30 +118,6 @@ CKEDITOR.plugins.add( 'html5video', {
                         this.element.getChild( 0 ).setAttribute( 'autoplay', 'autoplay' );
                     } else {
                         this.element.getChild( 0 ).removeAttribute( 'autoplay' );
-                    }
-
-                    if ( this.data.loop === 'yes' ) {
-                        this.element.getChild( 0 ).setAttribute( 'loop', 'loop' );
-                    } else {
-                        this.element.getChild( 0 ).removeAttribute( 'loop' );
-                    }
-
-                    if ( this.data.allowdownload === 'yes' ) {
-                        this.element.getChild( 0 ).removeAttribute( 'controlslist' );
-                    } else {
-                        this.element.getChild( 0 ).setAttribute( 'controlslist', 'nodownload' );
-                    }
-
-                    if ( this.data.advisorytitle ) {
-                        this.element.getChild( 0 ).setAttribute( 'title', this.data.advisorytitle );
-                    } else {
-                        this.element.getChild( 0 ).removeAttribute( 'title' );
-                    }
-
-                    if (this.data.controls) {
-                        this.element.getChild(0).setAttribute('controls', 'controls');
-                    } else {
-                        this.element.getChild(0).removeAttribute('controls');
                     }
                 }
             }

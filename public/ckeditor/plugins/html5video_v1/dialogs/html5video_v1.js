@@ -145,8 +145,9 @@ CKEDITOR.dialog.add( 'html5video_v1', function( editor ) {
                         //上传文件
                         if(editor.config.html5video_v1UploadFn){
                             editor.config.html5video_v1UploadFn(file,function(fileUrl){
-                                that.getDialog().getContentElement('info','url').setValue(fileUrl);
-                                that.getDialog().selectPage('info')
+                                console.log(fileUrl);
+                                // that.getDialog().getContentElement('info','url').setValue(fileUrl);
+                                // that.getDialog().selectPage('info')
                             });
                         }
                     }

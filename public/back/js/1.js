@@ -75,6 +75,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "edit",
@@ -89,8 +92,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         description: '',
         content: "",
         cover_img: "",
-        icon: "",
-        hover_icon: ""
+        sort: "",
+        menu_icon: "",
+        menu_hover_icon: ""
       }
     };
   },
@@ -110,8 +114,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           description: '',
           content: "",
           cover_img: "",
-          icon: "",
-          hover_icon: ""
+          menu_icon: "",
+          menu_hover_icon: ""
         };
       }
     });
@@ -134,8 +138,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             description: '',
             content: "",
             cover_img: "",
-            icon: "",
-            hover_icon: ""
+            menu_icon: "",
+            menu_hover_icon: ""
           };
         }
       });
@@ -148,10 +152,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.form.cover_img = res.data;
     },
     handleHoverIconSuccess: function handleHoverIconSuccess(res, file) {
-      this.form.hover_icon = res.data;
+      this.form.menu_hover_icon = res.data;
     },
     handleIconSuccess: function handleIconSuccess(res, file) {
-      this.form.icon = res.data;
+      this.form.menu_icon = res.data;
     },
     onSubmit: function onSubmit() {
       var _this3 = this;
@@ -280,10 +284,12 @@ var render = function() {
                       }
                     },
                     [
-                      _vm.form.icon
+                      _vm.form.menu_icon
                         ? _c("img", {
                             staticClass: "avatar",
-                            attrs: { src: _vm.$config.img_url + _vm.form.icon }
+                            attrs: {
+                              src: _vm.$config.img_url + _vm.form.menu_icon
+                            }
                           })
                         : _c("i", {
                             staticClass: "el-icon-plus avatar-uploader-icon"
@@ -313,11 +319,12 @@ var render = function() {
                       }
                     },
                     [
-                      _vm.form.hover_icon
+                      _vm.form.menu_hover_icon
                         ? _c("img", {
                             staticClass: "avatar",
                             attrs: {
-                              src: _vm.$config.img_url + _vm.form.hover_icon
+                              src:
+                                _vm.$config.img_url + _vm.form.menu_hover_icon
                             }
                           })
                         : _c("i", {
@@ -328,6 +335,24 @@ var render = function() {
                 ],
                 1
               )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "排序" } },
+            [
+              _c("el-input", {
+                attrs: { type: "Number", placeholder: "请输入排序" },
+                model: {
+                  value: _vm.form.sort,
+                  callback: function($$v) {
+                    _vm.$set(_vm.form, "sort", $$v)
+                  },
+                  expression: "form.sort"
+                }
+              })
             ],
             1
           ),

@@ -26,10 +26,32 @@ class ArticalController extends Controller
     {
 
     }
+
+    public function getArticalInfo($id,Request $request){
+        $articalInfo= Artical::find($id);
+        return ["code"=>200,'data'=>$articalInfo,"msg"=>"获取成功"];
+    }
+
+    public function getSearchList(Request $request){
+
+        $keyWord=$request->input('search_key');
+        $list=Artical::where('title',$keyWord)->orWhere('title','like','%'.$keyWord.'%')
+                ->get()->toArray();
+        return ["code"=>200,'data'=>$list,"msg"=>"获取成功"];
+    }
+
+    public function getAllArtical($id,Request $request){
+
+        $menu=Permission::where("pid",$id)->orderBy('sort','asc')->get()->toArray();
+        $ids =array_column($menu,"id");
+        $articalList=Artical::whereIn('pid',$ids)->orderBy('sort','asc')->get()->toArray();
+        return ["code"=>200,'data'=>$articalList,"msg"=>"获取成功"];
+    }
+
     //根据id显示对应的资源  user/{id}
     public function show($id,Request $request){
 
-        $articalLsit= Artical::where("pid",$id)->get()->toArray();
+        $articalLsit= Artical::where("pid",$id)->orderBy('created_at','desc')->get()->toArray();
         $permission = Permission::where("id",$id)->first();
         $data=array(
             "list"=>$articalLsit,
@@ -47,13 +69,15 @@ class ArticalController extends Controller
         $artical = Artical::find($id);
         $artical->title=$request->input('title');
         $artical->description=$request->input('description');
-        $artical->content=$request->input('content');
+        $artical->content=$this->replacePicUrl($request->input('content'));
         $artical->author=$request->input('author');
         $artical->origin=$request->input('origin');
         $artical->sort=$request->input('sort');
+        $artical->recommend=$request->input('recommend');
         $artical->cover_img=$request->input('cover_img');
+        $artical->video_url=$request->input('video_url');
         $artical->save();
-        return ["code"=>200,"msg"=>"修改成功"];
+        return ["code"=>200,"data"=>$artical,"msg"=>"修改成功"];
     }
 //    创建资源
     public function store(Request $request)
@@ -62,10 +86,12 @@ class ArticalController extends Controller
             'title'=>$request->input('title'),
             'pid'=>$request->input('pid'),
             'description'=>$request->input('description'),
-            'content'=>$request->input('content'),
+            'content'=>$this->replacePicUrl($request->input('content')),
             'author'=>$request->input('author'),
             'origin'=>$request->input('origin'),
             'sort'=>$request->input('sort'),
+            'recommend'=>$request->input('recommend'),
+            'video_url'=>$request->input('video_url'),
             'cover_img'=>$request->input('cover_img'),
         ];
 
@@ -122,6 +148,18 @@ class ArticalController extends Controller
                 ]);
             }
         }
+
+    }
+
+    public function replacePicUrl($content = null) {
+        return preg_replace_callback('/<[img|IMG].*?src=[\'| \"](?![http|https])(.*?(?:[\.gif|\.jpg]))[\'|\"].*?[\/]?>/', function ($r) {
+            if(!filter_var($r[1], FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED)){
+                $str = env("APP_URL").$r[1];
+            }else{
+                $str = $r[1];
+            }
+            return str_replace($r[1], $str, $r[0]);
+        }, $content);
 
     }
 }
