@@ -1,401 +1,726 @@
-/*
- Navicat Premium Data Transfer
+-- phpMyAdmin SQL Dump
+-- version 4.4.15.10
+-- https://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: 2021-02-02 15:27:13
+-- 服务器版本： 5.6.50-log
+-- PHP Version: 7.1.33
 
- Source Server         : qidilutest
- Source Server Type    : MySQL
- Source Server Version : 50562
- Source Host           : localhost:3306
- Source Schema         : qidilutest
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
- Target Server Type    : MySQL
- Target Server Version : 50562
- File Encoding         : 65001
 
- Date: 23/12/2020 02:35:35
-*/
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
+--
+-- Database: `qidilutest`
+--
 
--- ----------------------------
--- Table structure for admin_app
--- ----------------------------
-DROP TABLE IF EXISTS `admin_app`;
-CREATE TABLE `admin_app`  (
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `admin_app`
+--
+
+CREATE TABLE IF NOT EXISTS `admin_app` (
   `pid` int(11) NOT NULL COMMENT '当前菜单的栏目id',
-  `ios` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ios下载地址',
-  `android` int(11) NULL DEFAULT NULL COMMENT 'android下载地址',
+  `ios` varchar(255) DEFAULT NULL COMMENT 'ios下载地址',
+  `android` varchar(255) DEFAULT NULL COMMENT 'android下载地址',
   `updated_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   `created_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',
-  `cover_img` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '封面图',
-  PRIMARY KEY (`pid`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  `cover_img` varchar(255) DEFAULT NULL COMMENT '封面图'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- ----------------------------
--- Records of admin_app
--- ----------------------------
-INSERT INTO `admin_app` VALUES (62, 'sadfasdf', NULL, '2020-12-20 16:28:11', '2020-12-20 16:26:09', NULL);
+--
+-- 转存表中的数据 `admin_app`
+--
 
--- ----------------------------
--- Table structure for admin_artical
--- ----------------------------
-DROP TABLE IF EXISTS `admin_artical`;
-CREATE TABLE `admin_artical`  (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `pid` int(11) NULL DEFAULT NULL COMMENT '父级ID',
-  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标题',
-  `description` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '内容',
+INSERT INTO `admin_app` (`pid`, `ios`, `android`, `updated_at`, `created_at`, `cover_img`) VALUES
+(62, 'https://files.kaxinkeji.com/cfzx/index.html', 'https://files.kaxinkeji.com/cfzx/index.html', '2021-01-04 12:01:18', '2020-12-20 16:26:09', '/upload/img/2021-01-045ff2ffd5baeda.png');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `admin_artical`
+--
+
+CREATE TABLE IF NOT EXISTS `admin_artical` (
+  `id` int(11) unsigned NOT NULL,
+  `pid` int(11) DEFAULT NULL COMMENT '父级ID',
+  `title` varchar(255) DEFAULT NULL COMMENT '标题',
+  `description` varchar(1000) DEFAULT NULL COMMENT '描述',
+  `content` text NOT NULL COMMENT '内容',
   `updated_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   `created_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',
-  `origin` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '来源',
-  `sort` int(11) NULL DEFAULT NULL COMMENT '排序',
-  `cover_img` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '封面图',
-  `author` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '作者',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  `origin` varchar(255) DEFAULT NULL COMMENT '来源',
+  `sort` int(11) DEFAULT NULL COMMENT '排序',
+  `cover_img` varchar(255) DEFAULT NULL COMMENT '封面图',
+  `author` varchar(255) DEFAULT NULL COMMENT '作者',
+  `video_url` varchar(255) DEFAULT NULL,
+  `recommend` int(11) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- ----------------------------
--- Records of admin_artical
--- ----------------------------
-INSERT INTO `admin_artical` VALUES (10, 61, '电力需求超出预期', '受工业生产高速增长，以及低温寒流叠加的影响', '<p>江西12月上旬发用电量同比增长18.4%，比湖南略少一点，但是也超过18%，这个数也很大。截至目前，江西最大的用电负荷，前几天达到了2631万千瓦，江西这个情况比夏季过去曾经的历史最高负荷也高出了五六十万千瓦。湖南和江西都创造了高点。</p>', '2020-12-22 14:23:48', '2020-12-20 15:47:07', 'E汇客', 1, '/upload/img/2020-12-225fe2017300057.jpg', 'E汇客');
-INSERT INTO `admin_artical` VALUES (7, 56, '拉卡拉新闻', '拉卡拉拉卡拉拉卡拉', '<p>腾付通POS机已经全面开通实时到账服务，交易成功到账成功率99%。</p>\n\n<p>当然，如果因为操作不当、卡片风控、交易存在风险等个别情况，交易可能延迟到账或者不到账，这时候就要联系售后处理了。但您放心，电银通POS机正规一清机器，资金安全，只需要核实交易即可到账，或者退回该笔交易。您刷卡的钱是安全的，不会出现任何损失，所以不用着急。</p>\n\n<p>1.如果您是正规渠道办理的腾付通POS机，只需要联系给您办理的服务机构，查询交易记录和未到账原因，进行相应处理便可到账。</p>\n\n<p>2.如果您是个人兼职、或者小业务员办理、再或者电话销售等非正规渠道办理，出现交易不到账找不到人，可以联系我们官网帮您查询处理。</p>\n\n<p>3.还有一种方式是拨打全国统一售后服务热线：400655766或者腾付通客服微信：5119296 进行账务查询。</p>\n\n<p>第2和第3两种方式，都可以协助您查询交易情况和一般账务问题，但是如果出现交易存在风险，需要上传交易记录和相关材料的情况，则需要联系办理机器的服务商，通过服务商渠道上传和处理。因而非正规渠道办理的机具会出现解决麻烦的问题，影响交易和使用。</p>\n\n<div class=\"ckeditor-html5-video-v1\" data-responsive=\"true\" style=\"text-align:center\">\n<video controls=\"controls\" src=\"https://vd4.bdstatic.com/mda-kmmsim0bz6qgn37i/v1-cae/sc/mda-kmmsim0bz6qgn37i.mp4\" style=\"height:auto; max-width:100%\">&nbsp;</video>\n</div>\n\n<p>腾付通POS机已经全面开通实时到账服务，交易成功到账成功率99%。</p>\n\n<p>当然，如果因为操作不当、卡片风控、交易存在风险等个别情况，交易可能延迟到账或者不到账，这时候就要联系售后处理了。但您放心，电银通POS机正规一清机器，资金安全，只需要核实交易即可到账，或者退回该笔交易。您刷卡的钱是安全的，不会出现任何损失，所以不用着急。</p>', '2020-12-22 13:55:32', '2020-12-20 15:27:44', '网站自建', 11, NULL, 'e汇客');
-INSERT INTO `admin_artical` VALUES (8, 56, '撒旦法撒旦法', '按份阿斯蒂芬', '<p>阿斯蒂芬阿斯蒂</p>', '2020-12-20 15:28:00', '2020-12-20 15:28:00', '按份阿斯蒂芬', 1, NULL, '大是大非');
-INSERT INTO `admin_artical` VALUES (11, 57, '金小宝新闻', '金小宝新闻', '<p>金小宝新闻</p>', '2020-12-22 14:19:14', '2020-12-22 14:19:14', NULL, 1, NULL, NULL);
-INSERT INTO `admin_artical` VALUES (12, 65, '付临门', '付临门', '<p>付临门付临门付临门付临门付临门付临门付临门付临门</p>', '2020-12-22 14:19:31', '2020-12-22 14:19:31', '付临门', NULL, NULL, '付临门');
-INSERT INTO `admin_artical` VALUES (13, 66, '银盛通', '银盛通银盛通银盛通银盛通', '<p>银盛通银盛通银盛通银盛通银盛通银盛通</p>', '2020-12-22 14:19:51', '2020-12-22 14:19:51', '银盛通', NULL, NULL, '银盛通');
-INSERT INTO `admin_artical` VALUES (14, 67, '腾付通', '腾付通腾付通', '<p>腾付通腾付通腾付通腾付通腾付通腾付通</p>', '2020-12-22 14:20:08', '2020-12-22 14:20:08', '腾付通', NULL, NULL, '腾付通');
+--
+-- 转存表中的数据 `admin_artical`
+--
 
--- ----------------------------
--- Table structure for admin_banner
--- ----------------------------
-DROP TABLE IF EXISTS `admin_banner`;
-CREATE TABLE `admin_banner`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `img` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `mobile_img` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `sort` int(255) NULL DEFAULT NULL,
-  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+INSERT INTO `admin_artical` (`id`, `pid`, `title`, `description`, `content`, `updated_at`, `created_at`, `origin`, `sort`, `cover_img`, `author`, `video_url`, `recommend`) VALUES
+(21, 56, '拉卡拉电签小POS机', '产品型号是MP35，拥有央行支付牌照、正规一清机，中国人民银行可以查询支付牌照。', '<p style="text-align:left"><span style="font-size:18px">产品型号是MP35，拥有央行支付牌照、正规一清机，中国人民银行可以查询支付牌照。</span><br />\n&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:18px"><strong><strong>一：产品费率</strong></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:18px">我们拉卡拉电签机的刷卡费率是0.38、0.5、0.6</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">0.38只限扫码（花呗）单笔一万以下（建议小额消费）；</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">0.5只限借记卡（储蓄卡）使用（封顶20元）；</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">0.6贷记卡（信用卡）（磁条卡、芯片卡）。</span></p>\n\n<p style="text-align:left"><br />\n<span style="font-size:18px"><strong><strong>二：结算方式</strong></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:18px">信用卡在早0：00-晚23：00区域之间可刷卡（23：00之后刷卡，则要到第二个工作日到账）</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">贷记卡（信用卡）:D0秒到（一块以下不秒到）；</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">借记卡（储蓄卡）：D1到账，工作日第二天早上9点左右到账；</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">扫码：通道信用卡、花呗D0秒到 ，储蓄卡D1到账。</span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:18px">提现手续费为0%</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">每日T+0累计最高可提现30万元</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">贷记（信用卡）芯片卡单笔最高5万元,同卡最多3次</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">贷记（信用卡）磁条卡不验证秒到刷卡一半额度，商户APP里面认证或者人脸识别可全部秒到。</span><br />\n<br />\n&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:18px"><strong><strong>三：使用流程</strong></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:18px"><strong><strong>（一）商户自主进件</strong></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:18px">商户可微信扫描机器背面的二维码进入汇拓客小程序填写入网信息。</span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:center"><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-275fe80cef6394b.png" style="height:744px; width:671px" /></p>\n\n<p style="text-align:left"><span style="font-size:18px"><strong><strong>商户入网</strong></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:18px"><strong><strong>①商户信息填写</strong></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:18px">没有营业执照的商户请选择类型为小微，商户名称地市+店铺名字编写，不能小于七个字，邮箱填写注意邮箱格式 有营业执照的商户请选择类型为企业如实填写，信息全部填写完成后点击&ldquo;下一步&rdquo;。</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">注：商户名称需体现市级，小微商户不可以带&ldquo;公司&rdquo;后缀。</span></p>\n\n<p style="text-align:center">&nbsp;</p>\n\n<p style="text-align:center"><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-275fe80de96bffe.png" style="height:1192px; width:441px" /></p>\n\n<p style="text-align:center">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:18px"><strong><strong>②结算信息填写</strong></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:18px">填写相关信息点击&ldquo;下一步&rdquo;继续填写。</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">注：1. 身份证拍摄必须为本人身份证，与以上姓名一致。2. 身份证有效期需与身份证背面截止日期一致。</span></p>\n\n<p style="text-align:center">&nbsp;</p>\n\n<p style="text-align:center"><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-275fe80faeb9308.png" style="height:1236px; width:695px" /></p>\n\n<p style="text-align:center">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:18px"><strong><strong>③终端信息填写</strong></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:18px"><strong><strong>终端类型：</strong></strong>&nbsp;商户自主进件不可设置终端信息，请直接点击&ldquo;提交&rdquo;即可，汇拓客APP需勾选终端类型。</span></p>\n\n<p style="text-align:left"><span style="font-size:18px"><strong><strong>费率： </strong></strong>商户自主进件是默认费率不可调整，汇拓客APP可在区间范围内调整。 填写相关信息后请点击&ldquo;下一步&rdquo;。</span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9a47a93c09.png" style="height:636px; margin-bottom:20px; margin-top:20px; width:372px" /></span></p>\n\n<p style="text-align:center">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:18px"><strong><strong>④提交电子协议</strong></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:18px">点击电子协议中的&ldquo;同意并签署&rdquo;等待商户审核。</span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9a49795c06.png" style="height:423px; margin-bottom:20px; margin-top:20px; width:328px" /></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:18px"><strong><strong>⑤激活码获取</strong></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:18px">扫机器背面二维码，输身份证后六位，在首页--商终信--激活码</span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9a4d855bc7.png" style="height:466px; margin-bottom:20px; margin-top:20px; width:431px" /></span></p>\n\n<ul>\n	<li style="text-align:left"><span style="font-size:18px"><strong><strong>机器激活、消费</strong></strong></span></li>\n</ul>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9a4f34a951.png" style="height:356px; margin-bottom:20px; margin-top:20px; width:440px" /></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9a517bb94e.png" style="height:356px; margin-bottom:20px; margin-top:20px; width:440px" /></span></p>\n\n<ul>\n	<li style="text-align:left"><span style="font-size:18px"><strong><strong>商户提额</strong></strong></span></li>\n</ul>\n\n<p style="text-align:left"><span style="font-size:18px"><strong><strong>①扫码验证身份</strong></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:18px">微信扫描机器背面的二维码，&nbsp;输入身份证后6位进行身份验证。</span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9a5337dc28.png" style="height:265px; margin-bottom:20px; margin-top:20px; width:354px" /></span></p>\n\n<p style="text-align:left"><span style="font-size:18px"><strong><strong>②提额认证</strong></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:18px">点击首页中的&nbsp;&ldquo;提额认证&rdquo;&nbsp;进行商户使用额度的提高。</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">注：提额跟人脸识别必须要做，否则磁条卡秒到额度到账一半，芯片卡不受影响。</span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9a5617eb63.png" style="height:506px; margin-bottom:20px; margin-top:20px; width:284px" /></span></p>\n\n<p style="text-align:left"><span style="font-size:18px"><strong><strong>③完成认证</strong></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:18px"><strong><strong>人脸认证完成后：</strong></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:18px">刷卡额度提升至单笔30万单日30万；扫码额度提升至单笔1万单日10万；实时到账额度提升至单笔5万单日20万</span></p>\n\n<p style="text-align:left"><span style="font-size:18px"><strong><strong>信用卡认证完成后：</strong></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:18px">实时到账额度提升至单笔5万单日30万</span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9a5881c3af.png" style="height:500px; margin-bottom:20px; margin-top:20px; width:281px" /></span></p>\n\n<p style="text-align:left"><span style="font-size:18px"><strong><strong>三、认证说明</strong></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:18px"><strong><strong>人脸认证完成后：</strong></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:18px">刷卡额度提升至单笔30万单日30万；扫码额度提升至单笔1万单日10万；实时到账额度提升至单笔5万单日20万</span></p>\n\n<p style="text-align:left"><span style="font-size:18px"><strong><strong>信用卡认证完成后：</strong></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:18px">实时到账额度提升至单笔5万单日30万</span><br />\n&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:18px"><strong><strong>四、功能介绍</strong></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:18px">拉卡拉电签机属于非押金机器，首次刷100元即可激活机器，VIP返现30元，合伙人返现40元。</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">①拉卡拉大pos机分润9元/万，客户在注册后第31天-60天内刷卡满1万元奖励30元，第61天-90天内刷卡满1万元奖励30元。（所有激活/信用卡刷卡/花呗都算）</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">②刷卡激活3个月后一次性扣流量费30元/年。</span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:18px">2、<strong><strong>拉卡拉大POS机的优势在于：</strong></strong>可刷花呗、免押金、商户稳定、安全可靠、上市公司品牌、笔笔有积分、可助养卡提额。</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">大家可以根据自己的需求选择合适自己的机器，自用方便省钱，推广长期拥有返利收入。</span></p>', '2020-12-28 09:29:55', '2020-12-27 03:48:00', NULL, NULL, '/upload/img/2020-12-275fe802cb90856.jpg', 'admin', 'http://1300347920.vod2.myqcloud.com/61d45587vodtranscq1300347920/e4c13fc25285890811751075050/v.f100800.mp4', 0),
+(29, 86, '银行不给你提额的4个真实原因', '关于信用卡提额，有没有一种感觉是，无论是身边的朋友，还是论坛的卡友，好像提额都很快，也很容易，但为何自己屡次提额都失败？', '<p style="margin-left:0; margin-right:0"><span style="font-size:18px">关于信用卡提额，有没有一种感觉是，无论是身边的朋友，还是论坛的卡友，好像提额都很快，也很容易，但为何自己屡次提额都失败？</span></p>\n\n<p style="margin-left:0; margin-right:0"><span style="font-size:18px"><strong>1、</strong><strong>有过逾期</strong></span></p>\n\n<p style="margin-left:0; margin-right:0"><span style="font-size:18px">想要提高信用卡提额的成功率，首先就得保证良好的信用记录，不能有逾期。</span></p>\n\n<p style="margin-left:0; margin-right:0"><span style="font-size:18px"><strong>2、</strong><strong>经常还最低还款额</strong></span></p>\n\n<p style="margin-left:0; margin-right:0"><span style="font-size:18px">经常用最低还款服务，虽然银行会赚取一些收入，但通常也不会给你提额，因为经常还最低额，说明经济能力不足，还款有困难，既然这个额度还款都有难度，银行会为了降低坏账，想要提额也是很费劲的！</span></p>\n\n<p style="margin-left:0; margin-right:0"><span style="font-size:18px"><strong>3、</strong><strong>总的授信额度过高</strong></span></p>\n\n<p style="margin-left:0; margin-right:0"><span style="font-size:18px">正常使用的信用卡太多，总的授信额度也已经很高了，当你再提额时，银行也会参考你的总授信额度，所以，为了避免总额度过高，也会降低提额的成功率！</span></p>\n\n<p style="margin-left:0; margin-right:0"><span style="font-size:18px"><strong>4、</strong><strong>信用卡的使用率低</strong></span></p>\n\n<p style="margin-left:0; margin-right:0"><span style="font-size:18px">如果平时用信用卡消费比较少，而且所刷的额度也不多，一般银行也不会给提额，银行会根据你的日常消费，从而判断你并没有更大额度的需求。</span></p>\n\n<p style="margin-left:0; margin-right:0"><span style="font-size:18px">以上几点都会影响信用卡提额，所以若想尽快提高信用卡额度，应避免以上几方面，尤其是保持良好的信用记录是关键。</span></p>\n\n<p style="margin-left:0; margin-right:0"><span style="font-size:18px">最后还要提醒各位卡友，如果现有的额度能满足日常的消费，尽量不要追求过高的额度，因为额度越高风险也越大！</span></p>', '2020-12-28 02:53:53', '2020-12-28 02:53:53', NULL, NULL, '/upload/img/2020-12-285fe9489ad0fc4.jpg', 'admin', NULL, 0),
+(30, 86, '建设银行推出上海交通便民龙卡信用卡！', '建设银行上海交通便民龙卡为建行上海分行专为车主设计的一张卡片。', '<p><span style="font-size:18px">建设银行上海交通便民龙卡为建行上海分行专为车主设计的一张卡片。</span></p>\n\n<p><span style="font-size:18px">持卡维修 快捷登记</span></p>\n\n<p><span style="font-size:18px">建设银行上海交通便民信用卡持卡人在车辆维修时主动出示上海交通便民龙卡，机修企业可通过机动车修理业治安管理信息系统读取卡内车辆信息，实现车辆维修快捷登记。</span></p>\n\n<p><span style="font-size:18px">便捷高速通行</span></p>\n\n<p><span style="font-size:18px">建设银行上海交通便民信用卡持卡人签约ETC可享高速公路不停车缴费。</span></p>\n\n<p><span style="font-size:18px">高额保险贴心关怀</span></p>\n\n<p><span style="font-size:18px">建设银行上海交通便民信用卡持卡人刷卡支付本人的100%国内外机票款（含折扣机票款）或80%以上（含）的旅游团费（含飞机票），即可在乘坐该机票所指定的航空客运航班中免费获得以持卡人本人为被保险人的最高100万元航空意外保险。</span></p>\n\n<p><span style="font-size:18px">有效期内年费优惠</span></p>\n\n<p><span style="font-size:18px">交通便民龙卡年费为160元/卡，实行卡有效期内免收年费的优惠政策。</span></p>', '2020-12-28 02:55:54', '2020-12-28 02:55:54', NULL, NULL, '/upload/img/2020-12-285fe949327d5d2.jpg', 'admin', NULL, 0),
+(31, 86, '恒丰年末放水、额度感人～', '据不少卡友反馈，近期恒丰银行信用卡审批通过数据大增，似乎是有意放水，作为一家小银行，难道是要趁多数银行风控更严的时候来扩大市场？', '<p><span style="font-size:18px">据不少卡友反馈，近期恒丰银行信用卡审批通过数据大增，似乎是有意放水，作为一家小银行，难道是要趁多数银行风控更严的时候来扩大市场？</span></p>\n\n<p><span style="font-size:18px">有些人可能担心自己批不下来，但实际情况是很多卡友已经持有多行信用卡，有个卡友这次申请恒丰已经是第15行了，还有人最近一年有2次逾期，申请都通过了。</span></p>\n\n<p><span style="font-size:18px">放水卡种</span></p>\n\n<p><span style="font-size:18px">目前恒丰银行信用卡卡种主要就是恒星卡和恒星白金卡，申请金卡和白金卡的结果都差不多，而且白金卡是免年费的。要申请就申请白金卡吧，反正没有年费压力。<br />\n<img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9497f6988f.jpg" style="height:533px; margin-bottom:20px; margin-top:20px; width:800px" /></span></p>\n\n<p><span style="font-size:18px">下卡额度差异大</span></p>\n\n<p><span style="font-size:18px">有一部分卡友反馈，自己申请下来的恒丰信用卡额度和自己现有信用卡最高额度相同，那么这就很可能是以卡办卡的模式，如果卡友现有信用卡额度在3万以上，并且使用半年以上的，那就有机会获得恒丰较高额度的信用卡。</span></p>\n\n<p><span style="font-size:18px">不过，也有很大一部分卡友下卡额度只有5000，与自己现持有的信用卡额度似乎没有任何关系，这可能是批量放水的主要额度。</span></p>\n\n<p><span style="font-size:18px">我身边有几个朋友最近申请恒丰的卡也都通过了，最高的额度有10万，但其他几个额度只有5000。所以我觉得要说放水，可能是批卡量放水，额度上还是非常谨慎的，再小的银行的也有风控，不会傻到给自己挖坑。</span></p>\n\n<p><span style="font-size:18px">综合起来看，要么就是5000额度，要么就是自己现有信用卡最高额度，有人批了3万、5万、8万，也有少数人批了10万，这应该是恒丰能批的最高额度。看来这个初始额度差异非常大。</span></p>\n\n<p><span style="font-size:18px">至于要不要申请，就看个人需求了。如果对额度要求高，那可能会有一定的失望几率，如果有信用卡收藏爱好，那就趁现在放水的时候申请吧，别等到申请的人太多，银行达到既定任务后又提高了门槛。</span></p>\n\n<p><span style="font-size:18px">想要申请恒丰银行信用卡的卡友，可以通过以下3种方式：</span></p>\n\n<p><span style="font-size:18px">注意：有时候系统繁忙，导致无法申请，就过一段时间或第二天再申请，一般平均2天左右时间就可以出结果。收到审核通过短信并收到卡后，就可以带上身份证去面签了，面签不会被为难，就是走一下流程而已。</span></p>\n\n<p><span style="font-size:18px">恒丰银行优势</span></p>\n\n<p><span style="font-size:18px">恒丰银行最大的好处就是风控没有那么严，可以随便刷，只要按时还款就好。其次就是经常给临时额度，刚下卡的使用一个月也能获得30%～50%的临时额度。</span></p>\n\n<p><span style="font-size:18px">至于固定额度，目前系统还没有开放自主提额权限，不过根据行业和市场经验来判断，作为进入信用卡市场比较晚的银行，前期对额度提升还是控制的比较严格，如果后期开放提额的，基本也是老客户优先。对此抱有希望的，那暂且不管额度是5000还是50000，先拿下来再说吧，平时多用卡，积累良好信用，说不定什么时候就碰到好机会提上去了呢。</span></p>\n\n<p>&nbsp;</p>\n\n<p>&nbsp;</p>', '2020-12-28 02:58:26', '2020-12-28 02:57:37', NULL, NULL, '/upload/img/2020-12-285fe9496b8fb8d.jpg', 'admin', NULL, 0),
+(22, 84, '你知道POS机刷卡手续费怎么算吗？', '很多卡友每天都在使用POS机刷卡，但是对于刷卡手续费怎么分配，怎么算的不明白，今天我就和大家分享一下关于POS机手续费的那些事儿。', '<p><span style="font-size:18px">很多卡友每天都在使用POS机刷卡，但是对于刷卡<strong>手续费</strong>怎么分配，怎么算的不明白，今天我就和大家分享一下关于<strong>POS机手续费</strong>的那些事儿。</span></p>\n\n<p><span style="font-size:18px">给你<strong>办理POS机</strong>的代理商经常给你说的一句话是，&ldquo;现在全国费率统一，标准费率是0.6%&rdquo;，你会问，那为什么有人用的机器费率是0.55%呢，或者更低的0.49%呢，我们带着疑问接着往下看。</span></p>\n\n<p><span style="font-size:18px">&ldquo;96费改&rdquo;这个词，相信很多人都听说过，具体是怎么回事呢，在2016年3月14日，央行发布一条通知，对当时的收单费率进行改革，也就是下面的文件:</span></p>\n\n<p style="text-align:center"><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-275fe85cfe7b791.png" style="height:691px; margin-bottom:20px; margin-top:20px; width:659px" /></p>\n\n<p>很多朋友可能看不太明白，看完下面一张图，就知道费改前后的区别</p>\n\n<p style="text-align:center"><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-275fe8891b6a2cb.png" style="margin-bottom:20px; margin-top:20px" /></p>\n\n<p>96费改前，也就是2016年9月6日前，市场中的费率很多，尤其封顶机特别多，因为便宜，但是有些行业，比如餐饮，珠宝，娱乐等行业费率1.25%，非常高，限制商户使用POS机的积极性，也造成很多套码乱象，费改以后大大的改善了行业的发展，那我们现在用的<strong>POS机手续费</strong>是怎么算的呢？</p>\n\n<h3>一、POS机费率：</h3>\n\n<p>&nbsp;</p>\n\n<p><strong>费率=发卡行费率+清算机构费率+收单机构服务费率</strong></p>\n\n<p>&nbsp;</p>\n\n<h3>二、发卡行：</h3>\n\n<p>&nbsp;</p>\n\n<p>用户所持信用卡的银行称为发卡行，发卡行服务费率单笔不得超过交易金额的0.45%。</p>\n\n<p>&nbsp;</p>\n\n<p>例如：POS机刷中国银行的信用卡，那么中国银行做为发卡行最高可收取POS机交易金额的0.45%手续费，刷一万元招商银行收取45元手续费，目前所有发卡行均按最高标准0.45%收取。</p>\n\n<p>&nbsp;</p>\n\n<h3>三、清算机构：</h3>\n\n<p>&nbsp;</p>\n\n<p>清算机构是指银联和网联（非银行支付机构网络支付清算平台的运营机构）。清算机构收取总比例为不超过单笔刷卡交易金额的0.065%，发卡机构和收单机构各承担50%，也就是各承担交易金额的0.0325%。</p>\n\n<p>&nbsp;</p>\n\n<p>到这一步按标准费率算，发卡行0.45%+清算机构0.065%=0.515%。从这里我们可以看到支付机构正常能赚多少<strong>手续费</strong>了吧？你说那些开很低费率的公司不赚钱的吗？还给代理商让利？</p>\n\n<p>&nbsp;</p>\n\n<h3>四，收单机构挣多少</h3>\n\n<p style="text-align:center"><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-275fe88973a1175.png" style="height:534px; margin-bottom:20px; margin-top:20px; width:414px" /></p>\n\n<p>以持卡人刷1000元为例，由上图表，我们知道实际商户只能实收994元，余6元由发卡行和收单机构再次分佣，其中发卡行分成4.5元，收单机构1.5元，然后发卡行再次拿出0.325元给银联，收单机构也要拿出0.325元给银联，总结一笔POS刷信用卡1000元，分成金额分别为：发卡行4.5元，银联0.65元，收单机构也就是支付公0.85元。这里的0.85元包括支付公司运营成本，各个代理机构，大小代理商，去分这一点钱。</p>\n\n<p>&nbsp;</p>\n\n<p>现在很多朋友应该看明白<strong>POS机刷卡手续费</strong>怎么分配的了。有些低费率的POS机你还敢用吗。</p>', '2020-12-27 13:18:23', '2020-12-27 10:40:25', NULL, NULL, '/upload/img/2020-12-275fe85bc582fe1.png', 'admin', NULL, 0),
+(23, 84, 'pos机刷卡手续费标准是什么？', '随着刷卡的普及，越来越多的小店都开始使用POS机啦。那么，POS机刷卡手续费标准是多少呢？', '<p><span style="font-size:18px">第一种是标准类，信用卡刷卡0.6%；储蓄卡刷卡0.5%，20元封顶。以刷卡一万为例，信用卡手续费60元，储蓄卡手续费20元；</span></p>\n\n<p><span style="font-size:18px">第二种是优惠类，比如大型连锁超市、民生缴费类、加油站，手续费通常为信用卡0.38%；储蓄率0.4%，18元封顶；</span></p>\n\n<p><span style="font-size:18px">第三类为减免类，比如公立医院、学校，手续费为0哦。</span></p>\n\n<p><span style="font-size:18px">别看二三类商户手续费低，这两类商户都是需要申请的，必须要资料合规才能行，第一类商户则没有要求，随便哪个行业提供资料都能办理。</span></p>\n\n<p><span style="font-size:18px">在此pos机办理中心提醒大家，如果需要办理POS机，一定要联系正规第三方支付公司或者代理，一定要有支付牌照，切勿贪图便宜上当受骗哦！</span></p>', '2020-12-28 01:59:20', '2020-12-27 13:43:28', NULL, NULL, '/upload/img/2020-12-285fe93bf56089f.jpg', NULL, NULL, 0),
+(24, 84, '办POS机为什么要手持身份证或者人脸认证', '用过POS机的商户都应该知道，无论是手刷MPOS还是大POS机都需要提交身份证、银行卡、信用卡等资料，一般还需要手持身份证或者人脸识别，可能有人会问，办个POS机不就用身份证和银行卡就行了吗？为什么还要人脸识别或者手持身份证呢？会不会出现不安全的问题呢？那么小编今天就和大家解说一下这个问题。', '<p style="text-align:center"><span style="font-size:18px"><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe93cff4c9be.jpg" style="height:667px; margin-bottom:20px; margin-top:20px; width:1000px" /></span></p>\n\n<p><span style="font-size:18px">期待人们的文章内容能协助每一POS服务提供商更强的顾客普及化支付专业知识，利己利大伙儿</span></p>\n\n<p><span style="font-size:18px">试过POS机的商户都应当了解，不论是手机pos蓝牙机還是大POS机是必须递交身份证件、银行卡、透支卡等材料，一般还必须手持身份证照或是面部识别，将会许多人会问，办个POS机不就用身份证件和银行卡就可以了吗?为何也要面部识别或是手持身份证照呢?是否会出現不安全性的难题呢?那麼网编今日就和大伙儿解說一下这一难题。</span></p>\n\n<p style="text-align:center"><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe93d39cadc2.jpg" style="height:426px; margin-bottom:20px; margin-top:20px; width:640px" /></p>\n\n<h3><span style="font-size:18px">为何如今POS必须面部验证</span></h3>\n\n<p><span style="font-size:18px">在之前，办理pos机不用过多的流程，只必须本人身份证件和一张银行卡就就行了，哪个那时候是T+1到账方式，还没秒到这一作用。</span></p>\n\n<p><span style="font-size:18px">随之POS机秒到账时期的来临，刷卡消费资产秒到银行卡(银行账户)，其秒到的基本原理是第三方支付企业自身注资垫款的，中国银联還是维持T+1的到账规范。换句话说，支付企业自身先掏钱给商户清算，随后第二天支付企业才可以接到银行的钱。</span></p>\n\n<p><span style="font-size:18px">尽管仅仅只是一天的时差，就给了偷刷分子结构出示了可乘之机，弄一张身份证件和银行卡申请注册一台pos机那就是易如反掌的事啊!随后就是说各种各样偷刷个人行为慢慢盛行全国性。因为各大支付企业全是不久创建的秒到服务项目，风控管理缺乏经验，以致于让企业和地区代理严重损失。</span></p>\n\n<p><span style="font-size:18px">因此，第三方支付企业总结经验经验教训，提升风控管理对策，提升对POS机的验证管理方法，以便提升POS机入网许可证审批规范，随后就出現了透支卡验证，最终到面部验证。</span></p>', '2020-12-28 02:05:29', '2020-12-28 02:05:29', NULL, NULL, '/upload/img/2020-12-285fe93cecaa356.jpg', NULL, NULL, 0),
+(25, 84, 'POS机办理的重要性，办理趋势依旧在！', '很多人都说现在的人出门都喜欢用手机支付，POS机办理已经不需要了，过时了。诚然，对于个人来说，如果只是外出日常消费的话，手机支付的确是可以满足。但是如果是用于大额消费的话，那么手机支付就不够看了。要知道微信、支付宝支付每天消费都是有限额的，所以大额消费还是进行要POS机办理。而且个人如果一时资金短缺的话还能通过POS机办理后进行刷卡取现到自己的储蓄账户用于周转资金，不用担心因资金不足而到处找人借钱。', '<p><span style="font-size:18px">很多人都说现在的人出门都喜欢用手机支付，POS机办理已经不需要了，过时了。诚然，对于个人来说，如果只是外出日常消费的话，手机支付的确是可以满足。但是如果是用于大额消费的话，那么手机支付就不够看了。要知道微信、支付宝支付每天消费都是有限额的，所以大额消费还是进行要POS机办理。而且个人如果一时资金短缺的话还能通过POS机办理后进行刷卡取现到自己的储蓄账户用于周转资金，不用担心因资金不足而到处找人借钱。 </span></p>\n\n<p style="text-align:center"><span style="font-size:18px"><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe93df5e3465.jpg" style="height:336px; margin-bottom:20px; margin-top:20px; width:624px" /></span></p>\n\n<p><span style="font-size:18px"><strong>POS机办理的重要性，办理趋势依旧在！</strong></span></p>\n\n<p><span style="font-size:18px">&nbsp;<br />\n<strong>1、个人方面</strong><br />\n很多人都说现在的人出门都喜欢用手机支付，<strong><u>POS机办理</u></strong>已经不需要了，过时了。诚然，对于个人来说，如果只是外出日常消费的话，手机支付的确是可以满足。但是如果是用于大额消费的话，那么手机支付就不够看了。要知道微信、支付宝支付每天消费都是有限额的，所以大额消费还是进行要<u><strong>POS机办理</strong></u>。而且个人如果一时资金短缺的话还能通过<u><strong>POS机办理</strong></u>后进行刷卡取现到自己的储蓄账户用于周转资金，不用担心因资金不足而到处找人借钱。</span></p>\n\n<p><span style="font-size:18px"><strong>2、商户方面</strong><br />\n现在很多人在商场消费都是习惯刷卡消费，如果商户没有及时安装POS机，那么就会流失很多客户，错过不少的生意。据有效的数据显示中国每万人拥有的POS机只有13.7台，而美国这个数字达到了189台，韩国更是达到了625台。商户安装POS机可以留住更多的客户人群，不再造成客户流失，让自己的生意能够面向国内银行卡30亿持有者及大量国际卡的15亿持有者。不再担心无效的支付或者收到假钞及携带大量现金到银行的危险。</span></p>\n\n<p style="text-align:center"><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe93ee4a1aaa.jpg" style="height:386px; width:636px" /></p>\n\n<p><span style="font-size:18px"><strong>3、POS机办理是大势所趋</strong><br />\n国内银行卡产业呈现南快速增长态势，银行卡累计发卡量已达25亿张，持卡人超过8亿。每年都会有超过三分之一的交易通过POS机完成交易，非现金支付正在呈现飞速发展的态势成为人们消费的首选。</span></p>', '2020-12-28 02:13:10', '2020-12-28 02:13:10', NULL, NULL, '/upload/img/2020-12-285fe93ddbe59da.jpg', NULL, NULL, 0),
+(26, 84, '移动POS机可以个人办理啦！个人办理POS机必看', '个人可以办理POS机吗？这是好多新用户存在的一个问题。对此，我给大家普及一下，个人办理移动POS机当然是可以的，不管是大POS机还是小POS机都是可以办理的。为什么个人也可以办理POS机呢? 各家支付公司也是为了跑马圈地，也是不惜砸血本，机具免费赠送。很多朋友可能会有这种感觉，不要钱的东西还真就用着心里不踏实了。这中间有什么梗?个人移动POS机如何办理才最靠谱?毕竟和金钱挂钩想用但是又怕不安全。很多人都有这个疑问，接下来我给大家讲讲个人支付终端应该怎样选择才最安全靠谱!', '<p><span style="font-size:18px">个人可以办理POS机吗？这是好多新用户存在的一个问题。对此，我给大家普及一下，个人办理移动POS机当然是可以的，不管是大POS机还是小POS机都是可以办理的。为什么个人也可以办理POS机呢? 各家支付公司也是为了跑马圈地，也是不惜砸血本，机具免费赠送。很多朋友可能会有这种感觉，不要钱的东西还真就用着心里不踏实了。这中间有什么梗?个人移动POS机如何办理才最靠谱?毕竟和金钱挂钩想用但是又怕不安全。很多人都有这个疑问，接下来我给大家讲讲个人支付终端应该怎样选择才最安全靠谱! </span></p>\n\n<h3><span style="font-size:18px">一、品牌的选择</span></h3>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">关于品牌，有这样一段对话</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">提问者：&ldquo;你走过大桥吗？&rdquo;</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">回答者：&ldquo;走过。&rdquo;</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">提问者：&ldquo;桥上有栏杆吗&rdquo;</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">回答者：&ldquo;有。&rdquo;</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">提问者：&ldquo;你过桥的时候扶栏杆吗？&rdquo;</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">回答者：&ldquo;不扶。&rdquo;</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">提问者：&ldquo;那么栏杆对你来说没有用吗？&rdquo;</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">回答者：&ldquo;当然有用了，没有栏杆护着，掉下去怎么办？&rdquo;</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">提问者：&ldquo;可是，你并没有扶栏杆啊？&rdquo;</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">回答者：&ldquo;可是，没有栏杆，我会害怕。&rdquo;</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">品牌，就是桥上的栏杆。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">拥有了品牌的保障，你才会踏实，这就是品牌的力量。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">所以当我们想买护肤品时，总会先想到雅诗兰黛、兰蔻；</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">想买手机时，会想到华为、苹果；</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">想买汽车时，必然少不了奔驰、宝马、奥迪。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">对于买POS机来说，也是一样。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">越是大品牌的公司，对产品的把控力就越高，后期保障就越充分。在这个POS机竞争的时代，对于<strong>个人办理移动POS机</strong>，其实买的并不是品牌，而是品牌带来的信心。</span></p>\n\n<p style="text-align:center"><span style="font-size:18px"><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe940a336ba5.png" style="height:394px; margin-bottom:20px; margin-top:20px; width:595px" /></span></p>\n\n<h3><span style="font-size:18px">二、代理商的选择</span></h3>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">想要看一个代理商靠不靠谱，很简单，就看他们是否支持售后服务。<strong>个人办理移动POS机</strong>毕竟不是一次性买卖，就跟日常买电器一样，都是有保修期限的，POS机的售后服务就很重要了，毕竟是跟钱直接挂钩的机器。一个好的代理商，他们的售后团队是非常完善的，只要你在使用POS机的过程中存在某些问题，可以直接向他们咨询。</span></p>\n\n<p>&nbsp;</p>\n\n<h3><span style="font-size:18px">三、POS机费率是不是越低越好？</span></h3>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">刚开始使用POS机的新手往往首先考虑的是费率的高低，而不是资金的安全和是否稳定，这种想法是完全错误的。<strong>个人办理移动POS机</strong>千万不要贪图一时的小便宜，而去办理一些杂七杂八的POS机，因为只有合理的价格，才是支付公司长久经营的根基，打价格战只能维持短时间的优势，没有稳定的盈利就无法提供优质的售后服务，长期以往支付公司入不敷出必定在市场的竞争中被淘汰。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">以上三点就是<strong>个人办理移动POS机</strong>需要主注意的事项，希望对大家有所帮助，用一句话总结就是：选择大品牌，找靠谱的公司，不贪图便宜；稳定、安全才是王道。</span></p>\n\n<p>&nbsp;</p>\n\n<p>&nbsp;</p>\n\n<p>&nbsp;</p>', '2020-12-28 02:20:01', '2020-12-28 02:20:01', NULL, NULL, '/upload/img/2020-12-285fe94075d2e54.png', NULL, NULL, 0),
+(27, 84, '个人能不能办理POS机？需要哪些条件？安不安全', '2020年，受到疫情影响，生意难做，工作难找，再加上车贷房贷的压力。好多人面临资金周转困难的问题，所以信用卡、花呗、白条等成了很多人的救命稻草。所以，如今办理个人POS机的人越来越多。对于个人POS机，可能很多人不知道如何去办理，无从下手，不知道需要哪些条件才可以办理？下面我就为大家分享一下办理个人POS机时，需要有哪些条件和注意哪些问题。', '<p><span style="font-size:18px">2020年，受到疫情影响，生意难做，工作难找，再加上车贷房贷的压力。好多人面临资金周转困难的问题，所以信用卡、花呗、白条等成了很多人的救命稻草。所以，如今办理个人POS机的人越来越多。对于个人POS机，可能很多人不知道如何去办理，无从下手，不知道需要哪些条件才可以办理？下面我就为大家分享一下办理个人POS机时，需要有哪些条件和注意哪些问题。 </span></p>\n\n<p><span style="font-size:18px"><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe942975b6ff.jpg" style="height:667px; margin-bottom:20px; margin-top:20px; width:1000px" /></span></p>\n\n<p><span style="font-size:18px">最近很多人都在问：我想<strong>办理一台POS机</strong>，个人刷卡周转资金用，不知道<strong>个人能不能办理POS机</strong>？答案：当然可以办理啊。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">2020年，受到疫情影响，生意难做，工作难找，再加上车贷房贷的压力。好多人面临资金周转困难的问题，所以信用卡、花呗、白条等成了很多人的救命稻草。所以，如今<strong>办理个人POS机</strong>的人越来越多。对于<strong>个人POS机</strong>，可能很多人不知道如何去办理，无从下手，不知道需要哪些条件才可以办理？下面我就为大家分享一下办理个人POS机时，需要有哪些条件和注意哪些问题。</span></p>\n\n<p>&nbsp;</p>\n\n<h3><span style="font-size:18px">一、办理个人POS机所需条件</span></h3>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">1、身份证正反面</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">2、手机号</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">3、储蓄卡</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">4、信用卡</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">5、手机</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">有以上材料即可（小提示：不需要出示给办理人员，这些条件是自己拿到个人POS机后自行注册所需要的条件，所以不要把自己的证件信息泄露）</span></p>\n\n<p>&nbsp;</p>\n\n<p style="text-align:center"><span style="font-size:18px"><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe942c0828eb.jpg" style="height:533px; margin-bottom:20px; margin-top:20px; width:800px" /></span></p>\n\n<h3><span style="font-size:18px">二、办理个人POS机需要注意哪些问题</span></h3>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">1.安全问题</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">虽然<strong>个人能办理POS机</strong>，但一定要注意<strong>办理的POS机</strong>安全问题。一定要选择正规的、有支付牌照的第三方支付公司旗下的刷卡机，千万不要办理到跳码的二清机，二清机给用户带来的风险是非常大的。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">2.扫码问题</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">由于个人POS机上大部分都是支持扫码功能的，可以扫支付宝、花呗等，而且费率非常低。导致很多用户<strong>办理个人POS机</strong>后，为了节省那一点点手续费，疯狂使用扫码功能，最后信用卡被银行风控，降额封卡都是屡见不鲜的。所以在这里提醒大家，小额多笔才是王道，刷卡扫码交替使用，对信用卡提额也比较好。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">3.售后问题</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">我们都知道，支付公司出现一些资金的延迟到账或者是不到账的问题的发生是不可避免的，也是人为不可控制的。那么，这时候，一个靠谱的代理售后就非常的有必要了，为什么这么说呢?因为你要保证你拿到机具有后续的问题能追溯到负责方，如果没有售后，你连找谁都不知道。POS机不是一次性买卖，一个好的售后团队，是衡量一个公司好与不好的标准。</span></p>', '2020-12-29 16:38:07', '2020-12-28 02:28:47', NULL, NULL, '/upload/img/2020-12-285fe94285b0799.jpg', 'admin', NULL, 1),
+(28, 85, '查询“征信”过多会影响房贷吗？', '个人信用报告记录个人借债还钱、合同履行、遵纪守法等信息，是个人信用历史的客观记录，也是人们的“经济身份证”。', '<p><span style="font-size:18px">个人信用报告记录个人借债还钱、合同履行、遵纪守法等信息，是个人信用历史的客观记录，也是人们的&ldquo;经济身份证&rdquo;。</span></p>\n\n<p><span style="font-size:18px">个人信用报告基本内容包括：1.个人基本信息。识别个人身份的信息，如国籍、姓名、证件类型、证件号码、婚姻状况、居住信息、职业信息、联系电话等。2.信息概要。概要描述个人信息构成、逾期及违约情况、获得授信及负债情况。3.信贷交易信息明细。逐笔详细描述个人的信贷交易信息，反映信息主体借钱和还钱的历史。4.公共信息明细。展示与信息主体个人有关的行政处罚与奖励信息、法院失信被执行人信息等公共信息。5.本人声明。个人对本人信用报告中有关事项的解释。6.异议标注。标注个人对本人信用报告中提出异议的信息。7.查询记录。详细记录过去两年内，何人何时因为什么原因查过信息主体的个人信用报告。</span></p>\n\n<p style="text-align:center"><span style="font-size:18px"><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9451d60a92.jpg" style="height:284px; margin-bottom:20px; margin-top:20px; width:449px" /></span></p>\n\n<p><span style="font-size:18px">当个人信用报告里出现以下情况时，将对申请银行贷款产生不利影响：1.恶意逾期。过往信用卡还款不及时导致长期逾期或逾期金额较大、逾期次数较多；大学期间申请的助学贷款未及时还款，导致逾期次数较多或逾期时间较长；其他贷款未及时还款导致的恶意逾期等等。2.个人负债比例较高。如果个人已有负债占比较高，达到个人收入70%以上，会对其申请贷款有所影响。3.为他人担保巨额债务。如果个人以自己的房产等财产作为抵押替他人担保巨额债务，个人自身的资产情况就要大打折扣，甚至有潜在负巨额债务的危险。4.征信被查询次数较多。个人向银行申请贷款、信用卡等信贷产品，银行会去查询居民的征信记录，如果征信记录被查询的次数较多，说明该居民借贷需求太高，相应风险也高。所以不建议个人同时申请多家信用卡。</span></p>\n\n<p><span style="font-size:18px">市民可以通过现场查询和互联网查询两种方式获取个人信用报告。1.现场柜台、自助查询机查询。可通过中国人民银行哈尔滨中心支行、部分金融机构网点布设的个人信用报告自助查询机进行查询。现场查询时，需要携带本人有效身份证件原件及1份复印件，在查询网点填写《个人信用报告本人查询申请表》后提交查询申请。2.互联网、网银查询。互联网查询网址为https://ipcrs.pbccrc.org.cn。通过互联网提交查询申请，并在第二天获得信用报告。网银查询开通招商银行、中信银行两家试点。网上查询时，需要首先进行用户注册，在线进行身份验证，提交查询申请。身份验证有私密性问题验证及数字证书验证两种方式。如果通过了身份验证，一般会在第二天获得短信通知，可登录网站进行用户激活，查看信用报告。</span></p>\n\n<p>&nbsp;</p>', '2020-12-28 02:46:55', '2020-12-28 02:46:55', NULL, NULL, '/upload/img/2020-12-285fe944f246906.jpg', 'admin', NULL, 0),
+(32, 86, '“一行两会”划定明年工作重点 涉及金融开放、金融监管等', '2020年中央经济工作会议闭幕后，“一行两会”分别召开会议，传达学习中央经济工作会议精神。', '<p><span style="font-size:18px">2020年中央经济工作会议闭幕后，&ldquo;一行两会&rdquo;分别召开会议，传达学习中央经济工作会议精神。</span></p>\n\n<p><span style="font-size:18px">央行：引导金融机构加大对制造业等领域信贷投放</span></p>\n\n<p><span style="font-size:18px">12月18日，人民银行党委召开扩大会议，传达学习中央经济工作会议精神，研究部署贯彻落实工作。人民银行党委书记郭树清主持会议，党委副书记、行长易纲及党委其他成员出席会议。</span></p>\n\n<p><span style="font-size:18px">会议强调，明年要着重抓好以下工作任务：</span></p>\n\n<p><span style="font-size:18px">一是稳健的货币政策灵活精准、合理适度。要完善货币供应调控机制，保持宏观杠杆率基本稳定，处理好恢复经济和防范风险的关系。持续深化利率和汇率市场化改革，引导市场利率围绕央行政策利率中枢运行，保持人民币汇率在合理均衡水平上的基本稳定。</span></p>\n\n<p><span style="font-size:18px">二是进一步加大对重点领域和薄弱环节的金融支持。做好稳企业保就业纾困政策的适当接续，继续支持民营小微企业发展。用好再贷款再贴现政策，引导金融机构加大对科技创新、绿色发展、制造业等领域的信贷投放。做好脱贫攻坚与乡村振兴金融服务有效衔接。</span></p>\n\n<p><span style="font-size:18px">三是持续防范化解金融风险。巩固拓展防范化解重大金融风险攻坚战成果，健全金融风险预防、预警、处置、问责制度体系，压实中小银行风险处置责任。加快完善宏观审慎政策框架。支持金融科技依法规范发展，坚决反对垄断和不正当竞争行为，防止资本无序扩张。</span></p>\n\n<p><span style="font-size:18px">四是深化金融供给侧结构性改革。做好&ldquo;十四五&rdquo;金融业改革发展规划编制工作。支持中小银行多渠道补充资本金，稳步推进农信社改革。深化债券市场改革，完善债券市场法制，夯实信用基础，严肃市场纪律，打击各种逃废债行为。持续加强金融消费权益保护，增强人民群众获得感、幸福感。稳步扩大金融双向开放，推动已宣布金融开放措施切实落地，稳慎推进人民币国际化。提升开放条件下金融监管能力。</span></p>\n\n<p><span style="font-size:18px">银保监会：坚决打击各种逃废债行为<br />\n<img alt="src=http___dpic.tiankong.com_sm_rv_QJ8690390368.jpg&amp;refer=http___dpic.tiankong.jpg" src="https://p.51credit.com/bos/img/20201224/1608777423667029424.jpg" title="" /></span></p>\n\n<p><span style="font-size:18px">12月22日，银保监会党委书记、主席郭树清主持召开党委扩大会议，传达学习中央经济工作会议精神，研究部署贯彻落实工作。</span></p>\n\n<p><span style="font-size:18px">会议要求，要认真领悟在严峻挑战下做好经济工作的&ldquo;五个根本&rdquo;规律性认识，准确把握明年经济工作的总体要求、主要目标、政策取向和重点任务，结合银行业保险业实际抓好细化落实。</span></p>\n\n<p><span style="font-size:18px">一是全力支持构建新发展格局。加快构建金融有效服务实体经济的体制机制，助推经济转型和结构调整，增强产业链供应链自主可控能力，畅通国内大循环。推进更高水平金融开放，促进国内国际&ldquo;双循环&rdquo;。</span></p>\n\n<p><span style="font-size:18px">二是助力提升国民经济整体效能。持续优化金融资源配置，加大对科技创新、小微企业、绿色发展的金融支持，强化普惠金融服务。支持扩大国内需求，激发消费潜在活力，增强投资增长后劲。大力发展农业保险，加大金融扶贫力度。</span></p>\n\n<p><span style="font-size:18px">三是抓好各种存量风险化解和增量风险防范。保持宏观杠杆率基本稳定，前瞻应对不良资产反弹，精准防控重点领域金融风险。多渠道补充银行资本金。压实各方责任，推动中小银行深化改革、化解风险。坚决打击各种逃废债行为。</span></p>\n\n<p><span style="font-size:18px">四是深化金融供给侧结构性改革。完善多层次、广覆盖、差异化金融机构体系。健全金融机构治理，严格规范股东股权管理。加快推动理财、信托转型发展，培育壮大机构投资者。完善债券市场法制，促进多层次资本市场发展，提高直接融资比重。规范发展第三支柱养老保险。</span></p>\n\n<p><span style="font-size:18px">五是完善现代金融监管体系。强化反垄断和防止资本无序扩张，坚持金融创新必须在审慎监管的前提下进行。提高金融法治化水平，对各类金融活动和行为依法实施全面监管。深化&ldquo;放管服&rdquo;改革，发展监管科技，大力提升监管效能。</span></p>\n\n<p><span style="font-size:18px">证监会：促进居民储蓄向投资转化</span></p>\n\n<p><span style="font-size:18px">12月22日，证监会党委书记、主席易会满主持召开党委会和党委(扩大)会，传达学习中央经济工作会议精神。会议强调，着力加强资本市场投资端建设，增强财富管理功能，促进居民储蓄向投资转化，助力扩大内需。</span></p>\n\n<p><span style="font-size:18px">会议强调，明年是&ldquo;十四五&rdquo;开局之年，做好明年资本市场工作十分重要。证监会系统要重点要抓好以下工作：</span></p>\n\n<p><span style="font-size:18px">一是着力完善资本市场支持科技创新的体制机制。积极发挥科创板、创业板、新三板支持创新的功能作用，更好促进科技、资本和产业高水平循环。优化再融资、并购重组等政策，完善股权激励和员工持股等制度，支持优质领军上市公司更好发挥引领作用，带动中小企业创新活动。完善私募股权基金&ldquo;募投管退&rdquo;机制，鼓励投早、投小、投科技。</span></p>\n\n<p><span style="font-size:18px">二是积极发挥资本市场枢纽功能，促进畅通货币政策、资本市场和实体经济的传导机制。完善多层次资本市场体系，加强各层次股权市场之间的有机联系，促进改善融资结构。科学合理保持IPO、再融资常态化。稳定交易所债券市场，夯实信用基础。</span></p>\n\n<p><span style="font-size:18px">三是着力加强资本市场投资端建设，增强财富管理功能，促进居民储蓄向投资转化，助力扩大内需。推动加强多层次、多支柱养老保险体系与资本市场的衔接，继续大力发展权益类公募基金，推动健全各类专业机构投资者长周期考核机制。进一步加强投资者保护，增强投资者信心。</span></p>\n\n<p><span style="font-size:18px">四是深化资本市场改革开放，持续加强基础制度建设。在注册制改革、健全退市机制、提高上市公司质量、完善证券执法体制机制等方面，持续抓好重点改革措施和关键制度的落地实施。稳妥推进市场、行业和产品高水平双向开放。</span></p>\n\n<p><span style="font-size:18px">五是坚持金融创新必须在审慎监管的前提下进行，防止资本无序扩张。严把IPO入口关，完善股东信息披露监管。加强监管协同和信息共享，避免监管真空。</span></p>\n\n<p><span style="font-size:18px">六是统筹发展与安全，坚决打好防范化解重大金融风险攻坚战、持久战。进一步完善风险监测、预判和应对处置机制，切实维护股票市场、期货市场平稳运行。持续推动债券违约、私募基金等重点领域风险有序缓释，守牢不发生系统性金融风险的底线。</span></p>\n\n<p><span style="font-size:18px">会议要求，要大力推动党建与业务的深度融合，把&ldquo;两个维护&rdquo;转化为干事创业的思想自觉和行动自觉。持续推进全面从严治党，强化对监管工作全流程全链条的监督，严格纪律约束。适应注册制改革新变化，进一步完善对发行审核注册等公权力的监督制约机制。努力打造&ldquo;忠专实&rdquo;的干部队伍，着力锤炼&ldquo;七种能力&rdquo;，增强担当意识，提高担当本领。</span></p>', '2020-12-28 02:59:40', '2020-12-28 02:59:40', NULL, NULL, '/upload/img/2020-12-285fe949fbaf927.jpg', 'admin', NULL, 0),
+(33, 86, '银行发新“警告”，有这些行为，会被列黑名单，你可能还不知情！', '今年，很多人因买房、代发工资等原因，前往银行办理银行卡、住房贷款等业务时，平时也没欠钱不还、信用卡逾期，但莫名其妙被银行拒绝，还说不上原因，真是哑巴吃黄连、有苦说不出，那是因为你可能有了以下行为，被银行列入了黑名单。', '<p><span style="font-size:18px">今年，很多人因买房、代发工资等原因，前往银行办理银行卡、住房贷款等业务时，平时也没欠钱不还、信用卡逾期，但莫名其妙被银行拒绝，还说不上原因，真是哑巴吃黄连、有苦说不出，那是因为你可能有了以下行为，被银行列入了黑名单。</span></p>\n\n<p><span style="font-size:18px">信用卡频繁套现</span></p>\n\n<p><span style="font-size:18px">很多人办理了信用卡，觉得信用卡就是自己的了，该怎么刷，刷多少，在哪儿刷都很随意，平时也不在意。有的人可能因为资金紧张，还用信用卡进行套现，但是，大家可能不知道的是，你的每一次刷卡记录银行都会进行保存、分析。</span></p>\n\n<p><span style="font-size:18px">部分人在小商店、小旅馆、小餐馆等场所，居然几万元的进行刷卡，而银行针对这些行业的POS机都有不同的编码，平时都是小金额的交易，突然有大额交易，就会被列入异常，或者使用信用卡连续同一POS机、刷同一金额，或者连续刷整数金额的都会被列入异常名单，你再去银行办理信用卡，或者贷款时，就有可能会被银行拒绝。</span></p>\n\n<p><span style="font-size:18px">更严重的是，信用卡套现还可能会构成犯罪。如果你替他人以虚假刷卡形式套现金额超过100万元以上的，就会被判处5年以下有期徒刑，如果刷卡金额超过500万，处罚会更严重，所以大家一定要谨慎用卡。<br />\n<img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe94a75935c3.jpg" style="height:480px; margin-bottom:20px; margin-top:20px; width:720px" /></span></p>\n\n<p><span style="font-size:18px">大额交易触碰反洗钱交易行为</span></p>\n\n<p><span style="font-size:18px">如果你是一个普通工薪阶层，或者一个打工仔，可是你的银行流水一个月动辄上千万，是不是不正常？你想想，你在税务局并没有很多的缴税记录，或者你在公积金中心也无过大的代缴记录，那么你这么大的交易流水就会被判别为交易异常，会被银行上报至中国人民银行，判定为有反洗钱风险，这样你贷款或者其他银行办卡都会受到影响。</span></p>\n\n<p><span style="font-size:18px">根据我国&ldquo;反洗钱新规&rdquo;规定，个人出入境携带大额现金或者有价证券超过一定金额的（根据每个人身份和用途不一样，规定的金额不一样），就会被判定有反洗钱风险，一般需要报反洗钱管理部门进行核实；还有就是平时转账、汇兑、网上支付、买保险、理财等行为都会受到反洗钱监测，如果和你本人实际用途不一样，都需要进行核实；</span></p>\n\n<p><span style="font-size:18px">同时，中国人民银行规定，从今年7月起，对公账户存取超过50万，个人账户存取超过10万元，都实行大额现金监测制度，进行大额现金登记和报告备案，逐渐在河北省、浙江、深圳市进行试点，后将推行至全国。</span></p>\n\n<p><span style="font-size:18px">信贷资金进到股市、房市</span></p>\n\n<p><span style="font-size:18px">近两年，随着互联网金融的蓬勃发展，互联网平台、银行等都推出了线上信贷产品，今年前半年，股市行情又很好，很多人经受不住诱惑，贷款进行炒股，结果现在不仅赔了个底朝天，还被银行列入了黑名单，有些人，可能买房缺一点现金，于是直接贷款买了房，这样也会被列入黑名单。</span></p>\n\n<p><span style="font-size:18px">因为目前互联网贷款产品多为消费贷款，是严禁进行炒股、理财、买房等投资行为，如果被监测到，也会被列入黑名单。</span></p>\n\n<p><span style="font-size:18px">其他行为</span></p>\n\n<p><span style="font-size:18px">现在随着各行各业数据化的进行，用户各种数据都会被纳入到银行监控范围，比如宽带、手机等有恶意拖欠行为，打官司记录，公共交通逃票等行为，都会被列入黑名单，从而影响你在银行的正常业务往来。</span></p>\n\n<p><span style="font-size:18px">综述：</span></p>\n\n<p><span style="font-size:18px">现在，随着智能手机的普及，各种手机APP入雨后春笋般的出现，而大部分APP都会记录用户的信用记录和交易行为，我们现在基本上处于一种透明状态，毫无隐私而言，只要你有一些异常行为，都会被监测到，从而会影响你日常生活，所以，现在个人信用记录越来越重要，为了避免日后麻烦，所以一定要保持你良好的信用记录，不然日后不仅银行业务办不成，以后可能连飞机、高铁都坐不成。</span></p>', '2020-12-28 03:01:58', '2020-12-28 03:01:25', NULL, NULL, NULL, 'admin', NULL, 0),
+(34, 86, '最值得申请的2种信用卡', '现在社会发展的越来越快，大家的消费观也变得越来越超前，提前消费现已变成了绝大多数年轻人的消费习惯，而提前消费最火爆的商品便是信用卡，信用卡一直都特别的火爆，好多第一次想申请信用卡的人不清楚哪一家的卡是最适合，实际上卡不在于好坏，而是在于适不适合自己用。那么现在我就专门这个问题，专门梳理了相对比较值得办理的信用卡推荐。', '<p><span style="font-size:18px">现在社会发展的越来越快，大家的消费观也变得越来越超前，提前消费现已变成了绝大多数年轻人的消费习惯，而提前消费最火爆的商品便是信用卡，信用卡一直都特别的火爆，好多第一次想申请信用卡的人不清楚哪一家的卡是最适合，实际上卡不在于好坏，而是在于适不适合自己用。那么现在我就专门这个问题，专门梳理了相对比较值得办理的信用卡推荐。<br />\n<img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe94b3838a9a.jpg" style="height:386px; margin-bottom:20px; margin-top:20px; width:500px" /></span></p>\n\n<p><span style="font-size:18px">浦发AE白金信用卡</span></p>\n\n<p><span style="font-size:18px">这款卡浦发对它的权益一调再调，现如今已经没当时的火爆权益多，但依然是相对比较诱人的。其权益中，信用卡年费这方面，收三千六百元/年，第一次办理高端卡的客户可享受第一年免信用卡年费优惠待遇。一整年不限次贵宾厅权益可携伴7人次、境内4次免费机场接/送服务项目、5万信用卡积分换取境内外星级酒店一间住宿体验。</span></p>\n\n<p><span style="font-size:18px">好多人反映网上办理经常会被拒，通过浦发的相关工作人员给出的解释了解到，原先浦发AE白金是高端卡，在网上办理通过的可能性会很低，因此想办理的人去各大网点办理的通过率会高一些。</span></p>\n\n<p><span style="font-size:18px">广发银行臻尚白金信用卡</span></p>\n\n<p><span style="font-size:18px">这款广发银行臻尚白金信用卡是专门为高铁出行推行的特色服务，经常高铁出行的商旅卡友们用这款卡是再适合不过了，持有广发银行臻尚白金信用卡的持卡人可尊享高铁贵宾室礼遇，免費配备龙腾卡，赠送最高4次（2点）/年龙腾高铁贵宾室礼遇。超过2点收费75元/人次，覆盖全国主要城市。信用卡年费这方面，广发银行臻尚白金信用卡主卡四百八十元/年，次卡240元/年。第一年下卡九十天之内刷3笔，每单满八十八元免信用卡年费，当年刷信用卡十二次及以上免第二年信用卡年费。这种特色权益都对你特别适合的情况下，可以办理试试看。</span></p>', '2020-12-28 03:04:35', '2020-12-28 03:04:35', NULL, NULL, '/upload/img/2020-12-285fe94b1f0e1dd.jpg', 'admin', NULL, 0),
+(35, 87, '买错保险能退吗？怎么退保险划算？退保能退多少钱？', '如果坚定了退保的决心，咱就说说退保能拿回来多少钱。首先我们需要明确一件事儿，退保时，保险公司不会把你的已交保费退给你，而是退还保单的一部分。我们来看看XX福的能退哪些部分：', '<p><span style="font-size:18px">如果坚定了退保的决心，咱就说说退保能拿回来多少钱。首先我们需要明确一件事儿，退保时，保险公司不会把你的已交保费退给你，而是退还保单的一部分。我们来看看XX福的能退哪些部分：</span></p>\n\n<p><span style="font-size:18px"><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe952e834e8a.jpg" style="height:340px; margin-bottom:20px; margin-top:20px; width:469px" /></span></p>\n\n<p><span style="font-size:18px">能退的部分在前期是非常低的，我们怎么能减少损失呢！</span><br />\n&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>1、什么是退保？</strong></span></p>\n\n<p><span style="font-size:18px">退保=违约，因为保险就是一纸合同，是我们和保险公司的一个约定。如果想提前终止，是要承担一些损失的。具体来说，我们之前交的保费只有一部分能拿回来，购买长期保险时都有一个表，一般随着缴费时间的增长而增长。</span></p>\n\n<p><span style="font-size:18px">不同的保险退保时差额都相差很大，香港很多保单前期能退的部分很低，前2年甚至为零，所以不要再说大陆保险坑好么，已经很照顾国内盲目投保的小白用户了。<br />\n<br />\n<img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9532531c2f.png" style="height:500px; margin-bottom:20px; margin-top:20px; width:1000px" /></span></p>\n\n<p><span style="font-size:18px"><strong>2、退保要承担很大损失，这是为什么？</strong></span></p>\n\n<p><span style="font-size:18px">因为我们的退保，也给保险公司造成了很大的损失，具体有以下几个方面：</span></p>\n\n<p><span style="font-size:18px">手续费用：无论签约和退保，保险公司都会花费人力物力来负责操作，这些都是成本。</span></p>\n\n<p><span style="font-size:18px">管理费成本：购买保险的第一年保险公司会向代理人支付大部分管理费，一旦退保后，支付的管理费是没办法收回的。</span></p>\n\n<p><span style="font-size:18px">保障扣除：因为在购买保险的几年内，这段时间已经提供了风险保障，因此需要扣除这块的费用。</span></p>\n\n<p><span style="font-size:18px">具体还有很多，这里就不一一列举了，反正退保是有相当大比例的金钱损失的，所以要慎重决定。<br />\n<br />\n<strong>3、什么情况，应该考虑退保？</strong></span></p>\n\n<p><span style="font-size:18px">如果你动了退保的念头，说明你已经意识到自己过往保险存在问题。不同人对风险和损失的感知是不同的，下面分几种情况具体分析：</span></p>\n\n<p><span style="font-size:18px"><strong>情况1：买错了产品</strong></span></p>\n\n<p><span style="font-size:18px">比如A同学想买一份终身型的健康产品，结果由于功课做的不够到位，最后买了一份万能险+附加健康的保险，这种情况就是比较典型的买错了产品。比如，万能险+健康险本质上是消费型的健康险，简单点说就是健康只能保到60岁。</span></p>\n\n<p><span style="font-size:18px">再比如一个普通的中产家庭，背负较大的房贷车贷，手头存款不多，却想通过保险的方式来增长获得高额回报，个人觉得这也属于买错了产品。因为通过保险增长的优势是稳健，但是一般需要几十年才能获得回报，而且回报率一般也不高。</span></p>\n\n<p><span style="font-size:18px"><strong>情况2：买低了保额</strong></span></p>\n\n<p><span style="font-size:18px">就算买对了保险，这里面还有很多坑在等着大家。如果奶爸A同学给自己买健康险的预算是5000元，可能只买到15万保额的终身型健康险，那么好险管家建议这种情况不如购买50万保额的保障到70岁的消费型健康险，因为买保险最重要就是买的保额，保额太低达不到转移我们风险的目的。先保障到70岁，过几年预算充足了在加保也不错。</span></p>\n\n<p><span style="font-size:18px"><strong>情况3：占用了过多的预算</strong></span></p>\n\n<p><span style="font-size:18px">对于普通的家庭来讲，一般也就是投入家庭年收入的5%-20%来购买保险，换算下来就是1-5万元之间，这么少预算的基础上，想要给爸爸、妈妈、孩子保额做高保障做全，是需要精打细算的。</span></p>\n\n<p><span style="font-size:18px">上面就是几个好险管家能想到的常见问题，这里就不过多展开了。建议大家梳理一下自己的保单，首先要了解自己的需求，然后在看目前的保障是否满意。</span></p>\n\n<p><span style="font-size:18px"><strong>情况4：选择退保，如何尽量避免损失？</strong></span></p>\n\n<p><span style="font-size:18px">总有人说买错了保险。想退保怎么办？</span></p>\n\n<p><span style="font-size:18px">其实不建议大家退的，但实在想退，我们就得把损失降到最低，我们有专业的团队，专业服务，一对一指导，通过正规渠道协助办理退保，有需求欢迎咨询了解</span></p>\n\n<p><span style="font-size:18px"><strong>可办理的类别：</strong>中国大陆所有保险公司承保的各种寿险、增长险、分成险等（除车险）均可办理退保</span></p>\n\n<p><span style="font-size:18px"><strong>可办理的条件：</strong>1、保险断交5年以内的; 2、保险业务员离职的; 3、保单退过部分的; 4、上当受骗有强烈意愿要退保的.</span></p>\n\n<p><span style="font-size:18px"><strong>不能办理的退保：</strong>保险断交五年外（最后一次缴费距离现在超过五年）、自保件（在保险公司任职时，以自己业务员名义给自己或直系亲属所签构的保险合同为自保件）</span></p>\n\n<p><span style="font-size:18px">为了避免大家一而再，再而三的掉入坑里，今天我们就来总结一下保险常见的套路~</span><br />\n&nbsp;</p>\n\n<p><span style="font-size:18px">套路1：和你玩起&ldquo;感情牌</span></p>\n\n<p><span style="font-size:18px">你经常见到的像送油、送大米、送电饭煲...</span></p>\n\n<p><span style="font-size:18px">还有以&ldquo;亲戚朋友&rdquo;的名义和你销售保险...</span></p>\n\n<p><span style="font-size:18px">但是大家有没有留意一点呢，保险公司为什么长期都在招聘业务员呢？</span></p>\n\n<p><span style="font-size:18px">除了因为销售这个岗位的流动性大之外。</span></p>\n\n<p><span style="font-size:18px">还有原因就是保险公司招聘的业务员根本都不是以&ldquo;员工&rdquo;来对待，</span></p>\n\n<p><span style="font-size:18px">基本进去后一个月两个月内就会被要求买保险。</span></p>\n\n<p><span style="font-size:18px">上面的人还会和他说，你自己不买一份，人家怎么可能会信任你啊？</span></p>\n\n<p><span style="font-size:18px">冲着有提成，还有保险公司每天的&ldquo;洗脑&rdquo;，基本上很多业务员的第一单都是自己买的。</span></p>\n\n<p><span style="font-size:18px">而且保险公司还会教他们怎么发展自己的&ldquo;下线&rdquo;，怎么向自己的&ldquo;亲戚朋友&rdquo;入手销售保险。</span></p>\n\n<p><span style="font-size:18px">甚至有些极端的还要求业务员要给出身边人的联系方式。</span></p>\n\n<p><span style="font-size:18px">另外代理人的离职率是非常高的。</span></p>\n\n<p><span style="font-size:18px">基本100人同期培训，一年后剩下的就只有两个人还在这行业。。</span></p>\n\n<p><span style="font-size:18px">老是和你说<strong>&ldquo;找我这个熟人买，日后理赔不用怕&rdquo;</strong>估计几年后都不在这家保险公司做了！</span></p>\n\n<p><span style="font-size:18px"><strong>而且更可怕的是什么呢？</strong></span></p>\n\n<p><span style="font-size:18px">很多人只听&ldquo;熟人&rdquo;的话，条款什么都不看，健康问卷什么都不理...</span></p>\n\n<p><span style="font-size:18px">但是，你想过为什么有保险合同吗？</span></p>\n\n<p><span style="font-size:18px">不就是因为保险是长达几十年甚至终身的&ldquo;保护&rdquo;。</span></p>\n\n<p><span style="font-size:18px">如果要实现&ldquo;保护&rdquo;，你靠人的口头&ldquo;说辞&rdquo;？？</span></p>\n\n<p><span style="font-size:18px">估计未来遇到纠纷，上到法庭，这个人估计都不知道去哪了。</span></p>\n\n<p><span style="font-size:18px">所以法律、合同才是保障消费者的唯一壁垒</span></p>\n\n<p><span style="font-size:18px"><strong>套路2：用停售来&ldquo;割韭菜&rdquo;</strong></span></p>\n\n<p><span style="font-size:18px"><strong>这个可以说是开门红期间，最最最最常见的套路。</strong></span></p>\n\n<p><span style="font-size:18px">像&ldquo;XX额度卖完即止&rdquo;、&ldquo;XX多少个名额&rdquo;、&ldquo;抢完就没了&rdquo;...</span></p>\n\n<p><span style="font-size:18px"><strong>我们就先不讨论这些产品本身怎么样。</strong></span></p>\n\n<p><span style="font-size:18px"><strong>这些所谓的&ldquo;好产品&rdquo;，基本在停售后，保险公司又会在短期内出一个更好的产品。</strong></span></p>\n\n<p><span style="font-size:18px"><strong>很简单的道理：</strong></span></p>\n\n<p><span style="font-size:18px">如果产品不是越来越好，估计这保险公司早就做不下去了~</span></p>\n\n<p><span style="font-size:18px">但是你还是能看到&ldquo;天天停售&rdquo;系列。.</span></p>\n\n<p><span style="font-size:18px"><strong>套路3：既能增长，又有保障</strong></span></p>\n\n<p><span style="font-size:18px">其实很多人对保险的增长效果十分&ldquo;宽容&rdquo;。</span></p>\n\n<p><span style="font-size:18px">大多数小伙伴都只关注业务员给他算出来的最后数字，却没看这个钱是什么岁数去拿的。</span></p>\n\n<p><span style="font-size:18px">他们都很喜欢用中高档收入来给消费者演示，但实际收入很可能是达不到这样的情况。</span></p>\n\n<p><span style="font-size:18px">因此关于保险增长有几点你必须记得：</span></p>\n\n<p><span style="font-size:18px">①分成险：</span></p>\n\n<p><span style="font-size:18px">分成是不保证的,甚至可以为0。 也并不是保险公司的盈利拿给你分成，而是这个分成险的盈余给你分成；</span></p>\n\n<p><span style="font-size:18px">②万能险：</span></p>\n\n<p><span style="font-size:18px">有具体的保底收入，但是一般保险公司的保底收入都是2.5%左右。 而且万能险需要扣除初始费用、风险管理费等诸多的费用，前几年保单个人账户价值会非常低，回本周期基本都是比较长的，增长效果并不能立竿见影！</span></p>\n\n<p><span style="font-size:18px">③万能账户：</span></p>\n\n<p><span style="font-size:18px">这个东西并不是你所有交的保费都进去计算利息，而是将你每年保险公司给你的收入放进去计算，也就是你可以认为是&ldquo;利息的利息&rdquo;。</span></p>\n\n<p><span style="font-size:18px">增长型就像返还型保险一样，能买到的保额都是十分低的。</span></p>\n\n<p><span style="font-size:18px">所以增长型保险并不建议大家胡乱去买，更别想通过它达到&ldquo;既能增长，又能保障&rdquo;的效果~</span></p>\n\n<p><span style="font-size:18px">还是那句老话：</span></p>\n\n<p><span style="font-size:18px">买保险，如果你选择依赖&ldquo;保险公司名声多么大&rdquo;、&ldquo;这业务员与你多么熟&rdquo;... 还不如自己多掌握一些保险的正确知识，也只有自己学会了，才能防止老被&ldquo;套路&rdquo;。</span></p>', '2020-12-28 03:40:49', '2020-12-28 03:40:19', NULL, NULL, '/upload/img/2020-12-285fe952f3cc164.png', 'admin', NULL, 0),
+(36, 87, '【保险退保】怎么退，退保能退多少，如何降低退保损失，这些你都需要知道', '多人稀里糊涂的买了保险，等需要用的时候才发现买错了，这时候就会考虑到退保。\n今天保鱼君就来聊聊关于退保的那些事儿，包括哪些保险必须退保，保险能退多少钱，有什么办法可以降低退保损失等等问题，文章主要内容包括以下几个方面：', '<p><span style="font-size:18px">大部分消费者在发现被骗后，都会先到保险公司要求全额退保，窝了一肚子气后发现，要么接受损失按照现金价值退保，要么继续委屈地交保费。不服气的消费者接下来就会向行业部门投诉，但是结局如何?您懂得!</span></p>\n\n<p><br />\n<span style="font-size:18px">法律意识强的消费者还会向律师求助，但是，根据实践，绝大部分律师不太会接这样的保险案子。而根据公开数据，即使律师接下来类似诉讼案子，也是输多赢少!<br />\n接下来的问题是：为什么好多律师不能，秘密在哪里?</span></p>\n\n<p><br />\n<span style="font-size:18px">为什么普通律师不太愿意接受全额退保的案子?</span></p>\n\n<p><br />\n<span style="font-size:18px">全额保险退保是一个通俗的说法，从法律角度讲，全额退保请求属于保险合同纠纷类案子。而一般非专业保险律师，处理合同纠纷类案子时，都会依据《合同法》和《民法》。但是保险合同与普通民事合同有着很大区别，比如，在民事合同中，如果在平等自愿的前提下，合同当事人都签了字，这份合同就自然合法有效了。但是保险合同却不这样，即使双方(包括消费者)在合同上都签了字，也不代表该保险合同就合法有效了。如果消费者受到了重大误导和欺骗，这份保险依然有理由可以认为无效。而且，由于过失是在保险公司，消费者自然就应该获得全额退保。</span></p>\n\n<p><br />\n<span style="font-size:18px">由于非专业保险律师对《保险法》不太了解，加上，保险合同又是最复杂的合同，即使在金融业，保险产品也被公认为最复杂的金融产品，所以，当普通律师按照《合同法》和《民法》来处理全额退保类案子时，悲剧在开始就注定了!这也是大部分律师不愿意受理全额退保案子的原因，也是保险合同纠纷案子输多赢少的根源所在!<br />\n那么，又是如何帮助消费者实现全额退保的呢?</span></p>\n\n<p><br />\n<span style="font-size:18px">我们严格依托《保险法》和中国保险监督管理委员会出台的各项法规来帮助消费者依法维权!<br />\n依托对《保险法》和各项保险法规的熟悉，保险专业律师团队可以迅速帮助消费者对保单购买的过程和各项单据进行审核，最便捷的帮助消费者寻找证据。即使证据不够充分，也可以指导消费者通过简单手段来获得扎实证据。</span></p>\n\n<p><br />\n<span style="font-size:18px">不仅仅是对保险法规的熟悉，由于保险合同还涉及到&ldquo;保险基本原理&rdquo;、&ldquo;保险惯例&rdquo;</span></p>\n\n<p><span style="font-size:18px">如果您需要维权，可以咨询客服评估分析。</span></p>', '2020-12-28 03:52:21', '2020-12-28 03:52:21', NULL, NULL, '/upload/img/2020-12-285fe95630559cb.jpg', 'admin', NULL, 0);
+INSERT INTO `admin_artical` (`id`, `pid`, `title`, `description`, `content`, `updated_at`, `created_at`, `origin`, `sort`, `cover_img`, `author`, `video_url`, `recommend`) VALUES
+(37, 87, '全额退保，维权实录', '奸佞假骗咍噱，忠善贤良悲叹。以我心灯一盏，照它寒夜黑天。', '<p><span style="font-size:18px">奸佞假骗咍噱，忠善贤良悲叹。</span></p>\n\n<p><span style="font-size:18px">以我心灯一盏，照它寒夜黑天。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>霸王电子回执案</strong></span></p>\n\n<p><span style="font-size:18px">客户被办理高额信用卡吸引，在平安人寿买了6千保险。信用卡批下额度一万，客户感觉受骗。二十天后代理人把保单送来。客户要求退保，拨打客服电话发现，保单已经过了犹豫期。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>银保监会要求：</strong>长期人寿保险合同设立10-20天犹豫期，客户可以无条件全额退保。犹豫期从收到合同次日起计算。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>套路</strong>：手机投保完成同时，默认客户已经收到电子合同，签收电子回执。犹豫期从投保当天开始计算。&ldquo;聪明&rdquo;的代理人更是过了20天，才把纸质合同送给客户。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">虽然属于一个集团，平安人寿和平安银行根本不是一个概念。办理高额信用卡，办理大额贷款，平安人寿代理人说了不算。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>维权</strong>：拨通平安客服，记下工号，要求和主管通话。主张：正式保险合同和投保说明书中，均写明，签收本保险合同次日起20天内为犹豫期。客服所解释的已经收到电子保险合同，电子回执也算签收，均没有文字明确说明。属于隐瞒重要事实，欺骗投保人。同时，拨打保监会12378投诉热线。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>结果</strong>：两天后收到公司内勤信息，请求客户撤诉，承诺全额退保。10天后，保费全款到账。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>银行存款变保险案</strong></span></p>\n\n<p><span style="font-size:18px">一位农村大姐到银行存钱，被一位热情的银行服务人员接待，稀里糊涂办了业务。第二年接到新华保险续收电话。才知道自己买的是保险，而且还要连续交费5年。客户在银行和保险公司之间来回奔波，被告知退保损失6千元。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>银保监会要求：</strong>保险公司代理人不得到银行驻点推销保险。银行销售保险产品，必须全程录音录像。不得夸大，承诺收益。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>套路</strong>：把保险公司银保代理人转为银行临时雇员。银行大堂设计专门的自助终端，指导客户在电脑上自行购买保险。利用客户对银行的信任，混淆存款与理财的概念。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>维权</strong>：大姐说到痛处，无声哭泣。看着擦泪的满手老茧，对这种赤裸裸的欺诈深恶痛绝！弘毅君亲自赶到银行网点，就投保过程，电子签名，回访电话等与银行和保险人员交涉。并拨打农业银行总行和银保监会电话投诉。要求全额退保，赔偿损失。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>结果</strong>：三天后和保险公司相关负责人一起到银行签署了协议。全额退款，赔偿利息275元。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>保单代签名案</strong></span></p>\n\n<p><span style="font-size:18px">2016年,太平洋保险在岳滩某村发奖品搞宣传。王先生碰到了一个代理人朋友。经不住再三推销，就为自己老婆买了份保险。<br />\n<br />\n三年后才发现，所有投保单上签名内容，均由代理人代为填写。而且宣传有病报销50万，终身还有100万，纯属欺骗。遂要求全额退保。<br />\n<br />\n<strong>银保监会：</strong>保险合同签名，风险抄录语句签名，投保提示书签名均有明确要求。《保险法》明文规定，以死亡为给付条件的保险合同，未经被保险人同意并认可保险金额，保险合同无效。<br />\n<br />\n<strong>套路</strong>：大多代理人和客户都是熟人关系。纸质投保单填错，客户当时不方便，家属之间代签，代理人为了省事。种种原因，出现了大量的代签名问题保单。<br />\n<br />\n保险公司随后的电话回访，是否亲笔签名，是否了解保险责任等。代理人一般都会要求客户，全部回答为是。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>维权</strong>：保险本身也是一份合同，一方没有亲笔签章，合同无效。拨打太平洋客服投诉，推三阻四。投诉至银保监会，要求全额退保，赔偿利息。<br />\n<br />\n<strong>结果</strong> :保险公司电话沟通多次，一周后，全额退保签署协议。同时补偿利息500元。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>理财保险夸大收益案</strong></span></p>\n\n<p><span style="font-size:18px">山东网友求助，自己2011年投保了富德生命富贵全能年金保险，年缴保费2万，缴费期10年。代理人当时宣传复利滚存，利息如何之高。后来发现，缴费8年还不够本。合同满期到2075年。咨询客服，退保损失很大。办理保险的代理人已经离职。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>银保监会要求：</strong> 不得把保险产品收益和银行产品收益做简单对比。不得夸大，承诺收益。不得宣传保单不可剥夺，避债避税。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">全世界只有中国的分红万能投连险，需要投保人抄录如下风险提示用语：<strong>本人已阅读保险条款、产品说明书和投保提示书，了解本产品的特点和保单利益的不确定性。</strong></span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">实践中，99.99%的客户投保时，没有阅读（甚至没有见到）保险条款，产品说明书和投保提示书。</span></p>\n\n<p><span style="font-size:18px"><strong>套路</strong>：理财型保险产品一直是保险误导的重灾区。根本原因是中国人爱存钱，保险大多是人情面子，不看条款（基本也看不懂）。代理人把保险包装成理财甚至投资工具。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>维权：</strong>保单自己签名，风险抄录自己抄写，电话回访自己接听，签单代理人已经离职。种种情况都对客户不利。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">弘毅君与客户微信沟通，还原投保过程每个细节。指导客户取证，三天后取得关键证据。直接在银保监会网上投诉。（情况复杂，电话投诉不便记录）</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>结果：</strong>一周后，保险公司联系客户去签署协议。我们审核后，客户签字，全额退保16万。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>冒名顶替上岗案</strong></span></p>\n\n<p><span style="font-size:18px">李先生退休后，被保险公司增员。因为年龄大了，公司主管让李先生用儿子的名字办理上岗手续。先后办理保险16份。后来李先生慢慢认识到，自己买的保险大多质次价高，公司宣讲多有误导。决定退保。</span></p>\n\n<p><br />\n<span style="font-size:18px"><strong>银保监会：《</strong>保险法》要求保险代理人应当具备专业能力，与保险公司签订委托代理协议。相关规定要求保险代理人需要提供真实资料，通过考试取得执业证书。保险公司一般要求入司年龄为22-50周岁。</span></p>\n\n<p><br />\n<span style="font-size:18px"><strong>套路：</strong>人海战术，全民保险，是中国保险的一大特色。几乎所有的保险公司，常年都在拼命招聘。标准越来越低，待遇越来越好。出勤就发1000元，出勤就发24桶油。出勤就发洗衣机。<br />\n<br />\n为了让年龄超标的人员能够顺利入司，保险公司都会让他们提交家人资料，自己顶替上岗。假人假学历，是当今中国保险代理人的两大特色。<br />\n<br />\n<strong>维权：</strong>李先生儿子投诉，在本人不知情不签字的情况下，取得了保险执业证，和保险公司签订了保险代理合同，同时办理了多份保险业务。根据《合同法》，代理合同无效。也有理由相信，所签署的多份保险合同的效力值得商榷。客户拨打公司客服，银保监会投诉，主张全部合同无效，要求全部解约。<br />\n<br />\n<strong>结果：</strong>经过多轮协商，最终16份保险全部全额退保。李先生所有的佣金和出勤津贴也不再返还。客户同意不再投诉。</span></p>\n\n<p>&nbsp;</p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>有 感 而 发</strong></span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">看到一次意外毁掉一生幸福；看到一场大病拖垮一个家庭；看到多少老人晚景凄凉；看到太多老板打拼半生一夜破产。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">我们认识到，保障财富、抵御风险，唯有保险才能让我们的生活不被改变。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">看到大妈大爷的存款，不经意间就变成了保单；看到朋友被死缠烂打，随便就买了垃圾保险；看到理赔的时候被无情拒赔；看到保险产品千千万，客户却选择困难。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">我们很心痛，我们希望，我们能够改变一点点。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">看到不识字的大妈在保险公司做到总监；看到保险酒会上集体公然的误导欺骗；看到有良知有理想的代理人黯然离开；看到朋友圈里侮辱智商的虚假宣传。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">我们很愤慨。劣币驱逐良币，真理的声音总是那么遥远。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">普及保险知识，还原保险真相。唤醒教育我们身边的朋友，从你我做起。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">星星之火，可以燎原。我们共同努力，让保险业早日风清气正，碧海蓝天。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">士不可以不弘毅，任重而道远。</span></p>', '2020-12-28 03:55:32', '2020-12-28 03:55:32', NULL, NULL, '/upload/img/2020-12-285fe9571eabeac.jpg', 'admin', NULL, 0),
+(38, 87, '保险全额退保。如何正确维权', '关于保单全额退保之事，其实很多人都有自己的原因想要保单退保，那么什么样的原因维权才是正确的呢？', '<p><span style="font-size:18px">关于保单全额退保之事，其实很多人都有自己的原因想要保单退保，那么什么样的原因维权才是正确的呢？</span></p>\n\n<p><span style="font-size:18px">第一，被误导销售的行为，因为误导销售本来就是销售违规行为，例如夸大产品宣传</span></p>\n\n<p><span style="font-size:18px">第二，被诱导销售的行为，利用返佣，优惠活动，礼品，停售等行为，诱导客户购买</span></p>\n\n<p><span style="font-size:18px">第三，告知了业务员健康问题，而业务员没有如实告知，这个问题经常发生，业务员为了自己的利益，给客户带来了隐患。</span></p>\n\n<p><span style="font-size:18px">第四，以可以贷款办信用卡为由，让客户购买保险！</span></p>\n\n<p><span style="font-size:18px">以上四种是典型的误导欺骗销售行为，如果您购买时有上面的问题，可以合法维权的！</span></p>\n\n<p><span style="font-size:18px">再来说一下哪些全额退保不正确？</span></p>\n\n<p><span style="font-size:18px">第一，以前买的保险不划算，不想交了，这是个人行为，不是有误导欺骗销售行为</span></p>\n\n<p><span style="font-size:18px">第二，我现在保单已经断交了，退现金价值很少，听说有全额退保也想试试</span></p>\n\n<p><span style="font-size:18px">第三，我和业务员现在关系不好，就想全额退保</span></p>\n\n<p><span style="font-size:18px">第四，业务员自己承受不起自保件的压力，选择全额退保挽回损失。</span></p>\n\n<p><span style="font-size:18px">以上四种是不可取也不正确的维权！</span></p>\n\n<p><span style="font-size:18px">不要恶意退保，不要随意退保，退保不仅有经济损失，还丢失了风险保障！保障很重要！</span></p>\n\n<p><span style="font-size:18px">但是也好多人也不清楚自己是否属于正确维权退保的原因，需要专门的分析评估。</span></p>\n\n<p><span style="font-size:18px">如果您需要帮助维权援助，可以客服帮你免费评估分析具体原因！</span></p>', '2020-12-28 03:59:02', '2020-12-28 03:59:02', NULL, NULL, '/upload/img/2020-12-285fe95803e8703.jpg', 'admin', NULL, 0),
+(39, 87, '消费者如何维权降低退保损失', '近日，有媒体报道，有储户将存款办成了保险，几年前存的三万余元不仅没有利息还倒亏一千多元。其实，工作人员在推销过程中所使用的一些“特别”词汇能够帮助消费者辨认是否遇到了被推销保险的情况。', '<p><span style="font-size:18px"><strong>导读：</strong>近日，有媒体报道，有储户将存款办成了<strong>保险</strong>，几年前存的三万余元不仅没有利息还倒亏一千多元。其实，工作人员在推销过程中所使用的一些&ldquo;特别&rdquo;词汇能够帮助消费者辨认是否遇到了被推销保险的情况。</span></p>\n\n<p><span style="font-size:18px"><strong>警惕&ldquo;特别&rdquo;词汇 防止&ldquo;存款变保单&rdquo;</strong></span></p>\n\n<p><span style="font-size:18px">福州的罗先生2010年8月他到福州紫阳立交桥附近一家银行存款，一名穿着制服的人上前搭讪，向他推销一款理财产品。工作人员向他介绍称，收益比存款高。于是，罗先生办理了这种分红型<strong>两全保险</strong>，每年交1.1万元，总共交三年，到去年8月，这份保险交费结束。然而，上个月当罗先生去取收益的时候，却被工作人员告知保险是十年期的，还有六年才到期，现在不仅3.3万元不能全部拿回来，还要亏1000多元。</span></p>\n\n<p><span style="font-size:18px">罗先生的遭遇并非个案，不少储户都曾吃过这样的&ldquo;哑巴亏&rdquo;，将储蓄存款、基金、银行理财产品与保险产品混淆。然而，据了解，从4月1日起，《关于进一步规范商业银行代理保险业务销售行为的通知》已经正式实施，像罗先生这样遭遇&ldquo;存款变保单&rdquo;事件的情况有望越来越少。</span></p>\n\n<p><span style="font-size:18px">制度上的保障必不可少，但储户提高防范意识和技巧也很重要，可从工作人员进行介绍时所使用的一些&ldquo;特别&rdquo;词汇上去判断。当有工作人员介绍说&ldquo;高于银行同期利息&rdquo;时，一定要问清楚是储蓄还是保险，以防误<strong>买保险</strong>。此外，若听到例如&ldquo;健康保障&rdquo;、&ldquo;零存整取&rdquo;、&ldquo;定投功能&rdquo;之类的词汇时，更要提高警惕，因为这些词语往往都是销售保险和基金的专用名词。</span></p>\n\n<p><span style="font-size:18px">此外，注意如下几点也可提前防止&ldquo;存款变保单&rdquo;问题的发生。首先要认真阅读合同，看清楚合同最后的落款是银行还是保险公司。这是判断储户办理的是银行业务还是保险业务最直接的依据。其次，辨别销售人员资质。主动询问保险销售者是否银行人员，是否持有《保险代理从业人员资格证书》，警惕其他非银行工作人员的误导宣传。</span></p>\n\n<p><span style="font-size:18px"><strong>&ldquo;上当&rdquo;后如何维权 降低损失？</strong></span></p>\n\n<p><span style="font-size:18px">那么，如果储户已经遭遇到&ldquo;存款变保单&rdquo;该如何依法维权呢？当储户误买了保险，要及时与保险公司工作人员联系退保。投保人在购买保险之后有15天的犹豫期，犹豫期内可免费退保，超过15天犹豫期，投保人要求退保则需要承担退保违约金。</span></p>\n\n<p><span style="font-size:18px">如果储户如果是在不知情的情况下被误导办了保险业务，一定要保留相关证据，到消费者协会或相关部门进行投诉。当然，通过法律途径维权也是可行的。受骗的投保人可以将相关资料提供给消费者协会、保监会有关部门，争取全额退还保费，只不过这样做可能需要花费较多的精力。</span></p>\n\n<p><span style="font-size:18px">然而，很多人发现是保险后往往并未坚决退保，原因就是相信销售人员曾向自己许诺的、超过银行定期存款的收益，但等到期后才发现，这些收益并未兑现。这时，如果储户急需用钱可向保险公司咨询，看能否办理保单质押贷款，先解决眼前的问题。</span></p>', '2020-12-28 07:49:13', '2020-12-28 07:49:13', NULL, NULL, '/upload/img/2020-12-285fe98d857d726.jpg', 'admin', NULL, 0),
+(40, 87, '全额退保的正确方法，怎样合法维权投诉才能全额退保', '自打卖保险这行当产生以来，就一直有人要退保。但是退保呢，交一万，退三百，交十万，退两千，很多人觉得心里过不去。退吧，肥肉被割一大块，不退吧，一年一年接着割，退不退都心疼这笔钱。原来的人都是哑巴吃黄连，有苦说不出啊！', '<p style="text-align:left"><span style="font-size:18px">自打卖保险这行当产生以来，就一直有人要退保。但是退保呢，交一万，退三百，交十万，退两千，很多人觉得心里过不去。退吧，肥肉被割一大块，不退吧，一年一年接着割，退不退都心疼这笔钱。原来的人都是哑巴吃黄连，有苦说不出啊！</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">在这里帮一下广大保险消费群体，掌握好一些技能就能挽回你的损失了。</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">什么情况下可以全额退保？</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">【1】犹豫期内：根据《关于规范人身保险业务经营有关问题的通知》：&ldquo;对于犹豫期的规定，在犹豫期内，投保人可以无条件解除保险合同，保险公司除扣除不超过10元的成本费以外，应退还全部保费，并不得对此收取其他任何费用。&rdquo;一般犹豫期为10天-15天，注意一些1年期的短期险和团体险是没有犹豫期的。</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">【2】代签名：保险合同必须由投保人签名，若保险经办人擅自签名，就算是经过投保人同意签名，都是不符合操作规范的，这种情况下申请退保可以全额返还。</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">【3】没有接听到电话回访：为了确保消费者的知情权，规避保险业务员人为的销售误导，监管部门规定保险公司必须进行电话回访。电话回访一般会确认是否为本人投保，是否了解险种信息，是否了解部分条款内容等，回访过程全程录音。若没有接听到电话回访，保险公司拿不出录音证据，投保人可以申请保费全额返还。</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">【4】人为销售误导：若保险业务员夸大保险作用，与保险保障内容存在严重出入，可以向保险公司申请全额退保。这种情况需保留好保险业务员误导销售行为的录音、录像或聊天记录等作为证。</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">用合法手段维权，帮助保险消费者维权！在你需要退保的时候也请各位冷静三思，仔细衡量退保得失，保险是一份契约，退保是单方违约自然有损失，但要衡量得失再退保。不劝你退保，不恶意退保！但当你存在被欺骗被误导的时候可以咨询客服，免费帮你评估你的保单情况。</span></p>', '2020-12-28 07:56:41', '2020-12-28 07:56:41', NULL, NULL, '/upload/img/2020-12-285fe98ed301836.jpg', NULL, NULL, 0),
+(42, 85, '一切正常应用蚂蚁花呗会危害个人征信?有关个人征信报告的这种谣传,你有没有中招了没有?', '近日,一则“蚂蚁‘花呗’部分用户接入央行征信系统”的消息引发关注,有网友担心花呗的正常使用会被显示到征信上,从而影响个人的信用记录,更有网友表示:不敢用了。事实真是如此吗?', '<p><span style="font-size:18px">近日,一则&ldquo;蚂蚁&lsquo;花呗&rsquo;部分用户接入央行征信系统&rdquo;的消息引发关注,有网友担心花呗的正常使用会被显示到征信上,从而影响个人的信用记录,更有网友表示:不敢用了。事实真是如此吗?</span></p>\n\n<p><span style="font-size:18px">事实上,只要用户按期正常还款,不逾期,使用互联网消费信贷产品就不会影响个人信用记录。信用记录最基本的功能是了解、验证他人的信用信息,并通过信用信息的传播来改善交易双方的信息不对称,起到约束交易双方行为的作用。拥有良好信用记录的借款人,不仅可以更快获得贷款,还容易获得更高的贷款额度和更优惠的利率。相反,如果借款人有严重的不良信用记录,在信贷申请中有被银行拒贷的可能。</span></p>\n\n<p><span style="font-size:18px">个人征信被誉为我们的&ldquo;经济身份证&rdquo;,其重要性早已渗透到生活的方方面面。然而,在对征信的认知中,大家常常被一些谣言所迷惑,今天,中国互联网联合辟谣平台就来为您一一澄清。</span></p>\n\n<p><span style="font-size:18px">一、不良征信记录能不能修复？</span></p>\n\n<p><span style="font-size:18px">征信系统的数据修改、删除是由业务发生银行发起,并经过严格的审批及操作流程,征信系统全程自动记录操作流程。征信信息如有错误或遗漏,可通过合法合规途径办理异议申请。</span></p>\n\n<p><span style="font-size:18px">对于已经产生的不良信用记录,根据《征信业管理条例》第十六条规定&ldquo;征信机构对个人不良信息的保存期限,自不良行为或者事件终止之日起为5年;超过5年的,应当予以删除&rdquo;。也就是从还清欠款之日起,五年之后,不良信用记录会消除。</span></p>\n\n<p><span style="font-size:18px">二、频繁查询征信不会影响借款?</span></p>\n\n<p><span style="font-size:18px">银行可能通过查看借款人的信用报告查询次数,判断借款人是否存在急于借款、多头借贷等情况。如果因审查客户的融资申请产生的查询记录次数过多,则会对申请银行贷款有影响。</span></p>\n\n<p><span style="font-size:18px">一般来说,一段时间内,个人征信报告因贷款、信用卡审批等原因被不同机构多次查询,但征信报告却显示该段时间内用户没有成功获批新贷款或成功申请到信用卡,那么,银行有理由推测该用户财务状况不佳,从而拒绝用户的申贷请求。不过,信用报告只是作为银行放贷的一个参考,是否放贷还是取决于银行对客户情况的综合考量。</span></p>\n\n<p><span style="font-size:18px">三、水电费信息已纳入个人征信?</span></p>\n\n<p><span style="font-size:18px">自2020年1月19日起,征信中心已面向社会公众和金融机构提供二代格式信用报告查询服务。目前二代征信系统尚未采集个人水费、电费缴费信息,仅在二代格式信用报告中设计预留了展示格式。但二代征信系统将继承展示一代征信系统中已采集的个人电信正常缴费和欠费信息。也就是说,如果你去查询新版个人征信报告,可能会发现报告中预留了个人水费、电费缴费信息的展示格式,但里面并没有具体信息展示。</span></p>\n\n<p><span style="font-size:18px">据介绍,在实际采集时,征信中心将与相关数据源单位协商,并将严格落实《征信业管理条例》第十三条&ldquo;采集个人信息应当经信息主体本人同意,未经本人同意不得采集&rdquo;规定,在数据源单位取得信息主体授权同意后才报送数据。</span></p>\n\n<p><span style="font-size:18px">四、不献血等于失信?</span></p>\n\n<p><span style="font-size:18px">2019年11月14日,国家卫健委等11个部门联合印发通知,要求各地应当探索将无偿献血纳入社会征信系统。对此,有谣言称,不献血的话个人征信会受到影响。</span></p>\n\n<p><span style="font-size:18px">国家卫生健康委表示,不献血不影响个人信用,更不会有惩戒措施。无偿献血纳入个人征信系统是个人信用的加分项目,目的是让更多无偿献血者的善举得到更广范围的支持和肯定,让他们的奉献精神得到更多赞誉。无偿献血是一种自愿行为,献血法也明确规定,国家实行无偿献血制度,国家提倡十八周岁至五十五周岁的健康公民自愿献血。</span></p>\n\n<p><span style="font-size:18px">信用记录保护TIPS:</span></p>\n\n<p><span style="font-size:18px">1.良好信用靠自己,守信行为帮助您。</span></p>\n\n<p><span style="font-size:18px">2.发生逾期,赶紧还清欠款,重建良好信用记录。</span></p>\n\n<p><span style="font-size:18px">3.一次失信不会终生记录,还清欠款5年后即删除。</span></p>\n\n<p><span style="font-size:18px">4.报告内容有误不用着急,可以申请异议核实更正。</span></p>\n\n<p><span style="font-size:18px">5.信用报告定期查,信用状况早知道,若有问题早应对,车贷房贷两不误。</span></p>', '2020-12-28 08:43:16', '2020-12-28 08:43:16', NULL, NULL, '/upload/img/2020-12-285fe99a9ea6f96.webp', 'admin', NULL, 0),
+(44, 85, '个人征信如何查询?', '对于个人征信如何查询来说，目前个人征信报告主要有线上和线下两种查询方式，具体查询方法如下：', '<p style="text-align:left"><span style="font-size:18px">对于个人征信如何查询来说，目前个人征信报告主要有线上和线下两种查询方式，具体查询方法如下：</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">1、线上查询</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">通过中国人民银行征信中心进行查询。</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">1）登录中国人民银行征信中心官方网站；</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">2）然后在首页找到&ldquo;互联网个人信用信息服务平台&rdquo;，点击进入；</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">3）然后登录到个人账户，如果没有账户，那么需要先注册，登录后按照系统提示一步步操作即可。</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">4）用户提交个人信用信息查询申请后，会在24小时后收到一个查询验证码；</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">5）再次登录网站，将验证码输入后即可查询个人征信。</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">2、线下查询</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">通过中国人民银行分支行网点查询个人征信报告，查询人需要携带本人有效身份证件，然后在柜台即可查询个人征信。一般每个人每年有2次免费查询个人征信的机会，超过2次的，查询一次将收取10元的费用。</span></p>', '2020-12-28 09:13:05', '2020-12-28 09:13:05', NULL, NULL, '/upload/img/2020-12-285fe9a19e8c24c.jpg', 'admin', NULL, 0),
+(45, 85, '个人征信多久更新一次?', '个人征信是征信机构把依法采集的信息，依法进行加工整理，最后依法向合法的信息查询人提供的个人信用历史记录，个人征信目前主要用于银行的各项消费信贷业务。那么一般个人征信多久更新一次呢？银行系统规定，需要每个月更新一次个人信用信息库，一般间隔期不会超过2个月。具体影响个人征信更新时间的原因，主要有如下两方面：', '<p style="text-align:left"><span style="font-size:18px">个人征信是征信机构把依法采集的信息，依法进行加工整理，最后依法向合法的信息查询人提供的个人信用历史记录，个人征信目前主要用于银行的各项消费信贷业务。那么一般个人征信多久更新一次呢？银行系统规定，需要每个月更新一次个人信用信息库，一般间隔期不会超过2个月。具体影响个人征信更新时间的原因，主要有如下两方面：</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">1、商业银行上报数据时间</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">《个人信用信息基础数据库管理暂行办法》第6条规定，商业银行应该及时向个人信用信息数据库报送个人信用信息。因此个人征信多久更新一次，看商业银行系统采集的个人信用信息是多久上报一次的，正常情况是一个月一次，特殊情况是2个月一次。</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">2、银行收到数据后更新时间</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">银行收到业务相关机构的上报数据后，一般在1~2个月内进行更新，也就是这个月上报的数据，下个月或者下下个月才能看到。根据银行上报的数据不一样，进而更新的时间也是不同的。</span></p>', '2020-12-28 09:16:04', '2020-12-28 09:16:04', NULL, NULL, '/upload/img/2020-12-285fe9a202dad86.png', 'admin', NULL, 0),
+(46, 85, '个人征信多少分才合格?', '征信报告对于每一个人来说都非常重要，合格的征信能帮你成功申请到房贷、信用卡。那么究竟个人征信多少分才合格呢？其实征信评分多少及格并没有统一标准，一般银行在审核个人征信记录时，将个人征信评分的安全等级分成五个级别，分别是正常、关注、次级、可疑、损失。', '<p style="text-align:left"><span style="font-size:18px">征信报告对于每一个人来说都非常重要，合格的征信能帮你成功申请到房贷、信用卡。那么究竟个人征信多少分才合格呢？其实征信评分多少及格并没有统一标准，一般银行在审核个人征信记录时，将个人征信评分的安全等级分成五个级别，分别是正常、关注、次级、可疑、损失。</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">一般借款人只有达到了正常和关注等级，就可以通过多数银行的风控审核。如果借款人的级别在次级及以下，那么在初步审核阶段，借款人的申请就会被银行拒绝，理由显示为综合评分不足，其实就是征信评分出了问题。</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">因此个人征信多少分来说，并没有具体的分值规定，主要看征信能不能达到相关银行规定贷款的等级，只要达到银行规定的贷款等级就可以。因此通常个人征信在正常和关注等级，均是可以贷款的。</span></p>', '2020-12-28 09:18:00', '2020-12-28 09:18:00', NULL, NULL, '/upload/img/2020-12-285fe9a2baaed0f.jpg', 'admin', NULL, 0),
+(47, 85, '个人征信多少分才合格?', '征信报告对于每一个人来说都非常重要，合格的征信能帮你成功申请到房贷、信用卡。那么究竟个人征信多少分才合格呢？其实征信评分多少及格并没有统一标准，一般银行在审核个人征信记录时，将个人征信评分的安全等级分成五个级别，分别是正常、关注、次级、可疑、损失。', '<p style="text-align:left"><span style="font-size:18px">征信报告对于每一个人来说都非常重要，合格的征信能帮你成功申请到房贷、信用卡。那么究竟个人征信多少分才合格呢？其实征信评分多少及格并没有统一标准，一般银行在审核个人征信记录时，将个人征信评分的安全等级分成五个级别，分别是正常、关注、次级、可疑、损失。</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">一般借款人只有达到了正常和关注等级，就可以通过多数银行的风控审核。如果借款人的级别在次级及以下，那么在初步审核阶段，借款人的申请就会被银行拒绝，理由显示为综合评分不足，其实就是征信评分出了问题。</span></p>\n\n<p style="text-align:left"><span style="font-size:18px">因此个人征信多少分来说，并没有具体的分值规定，主要看征信能不能达到相关银行规定贷款的等级，只要达到银行规定的贷款等级就可以。因此通常个人征信在正常和关注等级，均是可以贷款的。</span></p>', '2020-12-28 09:18:01', '2020-12-28 09:18:01', NULL, NULL, '/upload/img/2020-12-285fe9a2baaed0f.jpg', 'admin', NULL, 0),
+(48, 56, '拉卡拉大（押金版）大POS机', NULL, '<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>一：产品费率</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">我们拉卡拉这款大POS机的刷卡费率是0.38、0.5、0.6</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">0.38只限扫码（花呗）单笔一万以下（建议小额消费）；</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">0.5只限借记卡（储蓄卡）使用（封顶20元）；</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">0.6贷记卡（信用卡）（磁条卡、芯片卡）。</span></span></p>\n\n<p style="text-align:left"><br />\n<span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>二：结算方式</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">信用卡在早0：00-晚23：00区域之间可刷卡（23：00之后刷卡，则要到第二个工作日到账）</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">贷记卡（信用卡）:D0秒到（一块以下不秒到）；</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">借记卡（储蓄卡）：D1到账，工作日第二天早上9点左右到账；</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">扫码：通道信用卡、花呗D0秒到 ，储蓄卡D1到账。</span></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">提现手续费为0%</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">每日T+0累计最高可提现30万元</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">贷记（信用卡）芯片卡单笔最高5万元,同卡最多3次</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">贷记（信用卡）磁条卡不验证秒到刷卡一半额度，商户APP里面认证或者人脸识别可全部秒到。</span></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>三：使用流程</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>（一）商户自主进件</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">商户可微信扫描机器背面的二维码进入汇拓客小程序填写入网信息。</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9a7b20ba37.png" style="height:353px; margin-bottom:20px; margin-top:20px; width:336px" /></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>商户入网</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>①商户信息填写</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">没有营业执照的商户请选择类型为小微，商户名称地市+店铺名字编写，不能小于七个字，邮箱填写注意邮箱格式 有营业执照的商户请选择类型为企业如实填写，信息全部填写完成后点击&ldquo;下一步&rdquo;。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">注：商户名称需体现市级，小微商户不可以带&ldquo;公司&rdquo;后缀。</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9a7e26df56.png" style="height:691px; margin-bottom:20px; margin-top:20px; width:256px" /></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>②结算信息填写</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">填写相关信息点击&ldquo;下一步&rdquo;继续填写。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">注：1. 身份证拍摄必须为本人身份证，与以上姓名一致。2. 身份证有效期需与身份证背面截止日期一致。</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9a7fdebd7b.png" style="height:540px; margin-bottom:20px; margin-top:20px; width:304px" /></span></p>\n\n<p style="text-align:center">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>③终端信息填写</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>终端类型：</strong></span></strong><span style="font-size:10.5000pt">&nbsp;商户自主进件不可设置终端信息，请直接点击&ldquo;提交&rdquo;即可，汇拓客APP需勾选终端类型。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>费率： </strong></span></strong><span style="font-size:10.5000pt">商户自主进件是默认费率不可调整，汇拓客APP可在区间范围内调整。 填写相关信息后请点击&ldquo;下一步&rdquo;。</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9a8190c1d4.png" style="height:636px; margin-bottom:20px; margin-top:20px; width:372px" /></span></p>\n\n<p style="text-align:center">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>④提交电子协议</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">点击电子协议中的&ldquo;同意并签署&rdquo;等待商户审核。</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9a82e7d49b.png" style="height:423px; margin-bottom:20px; margin-top:20px; width:328px" /></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>⑤激活码获取</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">扫机器背面二维码，输身份证后六位，在首页--商终信--激活码</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9a859c9758.png" style="height:466px; margin-bottom:20px; margin-top:20px; width:431px" /></span></p>\n\n<ul>\n	<li style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>机器激活、消费</strong></span></strong></span></li>\n</ul>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9a87a79e99.png" style="height:356px; margin-bottom:20px; margin-top:20px; width:440px" /></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9a897d45aa.png" style="height:356px; margin-bottom:20px; margin-top:20px; width:440px" /></span></p>\n\n<ul>\n	<li style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>商户提额</strong></span></strong></span></li>\n</ul>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>①扫码验证身份</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">微信</span><span style="font-size:10.5000pt">扫描机器背面的二维码，&nbsp;输入身份证后6位进行身份验证。</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9a8ae363e6.png" style="height:265px; margin-bottom:20px; margin-top:20px; width:354px" /></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>②提额认证</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">点击首页中的&nbsp;&ldquo;提额认证&rdquo;&nbsp;进行商户使用额度的提高。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">注：提额跟人脸识别必须要做，否则磁条卡秒到额度到账一半，芯片卡不受影响。</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9a8cc9bd33.png" style="height:506px; margin-bottom:20px; margin-top:20px; width:284px" /></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>③完成认证</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>人脸认证完成后：</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">刷卡额度提升至单笔30万单日30万；扫码额度提升至单笔1万单日10万；实时到账额度提升至单笔5万单日20万</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>信用卡认证完成后：</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">实时到账额度提升至单笔5万单日30万</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9a8ff42047.png" style="height:500px; margin-bottom:20px; margin-top:20px; width:281px" /></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>四：功能介绍</strong></span></strong></span></p>\n\n<ol>\n	<li style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">拉卡拉大POS机属于押金机器，首次刷298元即可激活机器，VIP返现220元，合伙人返现230元。</span></span></li>\n</ol>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">①拉卡拉大pos机分润9元/万，客户在注册后180天内刷信用卡，刷满88万奖励298元。（所有刷卡/花呗消费都算）</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">②刷卡激活3个月后一次性扣流量费30元/年。</span></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">2、</span><strong><span style="font-size:10.5000pt"><strong>拉卡拉大POS机的优势在于：</strong></span></strong><span style="font-size:10.5000pt">可刷花呗、商户稳定、安全可靠、上市公司品牌、笔笔有积分、可助养卡提额。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">大家可以根据自己的需求选择合适自己的机器，自用方便省钱，推广长期拥有返利收入。</span></span></p>', '2020-12-28 09:44:39', '2020-12-28 09:35:40', NULL, NULL, '/upload/img/2020-12-285fe9a626152a4.jpg', NULL, 'http://1300347920.vod2.myqcloud.com/61d45587vodtranscq1300347920/acebecf85285890811750999670/v.f100800.mp4', 0),
+(49, 56, '拉卡拉（免押版）大POS机', NULL, '<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>一：产品费率</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">我们拉卡拉（免押）这款大POS机的刷卡费率是0.38、0.5、0.55</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">0.38只限扫码（花呗）单笔一万以下（建议小额消费）；</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">0.5只限借记卡（储蓄卡）使用（封顶20元）</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">0.55就是刷1000元以上大额（信用卡）</span></span></p>\n\n<p style="text-align:left"><br />\n<span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>二：结算方式</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">信用卡在早0：00-晚23：00区域之间可刷卡（23：00之后刷卡，则要到第二个工作日到账）</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">贷记卡（信用卡）:D0秒到（一块以下不秒到）；</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">借记卡（储蓄卡）：D1到账，工作日第二天早上9点左右到账；</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">扫码：通道信用卡、花呗D0秒到 ，储蓄卡D1到账。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">提现手续费为0%</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">每日T+0累计最高可提现30万元</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">贷记（信用卡）芯片卡单笔最高5万元,同卡最多3次</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">贷记（信用卡）磁条卡不验证秒到刷卡一半额度，商户APP里面认证或者人脸识别可全部秒到。</span></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>三：使用流程</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>（一）商户自主进件</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">商户可微信扫描机器背面的二维码进入汇拓客小程序填写入网信息。</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9ab590683f.png" style="height:350px; margin-bottom:20px; margin-top:20px; width:285px" /></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>商户入网</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>①商户信息填写</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">没有营业执照的商户请选择类型为小微，商户名称地市+店铺名字编写，不能小于七个字，邮箱填写注意邮箱格式 有营业执照的商户请选择类型为企业如实填写，信息全部填写完成后点击&ldquo;下一步&rdquo;。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">注：商户名称需体现市级，小微商户不可以带&ldquo;公司&rdquo;后缀。</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9ab75ce7e6.png" style="height:691px; margin-bottom:20px; margin-top:20px; width:256px" /></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>②结算信息填写</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">填写相关信息点击&ldquo;下一步&rdquo;继续填写。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">注：1. 身份证拍摄必须为本人身份证，与以上姓名一致。2. 身份证有效期需与身份证背面截止日期一致。</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9ab9149f00.png" style="height:540px; margin-bottom:20px; margin-top:20px; width:304px" /></span></p>\n\n<p style="text-align:center">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>③终端信息填写</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>终端类型：</strong></span></strong><span style="font-size:10.5000pt">&nbsp;商户自主进件不可设置终端信息，请直接点击&ldquo;提交&rdquo;即可，汇拓客APP需勾选终端类型。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>费率： </strong></span></strong><span style="font-size:10.5000pt">商户自主进件是默认费率不可调整，汇拓客APP可在区间范围内调整。 填写相关信息后请点击&ldquo;下一步&rdquo;。</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9abc116086.png" style="height:636px; margin-bottom:20px; margin-top:20px; width:372px" /></span></p>\n\n<p style="text-align:center">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>④提交电子协议</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">点击电子协议中的&ldquo;同意并签署&rdquo;等待商户审核。</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9abdfe09a2.png" style="height:423px; margin-bottom:20px; margin-top:20px; width:328px" /></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>⑤激活码获取</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">扫机器背面二维码，输身份证后六位，在首页--商终信--激活码</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9ac2bc4979.png" style="height:466px; margin-bottom:20px; margin-top:20px; width:431px" /></span></p>\n\n<ul>\n	<li style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>机器激活、消费</strong></span></strong></span></li>\n</ul>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9ac62babbf.png" style="height:356px; margin-bottom:20px; margin-top:20px; width:440px" /></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9ac8baa709.png" style="height:356px; margin-bottom:20px; margin-top:20px; width:440px" /></span></p>\n\n<ul>\n	<li style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>商户提额</strong></span></strong></span></li>\n</ul>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>①扫码验证身份</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">微信</span><span style="font-size:10.5000pt">扫描机器背面的二维码，&nbsp;输入身份证后6位进行身份验证。</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9acc9c4d39.png" style="height:265px; margin-bottom:20px; margin-top:20px; width:354px" /></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>②提额认证</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">点击首页中的&nbsp;&ldquo;提额认证&rdquo;&nbsp;进行商户使用额度的提高。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">注：提额跟人脸识别必须要做，否则磁条卡秒到额度到账一半，芯片卡不受影响。</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9ad059d182.png" style="height:506px; margin-bottom:20px; margin-top:20px; width:284px" /></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>③完成认证</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>人脸认证完成后：</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">刷卡额度提升至单笔30万单日30万；扫码额度提升至单笔1万单日10万；实时到账额度提升至单笔5万单日20万</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>信用卡认证完成后：</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">实时到账额度提升至单笔5万单日30万</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9ad3341b1d.png" style="height:500px; margin-bottom:20px; margin-top:20px; width:281px" /></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>四：功能介绍</strong></span></strong></span></p>\n\n<ol>\n	<li style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">拉卡拉（免押）大POS机属免押金机器，首次刷100元即可激活机器，VIP返现5元，合伙人返现10元。</span></span></li>\n</ol>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">①拉卡拉（免押）大pos机分润4元/万，从注册的第1天-30天内刷卡满1万元奖励20元，31天-60天内刷卡满1万元奖励20元，第61天-90天刷卡满1万元奖励20元。（所有激活/信用卡刷卡/扫码都算）</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">②刷卡激活3个月后一次性扣流量费30元/年。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">2、</span><strong><span style="font-size:10.5000pt"><strong>拉卡拉大POS机的优势在于：</strong></span></strong><span style="font-size:10.5000pt">可刷花呗、商户稳定、安全可靠、上市公司品牌、笔笔有积分、可助养卡提额。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">大家可以根据自己的需求选择合适自己的机器，自用方便省钱，推广长期拥有返利收入。</span></span></p>', '2020-12-28 10:02:45', '2020-12-28 09:51:48', NULL, NULL, '/upload/img/2020-12-285fe9aa6d0b636.jpg', NULL, 'http://1300347920.vod2.myqcloud.com/61d45587vodtranscq1300347920/ace9bb3a5285890811750995658/v.f100800.mp4', 0),
+(50, 57, '金小宝电签POS机', NULL, '<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>一：产品费率</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">我们金小宝电签机的刷卡费率是0.38、0.55</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">0.38就是刷京东白条5000元以下；</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">给大家介绍一下的这款金小宝电签机，它拥有央行支付牌照、正规一清机，中国人民银行可以查询支付牌照。</span></span></p>\n\n<p style="text-align:left"><br />\n<span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>二：结算方式</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">24小时内刷卡秒到账户</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">芯片卡单笔10万、单日50万;</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">磁条卡认证前单笔1000以内，认证后单笔5万、单日50万;</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">扫码支付单笔1000以内。储蓄卡20封顶T+1</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>三：使用流程</strong></span></strong></span></p>\n\n<ul>\n	<li style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>微信扫描二维码 下载APP</strong></span></strong></span></li>\n</ul>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">1、给大家介绍一下的这款金小宝电签机，它拥有央行支付牌照、正规一清机，中国人民银行可以查询支付牌照。</span></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">①用户微信扫描包装盒外正面二维码，进行&ldquo;小金管家APP&rdquo;下载即可。</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9af3e05a09.png" style="height:483px; margin-bottom:20px; margin-top:20px; width:397px" /></span></p>\n\n<p style="text-align:center">&nbsp;</p>\n\n<ul>\n	<li style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>注册登录</strong></span></strong></span></li>\n</ul>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">①首次登录选择快捷登录，输入手机号、图形验证码、点击获取验证码登录即可。</span></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9b0ab51a34.png" style="height:566px; margin-bottom:20px; margin-top:20px; width:561px" /></span></p>\n\n<p style="text-align:center">&nbsp;</p>\n\n<ul>\n	<li style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>完善信息（实名认证）</strong></span></strong></span></li>\n</ul>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">①点击去完善；</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">②填写注册人真实姓名、上传身份证正反面、选择当前地区、填写详细地址点击提交。</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9b1207b5d6.jpg" style="height:642px; margin-bottom:20px; margin-top:20px; width:595px" /></span></p>\n\n<ul>\n	<li style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>开通产品</strong></span></strong></span></li>\n</ul>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">①点击需要开通的产品名称；</span></span></p>\n\n<p><span style="font-size:10.5pt"><span style="font-size:10.5000pt">②按提示输入开户行信息、上传本人信用照片、输入银行预留手机号、选择所属地区点击下一步。</span><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9b15dbb624.jpg" style="height:859px; margin-bottom:20px; margin-top:20px; width:504px" /></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9b17fdb1ed.png" style="height:793px; margin-bottom:20px; margin-top:20px; width:700px" /></span></p>\n\n<ul>\n	<li style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>绑定结算卡</strong></span></strong></span></li>\n</ul>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">①选择已开通产品，点击小宝电签；</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">②点击结算账户，绑定结算卡；</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">③点击终端管理，绑定机具</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">④上传本人借记卡照片、填写开户银行、选择开户城市、开户支行、输入手机号点击保存。</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9b1e817ad4.png" style="height:753px; margin-bottom:20px; margin-top:20px; width:664px" /></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9b2171ba50.png" style="height:724px; margin-bottom:20px; margin-top:20px; width:592px" /></span></p>\n\n<p style="text-align:center">&nbsp;</p>\n\n<ul>\n	<li style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>绑定终端</strong></span></strong></span></li>\n</ul>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">①扫描终端背面序号或者手动输入机具序列号绑定机具。</span></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-285fe9b24f3e3dd.jpg" style="height:532px; margin-bottom:20px; margin-top:20px; width:700px" /></span></p>\n\n<p style="text-align:center">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>四：功能介绍</strong></span></strong></span></p>\n\n<ol>\n	<li style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">金小宝电签机属于非押金机器，首次刷10元即可激活机器，VIP返现30元，合伙人返现40元。</span></span></li>\n	<li style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">首次必须本人信用卡</span></span></li>\n</ol>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">注：金小宝电签机激活刷卡时，不要用广发卡认证（风控严格）</span></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">①金小宝电签机分润4元/万，客户在注册后第31天-60天内刷卡满5000奖励30元，61天-90天内刷卡满5000元奖励30元。（所有激活/信用卡刷卡/白条都算）</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">②刷卡激活30天后一次性扣流量费36元/年，赠送3个月。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">2、</span><strong><span style="font-size:10.5000pt"><strong>金小宝电签机的优势在于：</strong></span></strong><span style="font-size:10.5000pt">智慧商户&bull;真实落地、安全透明、支持白条、24小时秒到账户、笔笔有积分、可助养卡提额。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">大家可以根据自己的需求选择合适自己的机器，自用方便省钱，推广长期拥有返利收入。</span></span></p>', '2020-12-28 10:24:24', '2020-12-28 10:09:11', NULL, NULL, '/upload/img/2020-12-285fe9ae7c4c016.jpg', NULL, 'http://1300347920.vod2.myqcloud.com/61d45587vodtranscq1300347920/ac4918f55285890811750909874/v.f100800.mp4', 0);
+INSERT INTO `admin_artical` (`id`, `pid`, `title`, `description`, `content`, `updated_at`, `created_at`, `origin`, `sort`, `cover_img`, `author`, `video_url`, `recommend`) VALUES
+(51, 65, '付临门（押金版）大POS机', NULL, '<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>一：产品费率</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">我们付临门这款大POS机的刷卡费率是0.38、0.58</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">0.38就是刷1000元以下免密支付（限芯片卡）；</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">0.58就是刷1000元以上大额（信用卡和储蓄卡同费率）。</span></span></p>\n\n<p style="text-align:left"><br />\n<span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>二：结算方式</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">24小时内刷卡秒到账户</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">（1）</span><span style="font-size:10.5000pt">实名认证：</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">单商户单日总额度：12万</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">（未认证的磁条卡）：5000元/单卡/单笔，10000元/单商户/单日；</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">（已认证的磁条卡）：5万/单卡/单笔；10万/单卡/单日；</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">芯片卡：5万/单卡/单笔；12万/单卡/单日；12万元/单账户/单日</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">（2）</span><span style="font-size:10.5000pt">高级实名认证：</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">单商户单日总额度：50万</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">（未认证的磁条卡）： 10000元/单卡/单笔，30000元/单商户/单日；</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">（已认证的磁条卡）：5万/单卡/单笔；50万/单卡/单日；</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">芯片卡：5万/单卡/单笔；50万/单卡/单日；50万/单账户/单日。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">支付宝、微信：500元/单卡/单笔，3000元/单账户/单日</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">（3）</span><span style="font-size:10.5000pt">商户认证用户</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">单账户单日总额度：50万</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">（未认证磁条卡）：50000元/单卡/单笔，100000元/单商户/单日</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">（已认证的磁条卡）：5万/单卡/单笔；50万/单卡/单日；</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">芯片卡：5万/单卡/单笔；50万/单卡/单日；50万/单账户/单日</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>三：使用流程</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>（一）关注公众号 下载APP</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">①用户微信扫描机器背面二维码，关注&ldquo;付临门POS机服务公众号&rdquo;</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fea8e95efec4.jpg" style="height:365px; margin-bottom:20px; margin-top:20px; width:290px" /></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">②关注微信公众号，选择服务中心，点击付临门云商宝下载，页面自动跳转至APP下载，大家根据自己手机型号选择相应版本下载。</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fea8eb680e3a.png" style="height:461px; margin-bottom:20px; margin-top:20px; width:516px" /></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>（二）APP使用操作</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>①注册登录</strong></span></strong></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fea8ecf8e8ca.png" style="height:693px; margin-bottom:20px; margin-top:20px; width:699px" /></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>②实名认证</strong></span></strong></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fea8ef02e1ca.png" style="height:648px; margin-bottom:20px; margin-top:20px; width:699px" /></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>③绑定结算</strong></span></strong></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fea8f117353d.png" style="height:627px; margin-bottom:20px; margin-top:20px; width:700px" /></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>④高级认证</strong></span></strong></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fea8f8da9258.png" style="height:930px; margin-bottom:20px; margin-top:20px; width:505px" /></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>⑤绑定POS终端</strong></span></strong></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fea8fb6e164d.png" style="height:872px; margin-bottom:20px; margin-top:20px; width:491px" /></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>⑥服务类型</strong></span></strong></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fea8fda4e284.png" style="height:667px; margin-bottom:20px; margin-top:20px; width:700px" /></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>⑦pos终端开机设置</strong></span></strong></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fea91143fbd4.jpg" style="height:707px; margin-bottom:20px; margin-top:20px; width:474px" /></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fea915c7b9b9.jpg" style="height:788px; margin-bottom:20px; margin-top:20px; width:483px" /></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>⑧终端激活</strong></span></strong></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fea91d759122.jpg" style="height:830px; margin-bottom:20px; margin-top:20px; width:478px" /></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>⑨刷卡交易</strong></span></strong></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fea9273dd004.jpg" style="height:471px; margin-bottom:20px; margin-top:20px; width:464px" /></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fea92b1a5b67.jpg" style="height:745px; margin-bottom:20px; margin-top:20px; width:451px" /></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>四：功能介绍</strong></span></strong></span></p>\n\n<ol>\n	<li style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">付临门大POS机属于押金机器，首次刷298元即可激活机器，VIP返现220元，合伙人返现230元。</span></span></li>\n</ol>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">①付临门大pos机分润7元/万，客户在注册后180天内刷信用卡，刷满88万奖励200元。（所有刷卡/闪付消费都算）</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">②付临门大POS机内置流量卡，用完可购买5元/张。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">24小时内刷卡秒到账户</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">2、</span><strong><span style="font-size:10.5000pt"><strong>付临门大POS机的优势在于：</strong></span></strong><span style="font-size:10.5000pt">智能匹配&bull;优质落地商户、安全可靠、24小时秒到账户、汇率0.38-0.58、笔笔有积分、可助养卡提额。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">大家可以根据自己的需求选择合适自己的机器，自用方便省钱，推广长期拥有返利收入。</span></span></p>', '2020-12-29 02:22:31', '2020-12-28 10:28:08', NULL, NULL, '/upload/img/2020-12-285fe9b3776541c.jpg', 'admin', 'http://1300347920.vod2.myqcloud.com/61d45587vodtranscq1300347920/ac46d26a5285890811750905390/v.f100800.mp4', 0),
+(52, 66, '银盛通（押金版）大POS机', NULL, '<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>一：产品费率</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">我们银盛通（押金版）这款大POS机的刷卡费率是0.38、0.58</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">0.38就是刷1000元以下免密支付（限芯片卡）；</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">0.58就是刷1000元以上大额都是（信用卡和储蓄卡同费率）。</span></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">机器默认 0.58%，没有单笔秒到费，不＋2，不+3。扫码费率：0.38%。</span></span></p>\n\n<p style="text-align:left"><br />\n<span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>二：结算方式</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">24小时内刷卡秒到账户（最低刷卡金额 100 元）</span></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">机器上面个人最低消费金额大于 100 元 真实商户最低消费 10 元。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">磁条卡不认证，刷不了，认证之后单笔 2 万，单日 30 万。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">报备白名单之后，单笔 2000，单日 1 万。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">芯片卡默认单笔 5 万，单台机器当天 50 万，笔笔秒到。</span></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>三：使用流程</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>（一）关注公众号 下载APP</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">①用户微信扫描机器背面二维码，进行&ldquo;银盛通APP&rdquo;下载即可。</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fea95b92496a.png" style="height:411px; margin-bottom:20px; margin-top:20px; width:460px" /></span></p>\n\n<p style="text-align:center">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>（二）POS机绑定流程</strong></span></strong></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fea9632d0816.jpg" style="height:639px; margin-bottom:20px; margin-top:20px; width:631px" /></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fea96861d733.jpg" style="height:366px; margin-bottom:20px; margin-top:20px; width:366px" /></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fea96c7e48e5.jpg" style="height:388px; margin-bottom:20px; margin-top:20px; width:370px" /></span></p>\n\n<p style="text-align:center">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>四：功能介绍</strong></span></strong></span></p>\n\n<ol>\n	<li style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">银盛通（押金版）大POS机属于押金机器，首次刷298元即可激活机器，VIP返现240元，合伙人返现250元。</span></span></li>\n</ol>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">①银盛通（押金版）大POS机分润6元/万，客户在注册后180天内刷信用卡，刷满88万奖励200元。（所有激活/信用卡刷卡/闪付都算）</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">②银盛通（押金版）大POS机内置流量卡，免费使用90天，之后收取功能费3元/月。</span></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">2、</span><strong><span style="font-size:10.5000pt"><strong>银盛通（押金版）大POS机的优势在于：</strong></span></strong><span style="font-size:10.5000pt">智能匹配&bull;优质落地商户、安全可靠、24小时秒到账户、笔笔有积分、可助养卡提额。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">大家可以根据自己的需求选择合适自己的机器，自用方便省钱，推广长期拥有返利收入。</span></span></p>', '2020-12-29 02:39:17', '2020-12-28 10:30:48', NULL, NULL, '/upload/img/2020-12-285fe9b3d4cce92.jpg', NULL, 'http://1300347920.vod2.myqcloud.com/61d45587vodtranscq1300347920/e6ef7e215285890811751150181/v.f100800.mp4', 0),
+(53, 66, '银盛通电签POS机', NULL, '<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>一：产品费率</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">我们银盛通电签机的刷卡费率是0.38、0.55</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">0.38就是刷1000元以下免密支付（限芯片卡）；</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">0.58就是刷1000元以上大额都是（信用卡和储蓄卡同费率）。</span></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">机器默认 0.58%，没有单笔秒到费，不＋2，不+3。闪刷费率：0.38%。</span></span></p>\n\n<p style="text-align:left"><br />\n<span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>二：结算方式</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">24小时内刷卡秒到账户（最低刷卡金额 100 元）</span></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">机器上面个人最低消费金额大于 100 元 真实商户最低消费 10 元。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">磁条卡不认证，刷不了，认证之后单笔 2 万，单日 30 万。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">报备白名单之后，单笔 2000，单日 1 万。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">芯片卡默认单笔 5 万，单台机器当天 50 万，笔笔秒到。</span></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>三：使用流程</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>（一）关注公众号 下载APP</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">①用户微信扫描机器背面二维码，进行&ldquo;银盛通APP&rdquo;下载即可。</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fea94458bf8a.jpg" style="height:397px; margin-bottom:20px; margin-top:20px; width:443px" /></span></p>\n\n<p style="text-align:center">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>（二）POS机绑定流程</strong></span></strong></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fea948da1d00.jpg" style="height:392px; margin-bottom:20px; margin-top:20px; width:387px" /></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fea94da0d7d7.jpg" style="height:366px; margin-bottom:20px; margin-top:20px; width:366px" /></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fea950b0dfce.jpg" style="height:388px; margin-bottom:20px; margin-top:20px; width:370px" /></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>四：功能介绍</strong></span></strong></span></p>\n\n<ol>\n	<li style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">银盛通电签机属于非押金机器，首次刷10元即可激活机器，VIP返现20元，合伙人返现30元。</span></span></li>\n</ol>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">①银盛通电签机分润7元/万，客户在注册后60天内刷信用卡，刷满10万奖励50元。（所有激活/信用卡刷卡/闪付都算）</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">②刷卡激活30天后一次性扣流量费27元/年，赠送3个月。</span></span></p>\n\n<p>&nbsp;\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">2、</span><strong><span style="font-size:10.5000pt"><strong>银盛通电签机的优势在于：</strong></span></strong><span style="font-size:10.5000pt">智能匹配&bull;优质落地商户、安全可靠、24小时秒到账户、笔笔有积分、可助养卡提额。</span></span></p>\n</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">大家可以根据自己的需求选择合适自己的机器，自用方便省钱，推广长期拥有返利收入。</span></span></p>', '2020-12-29 02:31:46', '2020-12-28 10:31:55', NULL, NULL, '/upload/img/2020-12-285fe9b418a9969.jpg', NULL, 'http://1300347920.vod2.myqcloud.com/61d45587vodtranscq1300347920/e921ab415285890811751232801/v.f100800.mp4', 0),
+(54, 67, '腾付通（免押金版）大POS机', NULL, '<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>一：产品费率</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">我们腾付通pos这款大POS机的刷卡费率是0.38、0.55,</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">0.38就是刷1000元以下免密支付（限芯片卡）、以及扫码（花呗）单笔1000以下（建议小额消费）；</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">0.55就是刷1000元以上大额都是0.55（信用卡和储蓄卡同费率）。</span><br />\n<span style="font-size:10.5000pt">借记卡</span><span style="font-size:10.5000pt">（储存卡）</span><span style="font-size:10.5000pt">默认0.55%，封项25元，借记卡加万5秒到附加费。</span><br />\n<strong><span style="font-size:10.5000pt"><strong>二：结算方式</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">信用卡在早7：00-晚23：45区域之间刷卡秒到账户（ 超过秒到时间则需要第二个工作日出款，也是俗称的T+1。）</span></span></p>\n\n<p style="text-align:left"><span style="font-size:12pt"><span style="font-size:10.5000pt">贷记（信用卡） 磁条 单笔5千 当日2万贷记 芯片 不限借记卡 磁条 禁用</span></span></p>\n\n<p style="text-align:left"><span style="font-size:12pt"><span style="font-size:10.5000pt">借记卡（储存卡）芯片 单笔1000 当日5万这是最新通道限额 </span></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>三：激活流程</strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>（一）关注公众号 </strong></span></strong></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">①扫描机器背后二维码，关注腾付通微信公众号</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">②进入公众号点击用户服务&rarr;商户登录</span></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fead4c735072.jpg" style="height:432px; margin-bottom:20px; margin-top:20px; width:453px" /></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fead5cd80145.jpg" style="height:866px; margin-bottom:20px; margin-top:20px; width:354px" /></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">③点击商户进件，填写个人基本信息、法人身份证正反面、手持身份证正面拍照上传、结算信息</span></span></p>\n\n<p style="text-align:center"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295fead6e7ea154.jpg" style="height:449px; margin-bottom:20px; margin-top:20px; width:362px" /></span></p>\n\n<p style="text-align:left">&nbsp;</p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">④绑定机器信息(扫描机身上的二维码，输入SM号码)完成后点击完成新增</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">⑤页面自动跳转至商户页面，输入手机号，用验证码登录。首次登录需要设置密码，设置完成即可登录完成进入首页。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>四：功能介绍</strong></span></strong></span></p>\n\n<ol>\n	<li style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">腾付通大pos机属于非押金机器，首次刷100元即可激活机器，VIP返现5元，合伙人返现10元。</span></span></li>\n</ol>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">①腾付通大pos机分润4元/万，达标奖励60元。从注册的第1天-30天内刷卡满1万元奖励20元，31天-60天内刷卡满1万元奖励20元，第61天-90天刷卡满1万元奖励20元。（所有激活/信用卡刷卡/闪付/花呗都算）</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">②腾付通pos机流量费为50元。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><strong><span style="font-size:10.5000pt"><strong>腾付通pos机的优势在于：</strong></span></strong><span style="font-size:10.5000pt">解决各类信用卡风控等问题，比如常见的广发、中信等各类风控卡，都可以放心使用。所有刷卡商户均为100%落地商户，可在企查查APP上查询。</span></span></p>\n\n<p style="text-align:left"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">大家可以根据自己的需求选择合适自己的机器，自用方便省钱，推广长期拥有返利收入。</span></span></p>', '2020-12-29 07:18:17', '2020-12-28 10:32:43', NULL, NULL, '/upload/img/2020-12-285fe9b4491b18a.jpg', NULL, 'http://1300347920.vod2.myqcloud.com/61d45587vodtranscq1300347920/e4c37dd05285890811751079339/v.f100800.mp4', 0),
+(55, 50, '通易付（电签版）POS机', NULL, '<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">一、</span><span style="font-size:10.5000pt">注意事项:</span></span></p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">1、</span><span style="font-size:10.5000pt">限额：</span></span></p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">用户收款限额单笔5万元，单日30万元，小额双免云闪付单笔1000，单日10笔 借记卡交易单笔最高1000元，超过1000元不允许交易，单日3笔 信用卡磁条卡交易若单笔金额超过2000元，且为纯磁条卡交易，需在小程序中，由用户在银行卡认证里边自行进行认证 微信支付宝扫码单用户单日3笔，单笔2000（扫码由商户资质决定）。 从商户激活日起：前30天流量卡免费，30天后流量卡一次性刷卡时扣除36元流量卡年费一年，不刷卡不扣除。</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">2、</span><span style="font-size:10.5000pt">秒到时间：6:00-23:50。</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">3、</span><span style="font-size:10.5000pt">不落地区域：宁夏 大连。</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">4、</span><span style="font-size:10.5000pt">年龄限制：18-60。</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">5、</span><span style="font-size:10.5000pt">一个身份证最多可以开几台机器？</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">答：一台 以身份证号码为准。</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">6、</span><span style="font-size:10.5000pt">电签版机器扫码商户是智能匹配还是固定?</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">答：非固定 个体户小微商户。</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">7、</span><span style="font-size:10.5000pt">注册过通联MPOS的还能再重复注册通联电签吗？</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">答：沉默用户（3个月未交易的）且交易额1万元以上的才可以重新注册电签，联系客户提供资料申请注销。</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">8、</span><span style="font-size:10.5000pt">交易是自动匹配商户的？怎么匹配？</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">答：按照时间和交易金额自动匹配的。</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">9、</span><span style="font-size:10.5000pt">怎么才算激活达标？</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">答：通联电签激活条件：第一阶段（注册日起1-30天内）必须要本人、本卡、且刷（交易金额大于等于100）的是信用卡认证后的卡 才算达标（认证流程-打开小程序里面-我的-信用卡认证） 可以认证多张本人的卡。</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">10、</span><span style="font-size:10.5000pt">终端刷卡0.55/0.49双费率，客户如何选择?在哪里操作？</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">答：从待机页直接做1消费是走的优享费率0.49 普通费率4管理--6/7消费0.55。</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">11、</span><span style="font-size:10.5000pt">电签版机器扫码商户是智能匹配还是固定?</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">答：非固定 个体户小微商户。</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">12、</span><span style="font-size:10.5000pt">商户不到账怎么办？</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">答：可以打客服95193查 也可以通过公众号在线客服查账。</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">13、</span><span style="font-size:10.5000pt">商户使用的是小程序：通易付Plus。</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">14、</span><span style="font-size:10.5000pt">达标交易100元是0.49和0.55交易? 储蓄卡也算？</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">答：达标返现中的消费量统计仅包含商户费率0.49% 0.55%的信用卡消费类型 储蓄卡和扫码不算。</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">15、</span><span style="font-size:10.5000pt">出省跨市会不会自动落户当地商户？</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">答：会的，跟着定位GPS走。</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">16、</span><span style="font-size:10.5000pt">是否有电子签购单，在哪里查询？</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">答：暂时没有。</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">17、</span><span style="font-size:10.5000pt">机器若有故障，解绑后的返现怎么算？按机器还是按商户？</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">答：解绑下来的机器再绑给其他客户不会有返现 解绑的商户再绑另一台新的机器会延续上一台机器的返现。</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">二、使用流程</span></span></p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">第一步：扫描机身后面公众号二维码；</span></span></p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295feae77380a44.jpg" style="height:316px; margin-bottom:20px; margin-top:20px; width:237px" /></span></p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">第二步：两种登录方式1、手机号注册；2、微信快捷登录；</span></span></p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295feae78bdc02c.png" style="height:218px; margin-bottom:20px; margin-top:20px; width:385px" /></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">第三步：注册完成后，登录小程序，点击&ldquo;我的&rdquo;&mdash;&ldquo;实名认证&rdquo;，进行实名认证；</span></span></p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295feae7a160765.png" style="height:218px; margin-bottom:20px; margin-top:20px; width:386px" /></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">商户认证流程：1、身份证识别+位置定位；2、银行卡识别+三要素验证；3、人脸比对；4认证结果；</span></span></p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295feae7b396149.png" style="height:217px; margin-bottom:20px; margin-top:20px; width:386px" /></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">第四步：点击&ldquo;我的银行卡&rdquo;绑定结算卡；</span></span></p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295feae7da15b7c.png" style="height:218px; margin-bottom:20px; margin-top:20px; width:386px" /></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">第五步：点击&ldquo;风险交易&rdquo;进行磁条卡认证</span></span></p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295feae7ebf0222.png" style="height:217px; margin-bottom:20px; margin-top:20px; width:385px" /></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">第六步：认证完成后，在&ldquo;我的&rdquo;页面点击&ldquo;我的设备&rdquo;绑定机具</span></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295feae8000ba64.png" style="height:217px; margin-bottom:20px; margin-top:20px; width:386px" /></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">第七步：激活设备</span></span></p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295feae8128916e.png" style="height:217px; margin-bottom:20px; margin-top:20px; width:385px" /></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">第八步：机器点击&ldquo;确认&rdquo;键选择消费方式。根据提示刷卡</span></span></p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295feae826a772f.png" style="height:271px; margin-bottom:20px; margin-top:20px; width:481px" /></span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><span style="font-size:10.5000pt">第九步：交易成功，务必在机器屏幕上签名</span></span></p>\n\n<p style="text-align:justify"><span style="font-size:10.5pt"><img src="http://www.ehuike28.com:8889/upload/artical/2020-12-295feae84f3b2d0.png" style="height:217px; margin-bottom:20px; margin-top:20px; width:386px" /></span></p>\n\n<p style="text-align:justify">&nbsp;</p>', '2020-12-29 08:27:07', '2020-12-28 10:36:08', NULL, NULL, '/upload/img/2020-12-285fe9b4f197315.jpg', NULL, 'http://1300347920.vod2.myqcloud.com/61d45587vodtranscq1300347920/e6e0c46a5285890811751146626/v.f100800.mp4', 0);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `admin_banner`
+--
+
+CREATE TABLE IF NOT EXISTS `admin_banner` (
+  `id` int(10) unsigned NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `img` varchar(255) DEFAULT NULL,
+  `mobile_img` varchar(255) DEFAULT NULL,
+  `sort` int(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+--
+-- 转存表中的数据 `admin_banner`
+--
+
+INSERT INTO `admin_banner` (`id`, `title`, `img`, `mobile_img`, `sort`, `url`, `updated_at`, `created_at`) VALUES
+(3, '银盛通', '/upload/img/2020-12-225fe1fd8b1864e.jpg', '/upload/img/2020-12-225fe20012b4ed4.jpg', 2, NULL, '2020-12-22 14:17:57', '2020-12-22 14:07:13'),
+(2, '腾付通', '/upload/img/2020-12-225fe1fff49251a.jpg', '/upload/img/2020-12-225fe200001445f.jpg', 1, 'http://www.baidu.com', '2020-12-22 14:17:38', '2020-12-21 16:34:32'),
+(4, '金小宝', '/upload/img/2020-12-225fe1fdd32dbf6.jpg', '/upload/img/2020-12-225fe20023e1995.jpg', 3, NULL, '2020-12-22 14:18:13', '2020-12-22 14:08:24'),
+(5, '拉卡拉', '/upload/img/2020-12-225fe1fe02893f0.jpg', '/upload/img/2020-12-225fe200322b087.jpg', 4, NULL, '2020-12-22 14:18:28', '2020-12-22 14:09:10'),
+(6, '付临门', '/upload/img/2020-12-225fe1fe31d05ca.jpg', '/upload/img/2020-12-225fe2003f7957f.jpg', 5, NULL, '2020-12-22 14:18:41', '2020-12-22 14:09:59');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `admin_certificates`
+--
+
+CREATE TABLE IF NOT EXISTS `admin_certificates` (
+  `id` int(10) unsigned NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `cover_img` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+--
+-- 转存表中的数据 `admin_certificates`
+--
+
+INSERT INTO `admin_certificates` (`id`, `title`, `cover_img`, `url`, `created_at`, `updated_at`, `sort`) VALUES
+(5, '授权证书', '/upload/img/2020-12-295feb29e937768.jpg', NULL, '2020-12-29 13:06:53', '2020-12-29 13:06:53', 1),
+(6, '品牌授权', '/upload/img/2020-12-295feb2a10371fd.jpg', NULL, '2020-12-29 13:07:31', '2020-12-29 13:07:31', 2),
+(7, '授权证书黑色', '/upload/img/2020-12-295feb2a296f78f.jpg', NULL, '2020-12-29 13:07:57', '2020-12-29 13:07:57', 3),
+(8, '合作伙伴授权书', '/upload/img/2020-12-295feb2a56bc07b.jpg', NULL, '2020-12-29 13:08:42', '2020-12-29 13:08:42', 4),
+(9, '开店宝', '/upload/img/2020-12-295feb2a6f8e3bb.jpg', NULL, '2020-12-29 13:09:07', '2020-12-29 13:09:07', 5),
+(10, '软件著作版权证书', '/upload/img/2020-12-305fec4a508c08b.jpg', NULL, '2020-12-30 09:37:30', '2020-12-30 09:37:30', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `admin_comment`
+--
+
+CREATE TABLE IF NOT EXISTS `admin_comment` (
+  `id` int(10) unsigned NOT NULL COMMENT 'id',
+  `name` varchar(255) DEFAULT NULL COMMENT '姓名',
+  `phone` varchar(11) DEFAULT NULL COMMENT '电话',
+  `wechat` varchar(255) DEFAULT NULL COMMENT '微信',
+  `content` text NOT NULL COMMENT '留言内容',
+  `updated_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+  `created_at` timestamp NULL DEFAULT NULL COMMENT '创建时间'
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+--
+-- 转存表中的数据 `admin_comment`
+--
+
+INSERT INTO `admin_comment` (`id`, `name`, `phone`, `wechat`, `content`, `updated_at`, `created_at`) VALUES
+(3, '测试', '测试', '测试', '测试', '2020-12-20 23:18:55', '2020-12-20 23:18:57'),
+(11, 'asdf', '15710067691', 'adf', 'asdfasdf', '2020-12-23 13:45:33', '2020-12-23 13:45:33'),
+(12, '张三', '15710067691', '123123123', '撒打发斯蒂芬', '2020-12-23 13:46:34', '2020-12-23 13:46:34');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `admin_partners`
+--
+
+CREATE TABLE IF NOT EXISTS `admin_partners` (
+  `id` int(10) unsigned NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `cover_img` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  `sort` int(11) DEFAULT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- ----------------------------
--- Records of admin_banner
--- ----------------------------
-INSERT INTO `admin_banner` VALUES (3, '银盛通', '/upload/img/2020-12-225fe1fd8b1864e.jpg', '/upload/img/2020-12-225fe20012b4ed4.jpg', 2, NULL, '2020-12-22 14:17:57', '2020-12-22 14:07:13');
-INSERT INTO `admin_banner` VALUES (2, '腾付通', '/upload/img/2020-12-225fe1fff49251a.jpg', '/upload/img/2020-12-225fe200001445f.jpg', 1, 'http://www.baidu.com', '2020-12-22 14:17:38', '2020-12-21 16:34:32');
-INSERT INTO `admin_banner` VALUES (4, '金小宝', '/upload/img/2020-12-225fe1fdd32dbf6.jpg', '/upload/img/2020-12-225fe20023e1995.jpg', 3, NULL, '2020-12-22 14:18:13', '2020-12-22 14:08:24');
-INSERT INTO `admin_banner` VALUES (5, '拉卡拉', '/upload/img/2020-12-225fe1fe02893f0.jpg', '/upload/img/2020-12-225fe200322b087.jpg', 4, NULL, '2020-12-22 14:18:28', '2020-12-22 14:09:10');
-INSERT INTO `admin_banner` VALUES (6, '付临门', '/upload/img/2020-12-225fe1fe31d05ca.jpg', '/upload/img/2020-12-225fe2003f7957f.jpg', 5, NULL, '2020-12-22 14:18:41', '2020-12-22 14:09:59');
+--
+-- 转存表中的数据 `admin_partners`
+--
 
--- ----------------------------
--- Table structure for admin_comment
--- ----------------------------
-DROP TABLE IF EXISTS `admin_comment`;
-CREATE TABLE `admin_comment`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '姓名',
-  `phone` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '电话',
-  `wechat` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '微信',
-  `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '留言内容',
-  `updated_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
-  `created_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+INSERT INTO `admin_partners` (`id`, `title`, `cover_img`, `url`, `updated_at`, `created_at`, `sort`) VALUES
+(5, '建设银行', '/upload/img/2020-12-295feb2a960b1a8.jpg', NULL, '2020-12-29 13:09:46', '2020-12-29 13:09:46', 1),
+(6, '招商银行', '/upload/img/2020-12-295feb2ab30fc4f.jpg', NULL, '2020-12-29 13:10:15', '2020-12-29 13:10:15', 2),
+(7, '中国农业银行', '/upload/img/2020-12-295feb2aca7b55c.jpg', NULL, '2020-12-29 13:10:38', '2020-12-29 13:10:38', 3),
+(8, '中国平安', '/upload/img/2020-12-295feb2ae5682cd.jpg', NULL, '2020-12-29 13:11:04', '2020-12-29 13:11:04', 4),
+(9, '中国邮政', '/upload/img/2020-12-295feb2afc4d0f1.jpg', NULL, '2020-12-29 13:11:29', '2020-12-29 13:11:29', 5),
+(10, '浦发银行', '/upload/img/2020-12-295feb2b126d46c.jpg', NULL, '2020-12-29 13:11:52', '2020-12-29 13:11:52', 6),
+(11, '交通银行', '/upload/img/2020-12-295feb2b2bd5e0e.jpg', NULL, '2020-12-29 13:12:17', '2020-12-29 13:12:17', 7),
+(12, '中信银行', '/upload/img/2020-12-295feb2b461bf64.jpg', NULL, '2020-12-29 13:12:42', '2020-12-29 13:12:42', 8),
+(13, '兴业银行', '/upload/img/2020-12-295feb2b5d7fc16.jpg', NULL, '2020-12-29 13:13:06', '2020-12-29 13:13:06', 9),
+(14, '民生银行', '/upload/img/2020-12-295feb2bab94dad.jpg', NULL, '2020-12-29 13:14:27', '2020-12-29 13:14:27', 10);
 
--- ----------------------------
--- Records of admin_comment
--- ----------------------------
-INSERT INTO `admin_comment` VALUES (3, '测试', '测试', '测试', '测试', '2020-12-20 23:18:55', '2020-12-20 23:18:57');
+-- --------------------------------------------------------
 
--- ----------------------------
--- Table structure for admin_permissions
--- ----------------------------
-DROP TABLE IF EXISTS `admin_permissions`;
-CREATE TABLE `admin_permissions`  (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '权限标识',
-  `display_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '权限名称',
-  `pid` smallint(6) NULL DEFAULT NULL COMMENT '控制器及方法',
-  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '页面地址',
-  `has_params` int(2) NULL DEFAULT 0 COMMENT '页面URL是否可携带参数',
-  `action` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `sort` smallint(6) NULL DEFAULT NULL,
-  `icon` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图标',
-  `is_menu` tinyint(1) UNSIGNED ZEROFILL NULL DEFAULT 0 COMMENT '是否为菜单（左侧显示）：0:非菜单，1：菜单',
-  `status` tinyint(1) NULL DEFAULT 1 COMMENT '是否隐藏：0：隐藏，1显示',
-  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '权限描述',
+--
+-- 表的结构 `admin_permissions`
+--
+
+CREATE TABLE IF NOT EXISTS `admin_permissions` (
+  `id` int(11) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL COMMENT '权限标识',
+  `display_name` varchar(255) DEFAULT NULL COMMENT '权限名称',
+  `pid` smallint(6) DEFAULT NULL COMMENT '控制器及方法',
+  `url` varchar(255) DEFAULT NULL COMMENT '页面地址',
+  `has_params` int(2) DEFAULT '0' COMMENT '页面URL是否可携带参数',
+  `action` varchar(255) DEFAULT NULL,
+  `sort` smallint(6) DEFAULT NULL,
+  `icon` varchar(255) DEFAULT NULL COMMENT '图标',
+  `is_menu` tinyint(1) unsigned zerofill DEFAULT '0' COMMENT '是否为菜单（左侧显示）：0:非菜单，1：菜单',
+  `status` tinyint(1) DEFAULT '1' COMMENT '是否隐藏：0：隐藏，1显示',
+  `description` varchar(255) DEFAULT NULL COMMENT '权限描述',
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `banner` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '栏目图片',
-  `hover_icon` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '鼠标经过时的icon',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 89 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '权限表' ROW_FORMAT = Dynamic;
+  `banner` varchar(255) DEFAULT NULL COMMENT '栏目图片',
+  `menu_hover_icon` varchar(255) DEFAULT NULL COMMENT '鼠标经过时栏目在前端显示的icon图标',
+  `menu_icon` varchar(255) DEFAULT NULL COMMENT '栏目在前端显示的icon图标'
+) ENGINE=MyISAM AUTO_INCREMENT=92 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='权限表';
 
--- ----------------------------
--- Records of admin_permissions
--- ----------------------------
-INSERT INTO `admin_permissions` VALUES (41, '系统管理', NULL, 0, NULL, 0, 'systemManger', 2, 'ios-keypad', 0, 1, '系统管理', '2020-12-20 16:31:00', '2020-12-21 00:31:00', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (44, '权限控制', NULL, 0, NULL, NULL, NULL, 3, 'ios-navigate', 1, 1, '权限控制', '2020-03-29 11:39:57', '2020-03-29 19:39:57', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (43, '系统设置', NULL, 41, 'system', NULL, 'SystemCtroller@index', NULL, NULL, 1, 1, '系统设置主页', '2020-12-18 14:22:33', '2020-12-18 22:22:33', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (47, '菜单规则', NULL, 44, 'permissions', NULL, 'permissionCroller@index', NULL, NULL, 1, 1, '菜单规则', '2020-03-29 06:06:51', '2020-03-29 14:06:51', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (48, '角色管理', NULL, 44, 'permissions-roles', NULL, 'roleCtroller@index', NULL, NULL, 1, 1, '角色列表', '2020-03-29 06:08:02', '2020-03-29 14:08:02', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (49, '用户管理', NULL, 44, 'permissions-users', NULL, 'userCtroller@index', NULL, NULL, 1, 1, '用户列表', '2020-03-29 06:08:26', '2020-03-29 14:08:26', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (50, '新增', NULL, 47, NULL, NULL, 'permissionCtroller@stroe', NULL, NULL, 0, 1, '新增', '2020-03-29 05:00:34', '2020-03-29 05:00:34', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (51, '编辑', NULL, 47, NULL, NULL, 'permissionCroller@update', NULL, NULL, 0, 1, '编辑菜单规则', '2020-03-29 05:02:00', '2020-03-29 05:02:00', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (52, '删除', NULL, 47, NULL, NULL, 'permissionCtroller@destry', NULL, NULL, 0, 1, '删除菜单规则', '2020-03-29 05:02:41', '2020-03-29 05:02:41', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (53, 'POS机商城', NULL, 0, 'pos', NULL, 'posController@index', 4, 'ios-analytics', 1, 1, 'pos机商城', '2020-12-19 10:16:59', '2020-12-19 18:16:59', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (54, '控制台', NULL, 0, 'control-board', 0, 'indexController@index', 1, 'ios-keypad', 0, 1, '控制台内容', '2020-12-20 16:30:49', '2020-12-21 00:30:49', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (56, '拉卡拉', NULL, 53, 'pos', 1, 'articalContoller@show', 0, NULL, 1, 1, '拉卡拉', '2020-12-21 18:08:15', '2020-12-22 02:08:15', '/upload/img/2020-12-215fe0e48f6b141.jpg', NULL);
-INSERT INTO `admin_permissions` VALUES (57, '金小宝', NULL, 53, 'pos', 1, 'posContoller@list', 0, NULL, 1, 1, '金小宝', '2020-12-20 11:40:42', '2020-12-20 19:40:42', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (58, '十大渠道', NULL, 0, 'pos', 1, 'channelController@index', 5, 'ios-analytics', 1, 1, '十大渠道', '2020-12-20 11:50:19', '2020-12-20 19:50:19', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (59, '商学院', NULL, 0, NULL, NULL, 'schoolController@index', 6, 'ios-easel', 1, 1, '商学院', '2020-12-19 10:52:46', '2020-12-19 18:52:46', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (60, '视频相关', NULL, 59, 'video', 1, 'videoController@index', 0, NULL, 1, 1, '视频相关', '2020-12-20 15:42:44', '2020-12-20 23:42:44', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (61, '资讯相关', NULL, 59, 'info', 1, 'schoolController@channels', 0, NULL, 1, 1, '内容管理', '2020-12-21 18:57:10', '2020-12-22 02:57:10', '/upload/img/2020-12-215fe0f006383e5.jpg', NULL);
-INSERT INTO `admin_permissions` VALUES (62, 'APP管理', NULL, 0, 'app', 1, 'appController@index', 7, 'ios-download', 1, 1, 'app管理', '2020-12-20 16:07:39', '2020-12-21 00:07:39', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (63, '公司介绍', NULL, 0, NULL, NULL, 'aboutController@index', 8, 'md-eye', 1, 1, '关于我们', '2020-12-19 13:31:35', '2020-12-19 21:31:35', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (64, '留言管理', NULL, 0, 'comment', 0, 'commentController@index', 9, 'ios-mail', 1, 1, '留言管理', '2020-12-20 14:28:31', '2020-12-20 22:28:31', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (65, '付临门', NULL, 53, 'pos', 1, 'posController@list', 0, NULL, 1, 1, '付临门', '2020-12-20 11:47:53', '2020-12-20 19:47:53', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (66, '银盛通', NULL, 53, 'pos', 1, 'posController@list', 0, NULL, 1, 1, '银盛通', '2020-12-20 11:48:15', '2020-12-20 19:48:15', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (67, '腾付通', NULL, 53, 'pos', 1, 'posController@list', 0, NULL, 1, 1, '腾付通', '2020-12-20 11:48:34', '2020-12-20 19:48:34', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (68, '关于我们', NULL, 63, 'company', 1, 'aboutController@index', 0, NULL, 1, 1, '关于我们', '2020-12-20 12:19:56', '2020-12-20 20:19:56', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (69, '企业资质', NULL, 63, 'company', 1, 'aboutController@index', 0, NULL, 1, 1, '企业资质', '2020-12-20 12:20:36', '2020-12-20 20:20:36', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (70, '联系我们', NULL, 63, 'company', 1, 'aboutController@index', 0, NULL, 1, 1, '联系我们', '2020-12-20 12:20:44', '2020-12-20 20:20:44', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (71, '企业文化', NULL, 63, 'company', 1, 'aboutController@index', 0, NULL, 1, 1, '联系我们', '2020-12-20 12:20:52', '2020-12-20 20:20:52', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (72, '积分兑换', NULL, 58, 'channels', 1, 'singleController@show', 0, NULL, 1, 1, '积分兑换', '2020-12-20 14:50:20', '2020-12-20 22:50:20', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (73, '账单延期', NULL, 58, 'channels', 1, 'singleController@show', 0, NULL, 1, 1, '积分兑换', '2020-12-20 15:47:37', '2020-12-20 23:47:37', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (74, '刷脸闪付', NULL, 58, 'channels', 1, 'singleController@show', 0, NULL, 1, 1, '刷脸闪付', '2020-12-20 15:47:44', '2020-12-20 23:47:44', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (75, '花呗白条', NULL, 58, 'channels', 1, 'singleController@show', 0, NULL, 1, 1, '花呗白条', '2020-12-20 15:47:50', '2020-12-20 23:47:50', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (76, '维权退保', NULL, 58, 'channels', 1, 'singleController@show', 0, NULL, 1, 1, '维权退保', '2020-12-20 15:47:58', '2020-12-20 23:47:58', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (77, '征信修复', NULL, 58, 'channels', 1, 'singleController@show', 0, NULL, 1, 1, '征信修复', '2020-12-20 15:48:05', '2020-12-20 23:48:05', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (78, '停息挂账', NULL, 58, 'channels', 1, 'singleController@show', 0, NULL, 1, 1, '停息挂账', '2020-12-20 15:48:11', '2020-12-20 23:48:11', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (79, '退息退年费', NULL, 58, 'channels', 1, 'singleController@show', 0, NULL, 1, 1, '退息退年费', '2020-12-20 15:49:37', '2020-12-20 23:49:37', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (80, '商学院', NULL, 58, 'channels', 1, 'singleController@show', 0, NULL, 1, 1, '商学院', '2020-12-20 15:48:24', '2020-12-20 23:48:24', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (81, 'POS机办理', NULL, 58, 'channels', 1, 'singleController@show', 0, NULL, 1, 1, 'POS机办理', '2020-12-20 15:48:30', '2020-12-20 23:48:30', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (82, '轮播图管理', NULL, 0, 'banner', 0, 'bannerController@show', 11, 'ios-keypad', 1, 1, '轮播图管理', '2020-12-21 16:26:29', '2020-12-22 00:26:29', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (83, '新闻中心', NULL, 0, 'news', 0, 'articalController@index', 8, 'ios-keypad', 1, 1, '新闻中心', '2020-12-22 14:30:28', '2020-12-22 22:30:28', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (84, '银联新闻', NULL, 83, 'news', 1, NULL, 1, NULL, 1, 1, '银联新闻', '2020-12-22 14:35:03', '2020-12-22 22:35:03', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (85, '业务公告', NULL, 83, 'news', 1, NULL, 2, NULL, 1, 1, '业务公告', '2020-12-22 14:35:25', '2020-12-22 22:35:25', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (86, '媒体报道', NULL, 83, 'news', 1, NULL, 0, NULL, 1, 1, '媒体报道', '2020-12-22 14:38:16', '2020-12-22 22:38:16', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (87, '党建专栏', NULL, 83, 'news', 1, NULL, 0, NULL, 1, 1, '党建专栏', '2020-12-22 14:38:11', '2020-12-22 22:38:11', NULL, NULL);
-INSERT INTO `admin_permissions` VALUES (88, '专题专栏', NULL, 83, 'news', 1, NULL, 0, NULL, 1, 1, '专题专栏', '2020-12-22 14:39:28', '2020-12-22 22:39:28', NULL, NULL);
+--
+-- 转存表中的数据 `admin_permissions`
+--
 
--- ----------------------------
--- Table structure for admin_role_permissions
--- ----------------------------
-DROP TABLE IF EXISTS `admin_role_permissions`;
-CREATE TABLE `admin_role_permissions`  (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+INSERT INTO `admin_permissions` (`id`, `name`, `display_name`, `pid`, `url`, `has_params`, `action`, `sort`, `icon`, `is_menu`, `status`, `description`, `updated_at`, `created_at`, `banner`, `menu_hover_icon`, `menu_icon`) VALUES
+(41, '系统管理', NULL, 0, NULL, 0, 'systemManger', 2, 'ios-keypad', 0, 1, '系统管理', '2020-12-20 16:31:00', '2020-12-21 00:31:00', NULL, NULL, NULL),
+(44, '权限控制', NULL, 0, NULL, NULL, NULL, 3, 'ios-navigate', 1, 1, '权限控制', '2020-03-29 11:39:57', '2020-03-29 19:39:57', NULL, NULL, NULL),
+(43, '系统设置', NULL, 41, 'system', 0, 'SystemCtroller@index', NULL, NULL, 1, 1, '系统设置主页', '2021-01-06 04:13:45', '2021-01-06 12:13:45', NULL, NULL, NULL),
+(47, '菜单规则', NULL, 44, 'permissions', NULL, 'permissionCroller@index', NULL, NULL, 1, 1, '菜单规则', '2020-03-29 06:06:51', '2020-03-29 14:06:51', NULL, NULL, NULL),
+(48, '角色管理', NULL, 44, 'permissions-roles', NULL, 'roleCtroller@index', NULL, NULL, 1, 1, '角色列表', '2020-03-29 06:08:02', '2020-03-29 14:08:02', NULL, NULL, NULL),
+(49, '用户管理', NULL, 44, 'permissions-users', NULL, 'userCtroller@index', NULL, NULL, 1, 1, '用户列表', '2020-03-29 06:08:26', '2020-03-29 14:08:26', NULL, NULL, NULL),
+(50, '易付通', NULL, 53, 'pos', 1, 'permissionCtroller@stroe', 3, NULL, 1, 1, '易付通', '2020-12-28 10:34:22', '2020-12-28 10:34:22', NULL, NULL, NULL),
+(51, '编辑', NULL, 47, NULL, NULL, 'permissionCroller@update', NULL, NULL, 0, 1, '编辑菜单规则', '2020-03-29 05:02:00', '2020-03-29 05:02:00', NULL, NULL, NULL),
+(52, '删除', NULL, 47, NULL, NULL, 'permissionCtroller@destry', NULL, NULL, 0, 1, '删除菜单规则', '2020-03-29 05:02:41', '2020-03-29 05:02:41', NULL, NULL, NULL),
+(53, 'POS机商城', NULL, 0, 'pos', NULL, 'posController@index', 4, 'ios-analytics', 1, 1, 'pos机商城', '2020-12-19 10:16:59', '2020-12-19 18:16:59', NULL, NULL, NULL),
+(54, '控制台', NULL, 0, 'control-board', 0, 'indexController@index', 1, 'ios-keypad', 1, 1, '控制台内容', '2020-12-29 13:15:22', '2020-12-29 13:15:22', NULL, NULL, NULL),
+(56, '拉卡拉', NULL, 53, 'pos', 1, 'articalContoller@show', 0, NULL, 1, 1, '拉卡拉', '2020-12-27 11:42:09', '2020-12-27 11:42:09', '/upload/img/2020-12-275fe87311726d5.jpg', NULL, NULL),
+(57, '金小宝', NULL, 53, 'pos', 1, 'posContoller@list', 0, NULL, 1, 1, '金小宝', '2020-12-27 11:48:17', '2020-12-27 11:48:17', '/upload/img/2020-12-275fe8748138af4.jpg', NULL, NULL),
+(58, '10大服务项目', NULL, 0, 'pos', 1, 'channelController@index', 5, 'ios-analytics', 1, 1, '10大服务项目', '2021-01-06 04:27:57', '2021-01-06 12:27:57', NULL, NULL, NULL),
+(62, 'APP管理', NULL, 0, 'app', 1, 'appController@index', 7, 'ios-download', 1, 1, 'app管理', '2020-12-20 16:07:39', '2020-12-21 00:07:39', NULL, NULL, NULL),
+(63, '公司介绍', NULL, 0, NULL, NULL, 'aboutController@index', 8, 'md-eye', 1, 1, '关于我们', '2020-12-19 13:31:35', '2020-12-19 21:31:35', NULL, NULL, NULL),
+(64, '留言管理', NULL, 0, 'comment', 0, 'commentController@index', 9, 'ios-mail', 1, 1, '留言管理', '2020-12-20 14:28:31', '2020-12-20 22:28:31', NULL, NULL, NULL),
+(65, '付临门', NULL, 53, 'pos', 1, 'posController@list', 0, NULL, 1, 1, '付临门', '2020-12-27 11:49:14', '2020-12-27 11:49:14', '/upload/img/2020-12-275fe874ba3397c.jpg', NULL, NULL),
+(66, '银盛通', NULL, 53, 'pos', 1, 'posController@list', 0, NULL, 1, 1, '银盛通', '2020-12-27 11:50:47', '2020-12-27 11:50:47', '/upload/img/2020-12-275fe8751757f05.jpg', NULL, NULL),
+(67, '腾付通', NULL, 53, 'pos', 1, 'posController@list', 0, NULL, 1, 1, '腾付通', '2020-12-27 11:51:18', '2020-12-27 11:51:18', '/upload/img/2020-12-275fe875367584e.jpg', NULL, NULL),
+(68, '关于我们', NULL, 63, 'company', 1, 'aboutController@index', 0, NULL, 1, 1, '关于我们', '2020-12-20 12:19:56', '2020-12-20 20:19:56', NULL, NULL, NULL),
+(69, '企业资质', NULL, 63, 'company', 1, 'aboutController@index', 0, NULL, 1, 1, '企业资质', '2020-12-20 12:20:36', '2020-12-20 20:20:36', NULL, NULL, NULL),
+(70, '技术团队', NULL, 63, 'company', 1, 'aboutController@index', 0, NULL, 1, 1, '技术团队', '2020-12-31 07:33:25', '2020-12-31 07:33:25', NULL, NULL, NULL),
+(91, '乐刷', NULL, 53, 'pos', 1, 'posController@list', 1, NULL, 1, 1, '乐刷', '2021-01-21 18:33:04', '2021-01-22 02:33:04', NULL, NULL, NULL),
+(72, '积分兑换', NULL, 58, 'channels', 1, 'singleController@show', 10, NULL, 1, 1, '积分兑换', '2020-12-25 10:34:30', '2020-12-25 18:34:30', NULL, '/upload/img/2020-12-235fe2d34563748.png', '/upload/img/2020-12-235fe2d341b338a.png'),
+(73, '账单延期', NULL, 58, 'channels', 1, 'singleController@show', 20, NULL, 1, 1, '积分兑换', '2020-12-25 10:34:51', '2020-12-25 18:34:51', NULL, '/upload/img/2020-12-235fe2d38b93320.png', '/upload/img/2020-12-235fe2d38562b40.png'),
+(74, '刷脸闪付', NULL, 58, 'channels', 1, 'singleController@show', 30, NULL, 1, 1, '刷脸闪付', '2020-12-25 10:34:57', '2020-12-25 18:34:57', NULL, '/upload/img/2020-12-235fe2d39a38ced.png', '/upload/img/2020-12-235fe2d394d5b67.png'),
+(75, '花呗白条', NULL, 58, 'channels', 1, 'singleController@show', 40, NULL, 1, 1, '花呗白条', '2020-12-25 10:35:04', '2020-12-25 18:35:04', NULL, '/upload/img/2020-12-235fe2d3a6be02f.png', '/upload/img/2020-12-235fe2d3a367de6.png'),
+(76, '维权退保', NULL, 58, 'channels', 1, 'singleController@show', 50, NULL, 1, 1, '维权退保', '2020-12-25 10:35:10', '2020-12-25 18:35:10', NULL, '/upload/img/2020-12-235fe2d3bb0c5c7.png', '/upload/img/2020-12-235fe2d3b2c0e14.png'),
+(77, '征信修复', NULL, 58, 'channels', 1, 'singleController@show', 60, NULL, 1, 1, '征信修复', '2020-12-30 07:18:33', '2020-12-30 07:18:33', NULL, '/upload/img/2020-12-235fe2d3c9dbe24.png', '/upload/img/2020-12-235fe2d3c643de9.png'),
+(78, '停息挂账', NULL, 58, 'channels', 1, 'singleController@show', 70, NULL, 1, 1, '停息挂账', '2020-12-25 10:35:23', '2020-12-25 18:35:23', NULL, '/upload/img/2020-12-235fe2d3db7c0e8.png', '/upload/img/2020-12-235fe2d3d42f45a.png'),
+(79, '退息退年费', NULL, 58, 'channels', 1, 'singleController@show', 80, NULL, 1, 1, '退息退年费', '2020-12-25 10:35:32', '2020-12-25 18:35:32', NULL, '/upload/img/2020-12-235fe2d3ea03cc4.png', '/upload/img/2020-12-235fe2d3e54261e.png'),
+(90, '联系我们', NULL, 63, 'company', 1, 'aboutController@index', 0, NULL, 1, 1, '联系我们', '2021-01-13 01:18:41', '2021-01-13 09:18:41', NULL, NULL, NULL),
+(81, 'POS机办理', NULL, 58, 'channels', 1, 'singleController@show', 1, NULL, 1, 1, 'POS机办理', '2020-12-25 10:34:10', '2020-12-25 18:34:10', NULL, '/upload/img/2020-12-235fe2d40bd085f.png', '/upload/img/2020-12-235fe2d408575e2.png'),
+(82, '轮播图管理', NULL, 0, 'banner', 0, 'bannerController@show', 11, 'ios-keypad', 1, 1, '轮播图管理', '2020-12-21 16:26:29', '2020-12-22 00:26:29', NULL, NULL, NULL),
+(83, '新闻中心', NULL, 0, 'news', 0, 'articalController@index', 8, 'ios-keypad', 1, 1, '新闻中心', '2020-12-22 14:30:28', '2020-12-22 22:30:28', NULL, NULL, NULL),
+(84, 'POS机学院', NULL, 83, 'news', 1, NULL, 1, NULL, 1, 1, 'POS机学院', '2020-12-28 02:48:43', '2020-12-28 02:48:43', '/upload/img/2020-12-275fe88e06c0672.jpg', NULL, NULL),
+(85, '征信学院', NULL, 83, 'news', 1, NULL, 4, NULL, 1, 1, '征信修复学院', '2020-12-28 03:09:52', '2020-12-28 03:09:52', NULL, NULL, NULL),
+(86, '信用卡学院', NULL, 83, 'news', 1, NULL, 2, NULL, 1, 1, '信用卡学院', '2020-12-28 02:48:55', '2020-12-28 02:48:55', '/upload/img/2020-12-255fe5b96de49b9.jpg', NULL, NULL),
+(87, '维权退保', NULL, 83, 'news', 1, NULL, 3, NULL, 1, 1, '维权退保', '2020-12-28 03:09:38', '2020-12-28 03:09:38', NULL, NULL, NULL),
+(89, '网贷退息', NULL, 58, 'channels', 1, 'singleController@show', 71, NULL, 1, 1, '网贷退息', '2021-01-13 04:05:57', '2021-01-13 12:05:57', NULL, '/upload/img/2021-01-135ffee20a6fb4d.jpg', '/upload/img/2021-01-135ffee224c50fc.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `admin_roles`
+--
+
+CREATE TABLE IF NOT EXISTS `admin_roles` (
+  `id` int(11) unsigned NOT NULL,
+  `name` varchar(255) DEFAULT NULL COMMENT '角色名称',
+  `description` varchar(255) DEFAULT NULL COMMENT '角色描述',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='角色表';
+
+--
+-- 转存表中的数据 `admin_roles`
+--
+
+INSERT INTO `admin_roles` (`id`, `name`, `description`, `created_at`, `updated_at`) VALUES
+(1, '超级管理员', '拥有所有权限', '2020-03-17 23:18:00', '2020-03-17 23:18:04'),
+(2, '普通管理员', '拥有部分权限', '2020-03-17 23:18:07', '2020-03-17 23:18:10'),
+(9, '测试角色', '测试角色权限', '2020-03-30 02:29:04', '2020-03-30 02:29:04');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `admin_role_permissions`
+--
+
+CREATE TABLE IF NOT EXISTS `admin_role_permissions` (
+  `id` int(11) unsigned NOT NULL,
   `permission_id` int(11) NOT NULL,
-  `role_id` int(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 104 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色和权限中间表' ROW_FORMAT = Fixed;
+  `role_id` int(11) DEFAULT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=107 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='角色和权限中间表';
 
--- ----------------------------
--- Records of admin_role_permissions
--- ----------------------------
-INSERT INTO `admin_role_permissions` VALUES (37, 41, 1);
-INSERT INTO `admin_role_permissions` VALUES (40, 44, 1);
-INSERT INTO `admin_role_permissions` VALUES (39, 43, 1);
-INSERT INTO `admin_role_permissions` VALUES (88, 73, 1);
-INSERT INTO `admin_role_permissions` VALUES (43, 47, 1);
-INSERT INTO `admin_role_permissions` VALUES (44, 48, 1);
-INSERT INTO `admin_role_permissions` VALUES (45, 49, 1);
-INSERT INTO `admin_role_permissions` VALUES (46, 50, 1);
-INSERT INTO `admin_role_permissions` VALUES (47, 51, 1);
-INSERT INTO `admin_role_permissions` VALUES (50, 54, 1);
-INSERT INTO `admin_role_permissions` VALUES (49, 53, 1);
-INSERT INTO `admin_role_permissions` VALUES (48, 52, 1);
-INSERT INTO `admin_role_permissions` VALUES (52, 50, 2);
-INSERT INTO `admin_role_permissions` VALUES (53, 41, 2);
-INSERT INTO `admin_role_permissions` VALUES (54, 44, 2);
-INSERT INTO `admin_role_permissions` VALUES (55, 47, 2);
-INSERT INTO `admin_role_permissions` VALUES (56, 51, 2);
-INSERT INTO `admin_role_permissions` VALUES (87, 72, 1);
-INSERT INTO `admin_role_permissions` VALUES (67, 47, 9);
-INSERT INTO `admin_role_permissions` VALUES (66, 44, 9);
-INSERT INTO `admin_role_permissions` VALUES (65, 49, 9);
-INSERT INTO `admin_role_permissions` VALUES (64, 51, 9);
-INSERT INTO `admin_role_permissions` VALUES (63, 54, 9);
-INSERT INTO `admin_role_permissions` VALUES (72, 57, 1);
-INSERT INTO `admin_role_permissions` VALUES (71, 56, 1);
-INSERT INTO `admin_role_permissions` VALUES (73, 58, 1);
-INSERT INTO `admin_role_permissions` VALUES (74, 59, 1);
-INSERT INTO `admin_role_permissions` VALUES (75, 60, 1);
-INSERT INTO `admin_role_permissions` VALUES (76, 61, 1);
-INSERT INTO `admin_role_permissions` VALUES (77, 62, 1);
-INSERT INTO `admin_role_permissions` VALUES (78, 63, 1);
-INSERT INTO `admin_role_permissions` VALUES (79, 64, 1);
-INSERT INTO `admin_role_permissions` VALUES (80, 65, 1);
-INSERT INTO `admin_role_permissions` VALUES (81, 66, 1);
-INSERT INTO `admin_role_permissions` VALUES (82, 67, 1);
-INSERT INTO `admin_role_permissions` VALUES (83, 68, 1);
-INSERT INTO `admin_role_permissions` VALUES (84, 69, 1);
-INSERT INTO `admin_role_permissions` VALUES (85, 70, 1);
-INSERT INTO `admin_role_permissions` VALUES (86, 71, 1);
-INSERT INTO `admin_role_permissions` VALUES (89, 74, 1);
-INSERT INTO `admin_role_permissions` VALUES (90, 75, 1);
-INSERT INTO `admin_role_permissions` VALUES (91, 76, 1);
-INSERT INTO `admin_role_permissions` VALUES (92, 77, 1);
-INSERT INTO `admin_role_permissions` VALUES (93, 78, 1);
-INSERT INTO `admin_role_permissions` VALUES (94, 79, 1);
-INSERT INTO `admin_role_permissions` VALUES (95, 80, 1);
-INSERT INTO `admin_role_permissions` VALUES (96, 81, 1);
-INSERT INTO `admin_role_permissions` VALUES (97, 82, 1);
-INSERT INTO `admin_role_permissions` VALUES (98, 83, 1);
-INSERT INTO `admin_role_permissions` VALUES (99, 84, 1);
-INSERT INTO `admin_role_permissions` VALUES (100, 85, 1);
-INSERT INTO `admin_role_permissions` VALUES (101, 86, 1);
-INSERT INTO `admin_role_permissions` VALUES (102, 87, 1);
-INSERT INTO `admin_role_permissions` VALUES (103, 88, 1);
+--
+-- 转存表中的数据 `admin_role_permissions`
+--
 
--- ----------------------------
--- Table structure for admin_roles
--- ----------------------------
-DROP TABLE IF EXISTS `admin_roles`;
-CREATE TABLE `admin_roles`  (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色名称',
-  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色描述',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
+INSERT INTO `admin_role_permissions` (`id`, `permission_id`, `role_id`) VALUES
+(37, 41, 1),
+(40, 44, 1),
+(39, 43, 1),
+(88, 73, 1),
+(43, 47, 1),
+(44, 48, 1),
+(45, 49, 1),
+(46, 50, 1),
+(47, 51, 1),
+(50, 54, 1),
+(49, 53, 1),
+(48, 52, 1),
+(52, 50, 2),
+(53, 41, 2),
+(54, 44, 2),
+(55, 47, 2),
+(56, 51, 2),
+(87, 72, 1),
+(67, 47, 9),
+(66, 44, 9),
+(65, 49, 9),
+(64, 51, 9),
+(63, 54, 9),
+(72, 57, 1),
+(71, 56, 1),
+(73, 58, 1),
+(77, 62, 1),
+(78, 63, 1),
+(79, 64, 1),
+(80, 65, 1),
+(81, 66, 1),
+(82, 67, 1),
+(83, 68, 1),
+(84, 69, 1),
+(85, 70, 1),
+(106, 91, 1),
+(89, 74, 1),
+(90, 75, 1),
+(91, 76, 1),
+(92, 77, 1),
+(93, 78, 1),
+(94, 79, 1),
+(105, 90, 1),
+(96, 81, 1),
+(97, 82, 1),
+(98, 83, 1),
+(99, 84, 1),
+(100, 85, 1),
+(101, 86, 1),
+(102, 87, 1),
+(104, 89, 1);
 
--- ----------------------------
--- Records of admin_roles
--- ----------------------------
-INSERT INTO `admin_roles` VALUES (1, '超级管理员', '拥有所有权限', '2020-03-17 23:18:00', '2020-03-17 23:18:04');
-INSERT INTO `admin_roles` VALUES (2, '普通管理员', '拥有部分权限', '2020-03-17 23:18:07', '2020-03-17 23:18:10');
-INSERT INTO `admin_roles` VALUES (9, '测试角色', '测试角色权限', '2020-03-30 02:29:04', '2020-03-30 02:29:04');
+-- --------------------------------------------------------
 
--- ----------------------------
--- Table structure for admin_single
--- ----------------------------
-DROP TABLE IF EXISTS `admin_single`;
-CREATE TABLE `admin_single`  (
+--
+-- 表的结构 `admin_single`
+--
+
+CREATE TABLE IF NOT EXISTS `admin_single` (
   `pid` int(11) NOT NULL COMMENT '当前菜单的栏目id',
-  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标题',
-  `description` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '内容',
+  `title` varchar(255) DEFAULT NULL COMMENT '标题',
+  `description` varchar(1000) DEFAULT NULL COMMENT '描述',
+  `content` text NOT NULL COMMENT '内容',
   `updated_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   `created_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',
-  `sort` int(11) NULL DEFAULT NULL COMMENT '排序',
-  `cover_img` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '封面图',
-  `icon` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图标',
-  `hover_icon` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '鼠标经过图标',
-  PRIMARY KEY (`pid`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  `sort` int(11) DEFAULT NULL COMMENT '排序',
+  `cover_img` varchar(255) DEFAULT NULL COMMENT '封面图',
+  `icon` varchar(255) DEFAULT NULL COMMENT '图标',
+  `hover_icon` varchar(255) DEFAULT NULL COMMENT '鼠标经过图标'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- ----------------------------
--- Records of admin_single
--- ----------------------------
-INSERT INTO `admin_single` VALUES (69, '企业资质', '企业资质', '<p>近期，湖南、江西等多个地区采取了限制用电的措施，引发了外界的关注。对此，国家发展改革委秘书长赵辰昕21日在新闻发布会上连说两个&ldquo;放心&rdquo;，称电力供应总体平稳有序，包括湖南、江西、浙江等在内的居民生活用电都没有受到影响。</p>', '2020-12-22 14:00:54', '2020-12-20 13:48:05', NULL, '/upload/img/2020-12-205fdf58d37708b.jpg', NULL, NULL);
-INSERT INTO `admin_single` VALUES (72, '积分兑换', '积分兑换积分兑换', '<p>腾付通POS机已经全面开通实时到账服务，交易成功到账成功率99%。</p>\n\n<p>当然，如果因为操作不当、卡片风控、交易存在风险等个别情况，交易可能延迟到账或者不到账，这时候就要联系售后处理了。但您放心，电银通POS机正规一清机器，资金安全，只需要核实交易即可到账，或者退回该笔交易。您刷卡的钱是安全的，不会出现任何损失，所以不用着急。</p>\n\n<p>1.如果您是正规渠道办理的腾付通POS机，只需要联系给您办理的服务机构，查询交易记录和未到账原因，进行相应处理便可到账。</p>\n\n<p>2.如果您是个人兼职、或者小业务员办理、再或者电话销售等非正规渠道办理，出现交易不到账找不到人，可以联系我们官网帮您查询处理。</p>\n\n<p>3.还有一种方式是拨打全国统一售后服务热线：400655766或者腾付通客服微信：5119296 进行账务查询。</p>\n\n<p>第2和第3两种方式，都可以协助您查询交易情况和一般账务问题，但是如果出现交易存在风险，需要上传交易记录和相关材料的情况，则需要联系办理机器的服务商，通过服务商渠道上传和处理。因而非正规渠道办理的机具会出现解决麻烦的问题，影响交易和使用。</p>\n\n<div class=\"ckeditor-html5-video-v1\" data-responsive=\"true\" style=\"text-align:center\">\n<video controls=\"controls\" src=\"https://vd4.bdstatic.com/mda-kmmsim0bz6qgn37i/v1-cae/sc/mda-kmmsim0bz6qgn37i.mp4\" style=\"height:auto; max-width:100%\">&nbsp;</video>\n</div>\n\n<p>腾付通POS机已经全面开通实时到账服务，交易成功到账成功率99%。</p>\n\n<p>当然，如果因为操作不当、卡片风控、交易存在风险等个别情况，交易可能延迟到账或者不到账，这时候就要联系售后处理了。但您放心，电银通POS机正规一清机器，资金安全，只需要核实交易即可到账，或者退回该笔交易。您刷卡的钱是安全的，不会出现任何损失，所以不用着急。</p>', '2020-12-22 17:23:03', '2020-12-22 13:52:50', NULL, '/upload/img/2020-12-225fe1fa26408f2.jpg', '/upload/img/2020-12-225fe22b6c712b9.png', '/upload/img/2020-12-225fe22b737a575.png');
-INSERT INTO `admin_single` VALUES (73, '账单延期', '账单延期账单延期', '<p>&nbsp;腾付通POS机已经全面开通实时到账服务，交易成功到账成功率99%。</p>\n\n<p>当然，如果因为操作不当、卡片风控、交易存在风险等个别情况，交易可能延迟到账或者不到账，这时候就要联系售后处理了。但您放心，电银通POS机正规一清机器，资金安全，只需要核实交易即可到账，或者退回该笔交易。您刷卡的钱是安全的，不会出现任何损失，所以不用着急。</p>\n\n<p>1.如果您是正规渠道办理的腾付通POS机，只需要联系给您办理的服务机构，查询交易记录和未到账原因，进行相应处理便可到账。</p>\n\n<p>2.如果您是个人兼职、或者小业务员办理、再或者电话销售等非正规渠道办理，出现交易不到账找不到人，可以联系我们官网帮您查询处理。</p>\n\n<p>3.还有一种方式是拨打全国统一售后服务热线：400655766或者腾付通客服微信：5119296 进行账务查询。</p>\n\n<p>第2和第3两种方式，都可以协助您查询交易情况和一般账务问题，但是如果出现交易存在风险，需要上传交易记录和相关材料的情况，则需要联系办理机器的服务商，通过服务商渠道上传和处理。因而非正规渠道办理的机具会出现解决麻烦的问题，影响交易和使用。</p>\n\n<div class=\"ckeditor-html5-video-v1\" data-responsive=\"true\" style=\"text-align:center\">\n<video controls=\"controls\" src=\"https://vd4.bdstatic.com/mda-kmmsim0bz6qgn37i/v1-cae/sc/mda-kmmsim0bz6qgn37i.mp4\" style=\"height:auto; max-width:100%\">&nbsp;</video>\n</div>\n\n<p>腾付通POS机已经全面开通实时到账服务，交易成功到账成功率99%。</p>\n\n<p>当然，如果因为操作不当、卡片风控、交易存在风险等个别情况，交易可能延迟到账或者不到账，这时候就要联系售后处理了。但您放心，电银通POS机正规一清机器，资金安全，只需要核实交易即可到账，或者退回该笔交易。您刷卡的钱是安全的，不会出现任何损失，所以不用着急。</p>', '2020-12-22 17:23:40', '2020-12-22 13:53:40', NULL, NULL, '/upload/img/2020-12-225fe22b8c77bdd.png', '/upload/img/2020-12-225fe22b9a0516e.png');
-INSERT INTO `admin_single` VALUES (68, '关于我们', '关于我们', '<p>火箭残骸里剩余残留物、危险品可能会形成次生危害，请广大群众不要近距离围观或接触残骸，严禁私自拆卸、拾捡、隐藏、贩卖和收购火箭残骸&hellip;&hellip;&rdquo;这是西双版纳傣族自治州人民政府12月5日发布的一则紧急通知。</p>', '2020-12-22 14:00:27', '2020-12-22 14:00:27', NULL, '/upload/img/2020-12-225fe1fbf66af04.jpg', NULL, NULL);
-INSERT INTO `admin_single` VALUES (70, '联系我们', '联系我们', '<p>具体数据显示，12月份以来，湖南、江西用电需求的增速非常高，在全国位居前列。根据电力生产快报，湖南12月上旬发用电量同比增长了19.8%。前几天最大的用电负荷3144万千瓦，这个比此前过去最高峰的负荷高出了100多万千瓦，接近200万千瓦，这个增量是非常大的。</p>', '2020-12-22 14:01:22', '2020-12-22 14:01:22', NULL, '/upload/img/2020-12-225fe1fc2420499.jpg', NULL, NULL);
-INSERT INTO `admin_single` VALUES (71, '企业文化', '企业文化', '<p>这则通知针对的是近期的一次火箭发射任务。12月6日11时58分，我国在西昌卫星发射中心，用长征三号乙运载火箭（以下简称长三乙火箭）成功发射高分十四号卫星。上述通知中提示：西双版纳傣族自治州勐海县勐满镇、西定乡、勐遮镇、勐阿镇部分区域将执行火箭残骸落区任务，届时相关道路将进行管制，请当地居民按照政府通知要求做好疏散防护</p>', '2020-12-22 14:02:00', '2020-12-22 14:02:00', NULL, '/upload/img/2020-12-225fe1fc4da179c.jpg', NULL, NULL);
-INSERT INTO `admin_single` VALUES (74, '刷脸闪付', '刷脸闪付', '<p>撒打发斯蒂芬</p>', '2020-12-22 17:23:55', '2020-12-22 17:18:41', NULL, NULL, '/upload/img/2020-12-225fe22ba387a09.png', '/upload/img/2020-12-225fe22ba93e5f5.png');
-INSERT INTO `admin_single` VALUES (75, '花呗白条', '花呗白条', '<p>花呗白条花呗白条花呗白条花呗白条</p>', '2020-12-22 17:24:07', '2020-12-22 17:18:55', NULL, NULL, '/upload/img/2020-12-225fe22bb069692.png', '/upload/img/2020-12-225fe22bb58d0d4.png');
-INSERT INTO `admin_single` VALUES (76, '维权退保', '维权退保维权退保维权退保', '<p>维权退保维权退保维权退保维权退保</p>', '2020-12-22 17:24:39', '2020-12-22 17:19:08', NULL, NULL, '/upload/img/2020-12-225fe22bcaca5ba.png', '/upload/img/2020-12-225fe22bd517803.png');
-INSERT INTO `admin_single` VALUES (77, '征信修复', '征信修复征信修复征信修复', '<p>征信修复征信修复征信修复征信修复征信修复</p>', '2020-12-22 17:24:56', '2020-12-22 17:19:20', NULL, NULL, '/upload/img/2020-12-225fe22be1a88ec.png', '/upload/img/2020-12-225fe22be668f77.png');
-INSERT INTO `admin_single` VALUES (78, '停息挂账', '停息挂账停息挂账停息挂账', '<p>停息挂账停息挂账停息挂账停息挂账</p>', '2020-12-22 17:25:11', '2020-12-22 17:19:33', NULL, NULL, '/upload/img/2020-12-225fe22bef5657e.png', '/upload/img/2020-12-225fe22bf49e6da.png');
-INSERT INTO `admin_single` VALUES (79, '退息退年费', '退息退年费退息退年费退息退年费', '<p>退息退年费退息退年费退息退年费退息退年费退息退年费</p>', '2020-12-22 17:25:25', '2020-12-22 17:19:46', NULL, NULL, '/upload/img/2020-12-225fe22bfe0a407.png', '/upload/img/2020-12-225fe22c040a31e.png');
-INSERT INTO `admin_single` VALUES (80, '商学院', '商学院商学院商学院商学院', '<p>商学院商学院商学院商学院商学院</p>', '2020-12-22 17:25:47', '2020-12-22 17:19:58', NULL, NULL, '/upload/img/2020-12-225fe22c13c3623.png', '/upload/img/2020-12-225fe22c1935940.png');
-INSERT INTO `admin_single` VALUES (81, 'POS机办理', 'POS机办理POS机办理POS机办理POS机办理', '<p>POS机办理POS机办理POS机办理POS机办理</p>', '2020-12-22 17:26:02', '2020-12-22 17:20:13', NULL, NULL, '/upload/img/2020-12-225fe22c2372680.png', '/upload/img/2020-12-225fe22c274b5f2.png');
+--
+-- 转存表中的数据 `admin_single`
+--
 
--- ----------------------------
--- Table structure for admin_user_roles
--- ----------------------------
-DROP TABLE IF EXISTS `admin_user_roles`;
-CREATE TABLE `admin_user_roles`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+INSERT INTO `admin_single` (`pid`, `title`, `description`, `content`, `updated_at`, `created_at`, `sort`, `cover_img`, `icon`, `hover_icon`) VALUES
+(69, '企业资质', '企业资质', '<p><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-315fed83170d3b3.jpg" style="height:286px; width:920px" /></p>\n\n<p><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-315fed84503c4a6.jpg" style="height:526px; width:920px" /></p>\n\n<p><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-315fed833243c4f.jpg" style="height:400px; width:920px" /></p>\n\n<p><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-315fed83829c370.jpg" /></p>\n\n<p><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-315fed83a3dbda2.jpg" /></p>\n\n<p>&nbsp;</p>\n\n<p style="text-align:center"><span style="font-size:18px">随着信用卡的普及，越来越多的人开始使用POS机，e汇客联合各大持牌正规支付公司，<br />\n提供各种主流品牌POS机，供您选择。资金安全百分百，所有机器免费安装，费率低至0.38%，<br />\n更有激活奖励、刷卡分润、达标奖励等诸多收益，收益都在APP结算，可自用省钱，分享赚钱。</span></p>\n\n<p>&nbsp;</p>\n\n<p>&nbsp;</p>\n\n<p>&nbsp;</p>\n\n<p>&nbsp;</p>', '2021-01-06 02:29:40', '2020-12-20 13:48:05', NULL, '/upload/img/2021-01-065ff5911149474.jpg', NULL, NULL),
+(72, '积分兑换', '积分兑换积分兑换', '<div class="ckeditor-html5-video-v1" data-responsive="true" style="text-align:center">\n<video controls="controls" src="http://1300347920.vod2.myqcloud.com/61d45587vodtranscq1300347920/913eb43b5285890809578394462/v.f100800.mp4" style="height:auto; max-width:100%">&nbsp;</video>\n</div>\n\n<p>&nbsp;</p>\n\n<h1 style="text-align:center"><strong><span style="font-size:24px">信用卡积分兑换现金</span></strong></h1>\n\n<h1>&nbsp;</h1>\n\n<h1><strong><span style="font-size:18px">即兑即付 快捷到账</span></strong></h1>\n\n<p><strong><span style="font-size:16px">2020年信用卡积分现状，1000亿积分过期！</span></strong><br />\n&nbsp;</p>\n\n<p><span style="font-size:16px">全国信用卡发行量超过6亿张，每年产生的积分数量超过9000亿分，仅过期积分就超过1000亿分，<br />\n信用卡论坛里经常有人抱怨以前6000积分就能换一杯星巴克，<br />\n今年直接跳涨到12000积分，刷卡消费一元积一分的话要花一万多元；<br />\n<br />\n要换300块的东西，动不动就需要近20万积分，可攒够20万积分越来越不容易。<br />\n我们办信用卡的初衷本来是为了方便、省钱，而且消费就会产生积分，每个有用卡习惯的人简单一查，<br />\n就会发现自己账户里有几万、几十万甚至上百万积分，然而很多时候大量的信用卡积分过期或被错用，令人心疼，乃至烦恼。</span></p>\n\n<p><br />\n<strong><span style="font-size:16px">全国每年发行3亿张信用卡！<br />\n每月新增积分1万亿+！<br />\n亿万积分过期无人问津！</span></strong></p>\n\n<p>&nbsp;</p>\n\n<p><strong><span style="font-size:18px">信用卡积分兑换现金比例多少钱，不同银行兑换比例不同！</span></strong></p>\n\n<p><span style="font-size:18px">自有积分公司，全网最高价。</span></p>\n\n<p><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-295feb27d51e63e.jpg" style="height:938px; margin-bottom:0px; margin-top:0px; width:920px" /></p>\n\n<p style="text-align:center">&nbsp;</p>\n\n<p style="text-align:center"><strong><span style="font-size:24px">信用卡积分怎么兑换现金</span></strong></p>\n\n<p>&nbsp;</p>\n\n<p><strong><span style="font-size:18px">兑换量没有要求，即兑即换现</span></strong></p>\n\n<p><span style="font-size:18px">信用卡积分用户一对一兑换，通过银行APP操作，无任何风险，兑换成功后立即可以提现，快捷到账！</span></p>\n\n<p><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-295feb2a6f5f458.jpg" style="height:938px; margin-bottom:20px; margin-top:20px; width:920px" /></p>\n\n<p style="text-align:center"><strong><span style="font-size:24px">各银行信用卡积分有效期</span></strong></p>\n\n<p><br />\n<strong><span style="font-size:18px">大部分持卡人不懂积分，积分过期，白白浪费！</span></strong><br />\n<span style="font-size:18px">1、工商银行：最长5年；<br />\n2、农业银行：2017年之前的卡于2022年1月31日前到期；2017年及之后的卡有效期5年，于第5年1月31日之前到期；<br />\n3、中国银行：2年，每年6月30日之前到期，白金卡长久有效；<br />\n4、建设银行：卡片有效期内有效；<br />\n5、交通银行：2年，沃尔玛卡1年；<br />\n6、招商银行：卡片有效期内有效；<br />\n7、广发银行：卡片有效期内有效；<br />\n8、中信银行：入账期起24个月内；<br />\n9、浦发银行：8年，白金卡永久有效；<br />\n10、平安银行：每3年一个周期，每个周期次月底清零；<br />\n11、兴业银行：2010年4月1日前的卡永久有效；之后的主卡有效期内有效；<br />\n12、光大银行：5年。 </span></p>\n\n<p>&nbsp;</p>\n\n<p>&nbsp;</p>', '2020-12-29 13:23:14', '2020-12-22 13:52:50', 2, '/upload/img/2020-12-275fe88e9789a4d.jpg', '/upload/img/2020-12-225fe22b6c712b9.png', '/upload/img/2020-12-225fe22b737a575.png'),
+(73, '账单延期', '账单延期账单延期', '<div class="ckeditor-html5-video-v1" data-responsive="true" style="text-align:center">\n<video controls="controls" src="http://1300347920.vod2.myqcloud.com/61d45587vodtranscq1300347920/b17a37565285890809582425881/v.f100800.mp4" style="height:auto; max-width:100%">&nbsp;</video>\n</div>\n\n<p>&nbsp;</p>\n\n<h1 style="text-align:center"><strong>信用卡逾期没钱还怎么办？</strong><br />\n&nbsp;</h1>\n\n<p><strong><span style="font-size:18px">e汇客来帮忙一站式解决持卡人所有问题</span></strong></p>\n\n<p><span style="font-size:18px">正规持牌支付公司为e汇客提供无卡支付通道，<br />\n只需要留5%的余额即可还清100%的账单。<br />\n从此告别最低还款和逾期。</span></p>\n\n<p><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-305fec1cb0b1f94.jpg" style="height:938px; margin-bottom:20px; margin-top:20px; width:920px" /></p>', '2020-12-30 06:22:44', '2020-12-22 13:53:40', 3, '/upload/img/2020-12-275fe88eb9cc189.jpg', '/upload/img/2020-12-225fe22b8c77bdd.png', '/upload/img/2020-12-225fe22b9a0516e.png'),
+(68, '关于我们', '关于我们', '<p><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-315fed7c4e34c06.jpg" style="height:466px; width:920px" /></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">湖南茂佰信息科技有限公司旗下全资品牌&ldquo;e汇客&rdquo;，是一个以云数据支撑的创新型服务平台，全国首创。是一款致力于更好的服务信用卡人群的综合性APP。一站式解决持卡人的各种需求。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">公司致力于为广大POS机用户在POS机办理及安装，积分兑换、账单延期、网贷退息等方面，提供全方面的商务咨询服务。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">截至2019年第三季度，我国信用卡累积发卡量已接近9亿张，信用卡授信总额近17万亿元，并且每年发卡量和授信额度在以超过20%的速度增长。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">随着持卡人越来越多，衍生了很多以信用卡为中心的相关业务，诞生了大量的相关从业人员来解决持卡人的各种不同需求，做为信用卡持卡人，在很多相关需求方面，仅仅只是普通用户。e汇客以技术为前提，以渠道为核心，以产品安全为导向，以持卡人的利益为宗旨，为全国信用卡用户搭建一个安全、快捷的综合性服务平台，没有中间商赚差价，大面积降低持卡人的负债成本，让持卡人不仅仅只是用户，同时也是收益者，更有商学院赋能给持卡人更多实用知识。</span></p>\n\n<p>&nbsp;</p>\n\n<p>&nbsp;</p>', '2021-01-16 01:02:38', '2020-12-22 14:00:27', NULL, '/upload/img/2021-01-065ff591069c81b.jpg', NULL, NULL),
+(70, '技术团队', '技术团队', '<p style="text-align:center">&nbsp;</p>\n\n<p style="text-align:center"><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2021-01-045ff30777d7029.jpg" /></p>\n\n<p style="text-align:center">&nbsp;</p>\n\n<p style="text-align:center">&nbsp;</p>', '2021-01-06 02:29:48', '2020-12-22 14:01:22', NULL, '/upload/img/2021-01-065ff5911a79a46.jpg', NULL, NULL),
+(71, '合作扶持', '合作扶持', '<p><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2021-01-045ff308538bb09.jpg" style="height:900px; width:920px" /></p>', '2021-01-06 02:29:57', '2020-12-22 14:02:00', NULL, '/upload/img/2021-01-065ff59122dbc6b.jpg', NULL, NULL),
+(74, '刷脸闪付', '刷脸闪付', '<div class="ckeditor-html5-video-v1" data-responsive="true" style="text-align:center">\n<video controls="controls" src="http://1300347920.vod2.myqcloud.com/8aea67dfvodcq1300347920/28fffef45285890811083964558/amr4HYSgvloA.mp4" style="max-width: 100%; height: auto;">&nbsp;</video>\n</div>\n\n<p>&nbsp;</p>\n\n<h1 style="text-align:center"><strong><span style="font-size:24px">人工智能 刷脸闪付</span></strong></h1>\n\n<h1 style="text-align:center"><strong><span style="font-size:24px">用AI技术创造智慧生活</span></strong></h1>\n\n<p>&nbsp;</p>\n\n<p><strong><span style="font-size:18px">支付更便捷、更方便、让生活更精彩</span></strong></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">正规持牌支付公司为e汇客提供无卡支付通道，资金安全百分百。更智能的前沿支付方式，让您畅享便捷，从此告别刷卡的尴尬。</span></p>\n\n<p>&nbsp;</p>\n\n<p><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-305fec203a9f779.jpg" style="height:938px; margin-bottom:20px; margin-top:20px; width:920px" /></p>\n\n<p>&nbsp;</p>', '2020-12-30 06:38:33', '2020-12-22 17:18:41', 4, '/upload/img/2020-12-275fe88ecbf2d5a.jpg', '/upload/img/2020-12-225fe22ba387a09.png', '/upload/img/2020-12-225fe22ba93e5f5.png'),
+(75, '花呗白条', '花呗白条', '<div class="ckeditor-html5-video-v1" data-responsive="true" style="text-align:center">\n<video controls="controls" src="http://1300347920.vod2.myqcloud.com/8aea67dfvodcq1300347920/28fffef45285890811083964558/amr4HYSgvloA.mp4" style="max-width: 100%; height: auto;">&nbsp;</video>\n</div>\n\n<p>&nbsp;</p>\n\n<h1 style="text-align:center"><strong><span style="font-size:24px">花呗白条如果取现解决资金周转？</span></strong></h1>\n\n<p style="text-align:center"><strong><span style="font-size:18px">在线人工客服为您解决风控、大额花呗白条取现难题。</span></strong></p>\n\n<p style="text-align:center"><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-305fec23afa9b68.jpg" style="margin-bottom:20px; margin-top:20px" /></p>\n\n<p style="text-align:center"><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-305fec247917270.jpg" style="height:768px; margin-bottom:20px; margin-top:20px; width:1202px" /></p>\n\n<p>&nbsp;</p>\n\n<p>&nbsp;</p>', '2020-12-30 07:02:36', '2020-12-22 17:18:55', 5, '/upload/img/2020-12-275fe88edc43dd5.jpg', '/upload/img/2020-12-225fe22bb069692.png', '/upload/img/2020-12-225fe22bb58d0d4.png'),
+(76, '维权退保', '维权退保维权退保维权退保', '<p><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-305fec296944993.jpg" style="height:383px; width:900px" /></p>\n\n<p>&nbsp;</p>\n\n<h1 style="text-align:center"><strong><span style="font-size:24px">买错保险能退吗？怎么退保险划算？退保能退多少钱？</span></strong></h1>\n\n<p style="text-align:center"><strong><span style="font-size:18px">退保，全国受理</span></strong></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>什么情况，应该考虑退保？</strong></span></p>\n\n<p><span style="font-size:18px">如果你动了退保的念头，说明你已经意识到自己过往保险存在问题。不同人对风险和损失的感知是不同的，下面分几种情况具体分析：</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>情况1：买错了产品</strong></span></p>\n\n<p><span style="font-size:18px">比如A同学想买一份终身型的健康产品，结果由于功课做的不够到位，<br />\n最后买了一份万能险+附加健康的保险，这种情况就是比较典型的买错了产品。<br />\n比如，万能险+健康险本质上是消费型的健康险，简单点说就是健康只能保到60岁。</span></p>\n\n<p><span style="font-size:18px">再比如一个普通的中产家庭，背负较大的房贷车贷，手头存款不多，<br />\n却想通过保险的方式来增长获得高额回报，个人觉得这也属于买错了产品。<br />\n因为通过保险增长的优势是稳健，但是一般需要几十年才能获得回报，而且回报率一般也不高。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>情况2：买低了保额</strong></span></p>\n\n<p><span style="font-size:18px">就算买对了保险，这里面还有很多坑在等着大家。<br />\n如果奶爸A同学给自己买健康险的预算是5000元，可能只买到15万保额的终身型健康险，<br />\n那么好险管家建议这种情况不如购买50万保额的保障到70岁的消费型健康险，<br />\n因为买保险最重要就是买的保额，保额太低达不到转移我们风险的目的。<br />\n先保障到70岁，过几年预算充足了在加保也不错。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>情况3：占用了过多的预算</strong></span></p>\n\n<p><span style="font-size:18px">对于普通的家庭来讲，一般也就是投入家庭年收入的5%-20%来购买保险，<br />\n换算下来就是1-5万元之间，这么少预算的基础上，<br />\n想要给爸爸、妈妈、孩子保额做高保障做全，是需要精打细算的。</span></p>\n\n<p><span style="font-size:18px">上面就是几个好险管家能想到的常见问题，这里就不过多展开了。<br />\n建议大家梳理一下自己的保单，首先要了解自己的需求，然后在看目前的保障是否满意。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>情况4：选择退保，如何尽量避免损失？</strong></span></p>\n\n<p><span style="font-size:18px">总有人说买错了保险。想退保怎么办？</span></p>\n\n<p><span style="font-size:18px">其实不建议大家退的，但实在想退，我们就得把损失降到最低，<br />\n我们有专业的团队，专业服务，一对一指导，通过正规渠道协助办理退保，有需求欢迎咨询了解。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>可办理的类别：</strong>中国大陆所有保险公司承保的各种寿险、增长险、分成险等（除车险）均可办理退保</span></p>\n\n<p><span style="font-size:18px"><strong>可办理的条件：</strong>1、保险断交5年以内的; 2、保险业务员离职的; 3、保单退过部分的; 4、上当受骗有强烈意愿要退保的.</span></p>\n\n<p><span style="font-size:18px"><strong>不能办理的退保：</strong>保险断交五年外（最后一次缴费距离现在超过五年）、自保件（在保险公司任职时，以自己业务员名义给自己或直系亲属所签构的保险合同为自保件）</span></p>\n\n<p>&nbsp;</p>\n\n<p>&nbsp;</p>\n\n<p>&nbsp;</p>', '2020-12-30 07:17:53', '2020-12-22 17:19:08', 6, '/upload/img/2020-12-275fe88ef06715a.jpg', '/upload/img/2020-12-225fe22bcaca5ba.png', '/upload/img/2020-12-225fe22bd517803.png'),
+(77, '征信修复', '征信修复征信修复征信修复', '<p><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-305fec2c353d8d9.jpg" style="height:383px; width:900px" /></p>\n\n<p>&nbsp;</p>\n\n<h1 style="text-align:center"><strong><span style="font-size:24px">征信修复</span></strong></h1>\n\n<p>&nbsp;</p>\n\n<p><strong><span style="font-size:18px">什么是征信修复？</span></strong></p>\n\n<p><br />\n<span style="font-size:18px">征信修复不是串改数据，征信修复不是内部关系屏蔽、征信修复不等于利用漏洞&ldquo;洗白&rdquo;，征信修复是公民对个人征信中记录的信息有异议、问题，采用正规合理的流程去修复的一种手段！</span></p>\n\n<p><br />\n<span style="font-size:18px"><strong>征信修复合法么？</strong></span></p>\n\n<p><br />\n<span style="font-size:18px">根据新版的《征信业管理条例》第四章第二十五条信息主体认为征信机构采集、<br />\n保存、提供的信息存在错误、遗漏的，有权向征信机构或者信息提供者提出异议，要求更正。<br />\n征信机构或者信息提供者收到异议，<br />\n应当按照国务院征信业监督管理部门的规定对相关信息作出存在异议的标注，<br />\n自收到异议之日起20日内进行核查和处理，并将结果书面答复异议人，所以征信修复是完全合法合规的。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">根据中国人民银行提出的《征信管理条例》以及<br />\n《个人信用信息基础数据库管理暂行办法》对我们的征信记录提出异议和处理的过程称为征信修复。</span></p>\n\n<p><span style="font-size:18px">征信出现逾期（包括不限于商业贷款逾期、房贷逾期、车贷逾期、信用卡逾期、<br />\n助学贷款类逾期、网贷逾期、呆账止付类逾期等）等各种导致您生活出现影响、<br />\n贷款出现影响、结婚升职出现影响，用正规合法的流程永久去除。</span></p>\n\n<p>&nbsp;</p>\n\n<p>&nbsp;</p>', '2020-12-30 07:32:30', '2020-12-22 17:19:20', 7, '/upload/img/2020-12-275fe88f06948c7.jpg', '/upload/img/2020-12-225fe22be1a88ec.png', '/upload/img/2020-12-225fe22be668f77.png'),
+(78, '停息挂账', '停息挂账停息挂账停息挂账', '<p><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-305fec2fc2c81af.jpg" /></p>\n\n<p>&nbsp;</p>\n\n<h1 style="text-align:center"><span style="font-size:24px"><strong>信用卡逾期后的债务问题</strong></span><br />\n<strong><span style="font-size:18px">停止追款 本金分期 挂账停息</span></strong><br />\n&nbsp;</h1>\n\n<p><span style="font-size:18px"><strong>什么是&ldquo;停息挂账&rdquo;？</strong></span></p>\n\n<p><span style="font-size:18px">停息挂账是指信用卡持卡人在卡片逾期之后，无力偿还的时候，<br />\n持卡人和银行重新达成一个，个性化分期还款协议，<br />\n把卡片里面的固定额度、临时额度以及备用金，做一个债务重组，重新二次分期，每个月按时还款的一种方式。</span><br />\n&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>停息挂账等于停掉了利息，分期偿还本金，最高可申请5年60期限。</strong><br />\n<br />\n<img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-305fec321d3a567.jpg" style="height:274px; width:720px" /></span><br />\n&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>根据信用卡监督管理条例第70条规定，满足以下4点可以申请停息挂账：</strong></span></p>\n\n<p><span style="font-size:18px">条件一、持卡人具有还款意愿的；</span></p>\n\n<p><span style="font-size:18px">条件二、持卡人具备分期还款能力的；</span></p>\n\n<p><span style="font-size:18px">条件三、持卡人已经逾期而且无法一次性偿还欠款的；</span></p>\n\n<p><span style="font-size:18px">条件四、持卡人想回归正常生活环境的，停止催收电话不想被执行的；</span></p>\n\n<p>&nbsp;</p>\n\n<p><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-305fec31b5c0079.jpg" style="height:375px; width:380px" /><br />\n&nbsp;</p>\n\n<p><strong>愿每个负债人都能早日走出债务泥潭，找到生活的希望。</strong></p>\n\n<p>&nbsp;</p>\n\n<p>&nbsp;</p>\n\n<p>&nbsp;</p>', '2020-12-30 07:55:30', '2020-12-22 17:19:33', 8, '/upload/img/2020-12-275fe88f2622ad2.jpg', '/upload/img/2020-12-225fe22bef5657e.png', '/upload/img/2020-12-225fe22bf49e6da.png'),
+(79, '退息退年费', '退息退年费退息退年费退息退年费', '<p><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-305fec337848d24.jpg" /></p>\n\n<p>&nbsp;</p>\n\n<h1 style="text-align:center"><span style="font-size:24px"><strong>退息退年费</strong></span><br />\n&nbsp;</h1>\n\n<p><strong><span style="font-size:18px">很多人的信用卡都有最低还款和逾期，最低还款会产生循环利息，<br />\n逾期会产生违约金。很多信用卡都有高额年费，这些费用都可以退还。</span></strong><br />\n&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>信用卡为什么可以退息？</strong></span></p>\n\n<p><span style="font-size:18px">央行于2017年1月1日起开始实施的《中国人民银行关于信用卡业务有关事项的通知》中提到，<br />\n取消信用卡滞纳金，对于持卡人违约逾期未还款的行为，<br />\n发卡机构应与持卡人通过协议约定是否收取违约金，以及相关收取方式和标准。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px">我们常听到的信用卡退息，主要退的是银行信用卡违约金、罚息、逾期利息、滞纳金、最低还款手续费等统称为利息的费用。<br />\n目前，不合理费用都是可以向银行要求退还的，比如：透支金额未清还部分收取的复利以及收取相关的服务管理费。</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>信用卡为什么可以退年费？</strong></span></p>\n\n<p><span style="font-size:18px">众所周知，年费是信用卡必收的一个费用，虽然很多普卡、金卡可以通过刷卡来减免年费，<br />\n但是若是刷卡没有达标就会被银行给扣了年费。<br />\n那么，碰到这种情况怎么办呢？信用卡若是没有刷够次数被收了年费，也是可以退回的。</span></p>\n\n<p>&nbsp;</p>\n\n<p>&nbsp;</p>', '2020-12-30 08:12:55', '2020-12-22 17:19:46', 9, '/upload/img/2020-12-275fe88f40ec205.jpg', '/upload/img/2020-12-225fe22bfe0a407.png', '/upload/img/2020-12-225fe22c040a31e.png'),
+(80, '商学院', '商学院商学院商学院商学院', '<div class="ckeditor-html5-video-v1" data-responsive="true" style="text-align:center">\n<video controls="controls" src="http://1300347920.vod2.myqcloud.com/61d45587vodtranscq1300347920/b17a2e135285890809582425626/v.f100800.mp4" style="max-width: 100%; height: auto;">&nbsp;</video>\n</div>\n\n<p style="text-align:center">&nbsp;</p>\n\n<h1 style="text-align:center"><strong><span style="font-size:24px">e汇客商学院</span></strong></h1>\n\n<p style="text-align:center"><span style="font-size:18px">给全国越来越多的信用卡人群，传递正确的财商思维，<br />\n打造个人信用体系，针对性的提供合理的落地解决方案，<br />\n避免出现以卡还卡，以贷养贷的恶性循环。更有线上、线下实用的落地课程，<br />\n让金融小白秒变行业大咖！教会持卡人正确的信用价值观，<br />\n普及更多的财商知识，让更多持卡人受益！</span></p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify">&nbsp;</p>\n\n<p style="text-align:justify">&nbsp;</p>', '2020-12-30 08:19:04', '2020-12-22 17:19:58', 10, NULL, '/upload/img/2020-12-225fe22c13c3623.png', '/upload/img/2020-12-225fe22c1935940.png'),
+(81, 'POS机办理', 'POS机办理POS机办理POS机办理POS机办理', '<div class="ckeditor-html5-video-v1" data-responsive="true" style="text-align:center">\n<video controls="controls" src="http://1300347920.vod2.myqcloud.com/61d45587vodtranscq1300347920/9b1ab0de5285890809585579453/v.f100800.mp4" style="height:auto; max-width:100%">&nbsp;</video>\n</div>\n\n<h1 style="text-align:justify">&nbsp;</h1>\n\n<h1 style="text-align:center"><span style="font-size:24px"><strong>全国六大支付公司 提供各种主流POS机</strong></span></h1>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:20px"><strong>开创支付扁平化先河 没有中间商赚拥金</strong></span></p>\n\n<p><span style="font-size:20px"><strong>全民受益 全民创业</strong></span></p>\n\n<p style="text-align:justify"><span style="font-size:18px">1、POS机免费申领，激活奖励全返给会员；</span></p>\n\n<p style="text-align:justify"><span style="font-size:18px">2、达标奖励全返给会员；</span></p>\n\n<p style="text-align:justify"><span style="font-size:18px">3、刷卡手续费利润全返还给会员。</span></p>\n\n<p><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-295feb17a07a199.jpg" style="height:400px; margin-bottom:0px; margin-top:0px; width:920px" /></p>\n\n<p><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-295feb05a01d34b.jpg" style="height:400px; margin-bottom:0px; margin-top:0px; width:920px" /></p>\n\n<p><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-315fed82ffe7a05.jpg" style="height:400px; width:920px" /></p>\n\n<p>&nbsp;</p>\n\n<p style="text-align:center"><strong><span style="font-size:24px">全国首创的创新型金融服务平台</span></strong></p>\n\n<p style="text-align:center">&nbsp;</p>\n\n<p><strong><span style="font-size:20px">一站式解决持卡人的所有需求</span></strong></p>\n\n<p style="text-align:justify"><span style="font-size:18px">1、一台就是代理，推广收益持续且稳定，一次付出长期拥有睡后收入；</span></p>\n\n<p style="text-align:justify"><span style="font-size:18px">2、所有品牌POS机的激活收益、刷卡分润，积分兑换现金，全都合并结算秒到账，随时提现。</span></p>\n\n<p style="text-align:justify"><img alt="" src="http://www.ehuike28.com:8889/upload/artical/2020-12-295feb1de931587.jpg" style="height:938px; width:920px" /></p>', '2021-01-06 05:24:55', '2020-12-22 17:20:13', 1, '/upload/img/2021-01-065ff5ba2489dec.jpg', '/upload/img/2020-12-225fe22c2372680.png', '/upload/img/2020-12-225fe22c274b5f2.png'),
+(89, '贷款退息', NULL, '<p><img alt="" src="http://www.ehuikee.com:8889/upload/artical/2021-01-075ff6fa9234db9.jpg" style="height:383px; margin-bottom:20px; margin-top:20px; width:900px" /></p>\n\n<p style="text-align:center"><strong><span style="font-size:24px">【宜信普惠 】</span></strong></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>① 只要还够本金或能还够本金的</strong><br />\n剩余欠款2-10万直接清零 强制结清❗️</span></p>\n\n<p><br />\n<span style="font-size:18px"><strong>② 宜信全国任意门店</strong><br />\n2018年以后贷款的客户<br />\n欠款没结清的都来退保险费<br />\n5分钟一单1-3天到账300-8000元</span></p>\n\n<p>&nbsp;</p>\n\n<p>&nbsp;</p>\n\n<p><img alt="" src="http://www.ehuikee.com:8889/upload/artical/2021-01-075ff6fa9e06d2c.jpg" style="height:383px; margin-bottom:20px; margin-top:20px; width:900px" /></p>\n\n<p style="text-align:center"><strong><span style="font-size:24px">【平安普惠退保费 】</span></strong></p>\n\n<p style="text-align:center">&nbsp;</p>\n\n<p><strong><span style="font-size:18px">&nbsp;1.退保费 （退回客户本人储蓄卡）</span></strong></p>\n\n<p><span style="font-size:18px">要求：平安普惠已结清并能查到借款记录的<br />\n操作周期：7-15工作日左右<br />\n保费退回金额：<br />\n3万元以下的退实际支付保费的70%-100%左右<br />\n3万元以上的退最高不超过3万元</span></p>\n\n<p><span style="font-size:18px">【平安普惠复减免保费➕服务费】</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style="font-size:18px"><strong>2</strong></span><strong><span style="font-size:18px">.</span></strong><span style="font-size:18px"><strong>减免保费➕服务费：</strong></span></p>\n\n<p><span style="font-size:18px">（抵扣剩余欠款金额）<br />\n要求：平安普惠正在还款中的，可以一次性结清欠款的。</span><br />\n<br />\n<br />\n<br />\n<br />\n&nbsp;</p>\n\n<p>&nbsp;</p>\n\n<p>&nbsp;</p>', '2021-01-15 05:13:07', '2021-01-06 05:06:05', NULL, NULL, NULL, NULL),
+(90, '联系我们', '联系我们', '<p><img alt="" src="http://www.ehuikee.com:8889/upload/artical/2021-01-135ffef18ad1e87.jpg" style="height:466px; width:920px" /></p>\n\n<p><strong><span style="font-size:20px">湖南茂佰信息科技有限公司</span></strong></p>\n\n<p><span style="font-size:18px">电话：400-059-7688</span></p>\n\n<p><span style="font-size:18px">地址：湖南长沙雨花区洞井街道湘府中路80号复地星光天地4栋4层</span></p>\n\n<p><span style="font-size:18px">网址：www.ehuikee.com</span></p>', '2021-01-13 05:11:41', '2021-01-13 04:56:44', NULL, '/upload/img/2021-01-135ffef13e04ed6.jpg', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `admin_users`
+--
+
+CREATE TABLE IF NOT EXISTS `admin_users` (
+  `id` int(10) unsigned NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(1024) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='后台用户表';
+
+--
+-- 转存表中的数据 `admin_users`
+--
+
+INSERT INTO `admin_users` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(4, 'admin', '651598247@qq.com', '$2y$10$AHOAvahN1pvTKqFZOdHE0.UcDOWDnDZ3ZCNXI/YwsrAS/zmdNjY5.', NULL, '2019-07-20 09:43:45', '2019-07-20 09:43:45'),
+(20, 'testone', '423124@qq.com', '$2y$10$aCBmHZvbF8PGzLnW3IUp2.k7cvIVOT6fToo2P0ocLF/55GSV7U93q', NULL, '2020-03-17 14:27:20', '2020-12-19 03:41:27');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `admin_user_roles`
+--
+
+CREATE TABLE IF NOT EXISTS `admin_user_roles` (
+  `id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 25 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户和角色中间表' ROW_FORMAT = Fixed;
+  `user_id` int(11) NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='用户和角色中间表';
 
--- ----------------------------
--- Records of admin_user_roles
--- ----------------------------
-INSERT INTO `admin_user_roles` VALUES (1, 1, 4);
-INSERT INTO `admin_user_roles` VALUES (15, 2, 20);
+--
+-- 转存表中的数据 `admin_user_roles`
+--
 
--- ----------------------------
--- Table structure for admin_users
--- ----------------------------
-DROP TABLE IF EXISTS `admin_users`;
-CREATE TABLE `admin_users`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `password` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+INSERT INTO `admin_user_roles` (`id`, `role_id`, `user_id`) VALUES
+(1, 1, 4),
+(15, 2, 20);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `admin_video`
+--
+
+CREATE TABLE IF NOT EXISTS `admin_video` (
+  `id` int(11) unsigned NOT NULL,
+  `pid` int(11) DEFAULT NULL COMMENT '父级ID',
+  `title` varchar(255) DEFAULT NULL COMMENT '标题',
+  `description` varchar(1000) DEFAULT NULL COMMENT '描述',
+  `content` text NOT NULL COMMENT '内容',
+  `updated_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+  `created_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  `url` varchar(255) DEFAULT NULL COMMENT '视频地址',
+  `sort` int(11) DEFAULT NULL COMMENT '排序',
+  `cover_img` varchar(255) DEFAULT NULL COMMENT '封面图'
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+--
+-- 转存表中的数据 `admin_video`
+--
+
+INSERT INTO `admin_video` (`id`, `pid`, `title`, `description`, `content`, `updated_at`, `created_at`, `url`, `sort`, `cover_img`) VALUES
+(7, 60, '钻石视频', '钻石视频', '<p>钻石视频</p>', '2020-12-23 15:29:26', '2020-12-20 15:46:11', 'https://blz-videos.nosdn.127.net/1/OverWatch/AnimatedShots/Overwatch_AnimatedShot_Soldier76_Hero.mp4', 1, '/upload/img/2020-12-235fe35ef2a55d3.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `admin_web_info`
+--
+
+CREATE TABLE IF NOT EXISTS `admin_web_info` (
+  `id` int(10) unsigned NOT NULL,
+  `cover_img` varchar(255) DEFAULT NULL,
+  `video` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL COMMENT 'video 首页视频',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `users_email_unique`(`email`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '后台用户表' ROW_FORMAT = Dynamic;
+  `search_key` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- ----------------------------
--- Records of admin_users
--- ----------------------------
-INSERT INTO `admin_users` VALUES (4, 'admin', '651598247@qq.com', '$2y$10$AHOAvahN1pvTKqFZOdHE0.UcDOWDnDZ3ZCNXI/YwsrAS/zmdNjY5.', NULL, '2019-07-20 09:43:45', '2019-07-20 09:43:45');
-INSERT INTO `admin_users` VALUES (20, 'testone', '423124@qq.com', '$2y$10$aCBmHZvbF8PGzLnW3IUp2.k7cvIVOT6fToo2P0ocLF/55GSV7U93q', NULL, '2020-03-17 14:27:20', '2020-12-19 03:41:27');
+--
+-- 转存表中的数据 `admin_web_info`
+--
 
--- ----------------------------
--- Table structure for admin_video
--- ----------------------------
-DROP TABLE IF EXISTS `admin_video`;
-CREATE TABLE `admin_video`  (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `pid` int(11) NULL DEFAULT NULL COMMENT '父级ID',
-  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标题',
-  `description` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '内容',
-  `updated_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
-  `created_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',
-  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '视频地址',
-  `sort` int(11) NULL DEFAULT NULL COMMENT '排序',
-  `cover_img` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '封面图',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+INSERT INTO `admin_web_info` (`id`, `cover_img`, `video`, `type`, `created_at`, `updated_at`, `search_key`, `title`, `description`) VALUES
+(1, '/upload/img/2021-01-145fffe4d1a83fe.jpg', 'http://1300347920.vod2.myqcloud.com/61d45587vodtranscq1300347920/84e0ba195285890812257928649/v.f100800.mp4', 'video', '2020-12-29 04:30:15', '2021-01-13 22:38:09', 'POS机办理，信用卡积分兑换，账单延期，刷脸闪付，花呗白条，维权退保，征信修复，停息挂账，退息退年费', 'e汇客官方网站', '传播财商思维，创造信用价值，让更多持卡人受益。e汇客是一个以云数据支撑的创新型金融服务平台，全国首创。是一款致力于更好的服务信用卡人群的综合性APP。一站式解决持卡人的各种需求。');
 
--- ----------------------------
--- Records of admin_video
--- ----------------------------
-INSERT INTO `admin_video` VALUES (7, 60, '钻石视频', '钻石视频', '<p>钻石视频</p>', '2020-12-22 14:22:44', '2020-12-20 15:46:11', 'https://vd4.bdstatic.com/mda-kkqvdabw5mf6dj03/mda-kkqvdabw5mf6dj03.mp4', 1, NULL);
+-- --------------------------------------------------------
 
--- ----------------------------
--- Table structure for migrations
--- ----------------------------
-DROP TABLE IF EXISTS `migrations`;
-CREATE TABLE `migrations`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `migration` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+--
+-- 表的结构 `migrations`
+--
 
--- ----------------------------
--- Records of migrations
--- ----------------------------
-INSERT INTO `migrations` VALUES (1, '2014_10_12_000000_create_users_table', 1);
-INSERT INTO `migrations` VALUES (2, '2014_10_12_100000_create_password_resets_table', 1);
+CREATE TABLE IF NOT EXISTS `migrations` (
+  `id` int(10) unsigned NOT NULL,
+  `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
--- ----------------------------
--- Table structure for password_resets
--- ----------------------------
-DROP TABLE IF EXISTS `password_resets`;
-CREATE TABLE `password_resets`  (
-  `email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  INDEX `password_resets_email_index`(`email`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+--
+-- 转存表中的数据 `migrations`
+--
 
-SET FOREIGN_KEY_CHECKS = 1;
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '2014_10_12_000000_create_users_table', 1),
+(2, '2014_10_12_100000_create_password_resets_table', 1);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `password_resets`
+--
+
+CREATE TABLE IF NOT EXISTS `password_resets` (
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `admin_app`
+--
+ALTER TABLE `admin_app`
+  ADD PRIMARY KEY (`pid`) USING BTREE;
+
+--
+-- Indexes for table `admin_artical`
+--
+ALTER TABLE `admin_artical`
+  ADD PRIMARY KEY (`id`) USING BTREE;
+
+--
+-- Indexes for table `admin_banner`
+--
+ALTER TABLE `admin_banner`
+  ADD PRIMARY KEY (`id`) USING BTREE;
+
+--
+-- Indexes for table `admin_certificates`
+--
+ALTER TABLE `admin_certificates`
+  ADD PRIMARY KEY (`id`) USING BTREE;
+
+--
+-- Indexes for table `admin_comment`
+--
+ALTER TABLE `admin_comment`
+  ADD PRIMARY KEY (`id`) USING BTREE;
+
+--
+-- Indexes for table `admin_partners`
+--
+ALTER TABLE `admin_partners`
+  ADD PRIMARY KEY (`id`) USING BTREE;
+
+--
+-- Indexes for table `admin_permissions`
+--
+ALTER TABLE `admin_permissions`
+  ADD PRIMARY KEY (`id`) USING BTREE;
+
+--
+-- Indexes for table `admin_roles`
+--
+ALTER TABLE `admin_roles`
+  ADD PRIMARY KEY (`id`) USING BTREE;
+
+--
+-- Indexes for table `admin_role_permissions`
+--
+ALTER TABLE `admin_role_permissions`
+  ADD PRIMARY KEY (`id`) USING BTREE;
+
+--
+-- Indexes for table `admin_single`
+--
+ALTER TABLE `admin_single`
+  ADD PRIMARY KEY (`pid`) USING BTREE;
+
+--
+-- Indexes for table `admin_users`
+--
+ALTER TABLE `admin_users`
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD UNIQUE KEY `users_email_unique` (`email`) USING BTREE;
+
+--
+-- Indexes for table `admin_user_roles`
+--
+ALTER TABLE `admin_user_roles`
+  ADD PRIMARY KEY (`id`) USING BTREE;
+
+--
+-- Indexes for table `admin_video`
+--
+ALTER TABLE `admin_video`
+  ADD PRIMARY KEY (`id`) USING BTREE;
+
+--
+-- Indexes for table `admin_web_info`
+--
+ALTER TABLE `admin_web_info`
+  ADD PRIMARY KEY (`id`) USING BTREE;
+
+--
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`) USING BTREE;
+
+--
+-- Indexes for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD KEY `password_resets_email_index` (`email`) USING BTREE;
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `admin_artical`
+--
+ALTER TABLE `admin_artical`
+  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=56;
+--
+-- AUTO_INCREMENT for table `admin_banner`
+--
+ALTER TABLE `admin_banner`
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `admin_certificates`
+--
+ALTER TABLE `admin_certificates`
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT for table `admin_comment`
+--
+ALTER TABLE `admin_comment`
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',AUTO_INCREMENT=13;
+--
+-- AUTO_INCREMENT for table `admin_partners`
+--
+ALTER TABLE `admin_partners`
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+--
+-- AUTO_INCREMENT for table `admin_permissions`
+--
+ALTER TABLE `admin_permissions`
+  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=92;
+--
+-- AUTO_INCREMENT for table `admin_roles`
+--
+ALTER TABLE `admin_roles`
+  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `admin_role_permissions`
+--
+ALTER TABLE `admin_role_permissions`
+  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=107;
+--
+-- AUTO_INCREMENT for table `admin_users`
+--
+ALTER TABLE `admin_users`
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=30;
+--
+-- AUTO_INCREMENT for table `admin_user_roles`
+--
+ALTER TABLE `admin_user_roles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=25;
+--
+-- AUTO_INCREMENT for table `admin_video`
+--
+ALTER TABLE `admin_video`
+  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `admin_web_info`
+--
+ALTER TABLE `admin_web_info`
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
